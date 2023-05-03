@@ -13,13 +13,23 @@ const App = ({ signOut }) => {
         fetchMenuItems();
     }, []);
 
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+            s4() + '-' + s4() + s4() + s4();
+    }
+
     async function fetchMenuItems() {
         const apiData = await API.graphql({ query: listMenuItems });
         const menuItemsFromAPI = apiData.data.listMenuItems.items;
         await Promise.all(
             menuItemsFromAPI.map(async (menuItem) => {
                 if (menuItem.image) {
-                    menuItem.image = await Storage.get(menuItem.id);
+                    menuItem.image = await Storage.get(menuItem.image);
                 }
                 return menuItem;
             })
@@ -37,7 +47,9 @@ const App = ({ signOut }) => {
             image: image.name,
         };
         if (!!data.image) {
-            await Storage.put(data.id, image);
+            const fileId = guid();
+            await Storage.put(fileId, image);
+            data.image = fileId;
         }
         await API.graphql({
             query: createMenuItemMutation,
@@ -47,10 +59,10 @@ const App = ({ signOut }) => {
         event.target.reset();
     }
 
-    async function deleteMenuItem({ id }) {
+    async function deleteMenuItem({ id, image }) {
         const newMenuItems = menuItems.filter((menuItem) => menuItem.id !== id);
         setMenuItems(newMenuItems);
-        await Storage.remove(id);
+        await Storage.remove(image);
         await API.graphql({
             query: deleteMenuItemMutation,
             variables: { input: { id } },
