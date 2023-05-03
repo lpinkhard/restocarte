@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 import {API, Storage} from "aws-amplify";
-import {Button, Flex, Heading, Image, Text, TextField, View, withAuthenticator,} from '@aws-amplify/ui-react';
+import {Button, Card, Collection, Divider, Flex, Heading, Image, Text, TextField, View, withAuthenticator,} from '@aws-amplify/ui-react';
 import {listMenuItems} from "./graphql/queries";
 import {createMenuItem as createMenuItemMutation, deleteMenuItem as deleteMenuItemMutation,} from "./graphql/mutations";
 
@@ -72,6 +72,44 @@ const App = ({ signOut }) => {
     return (
         <View className="App">
             <Heading level={1}>Menu Items</Heading>
+            <Collection
+                items={menuItems}
+                type="list"
+                direction="row"
+                gap="20px"
+                wrap="wrap"
+                margin="1rem"
+                alignItems="center"
+                alignSelf="center"
+            >
+                {(menuItem) => (
+                    <Card
+                        key={menuItem.id}
+                        borderRadius="medium"
+                        width="20rem"
+                        variation="outlined"
+                    >
+                        {menuItem.image && (
+                            <Image
+                                src={menuItem.image}
+                                alt={`${menuItem.title}`}
+                                style={{ width: 400 }}
+                            />
+                        )}
+                        <View padding="xs">
+                            <Heading padding="medium">{menuItem.title}</Heading>
+                            <Text as="span">{menuItem.description}</Text>
+                            <Divider padding="xs" />
+                            <Button variation="link" isFullWidth onClick={() => deleteMenuItem(menuItem)}>
+                                Delete item
+                            </Button>
+                        </View>
+                    </Card>
+                )}
+            </Collection>
+
+            <Divider orientation="horizontal" />
+
             <View as="form" margin="3rem 0" onSubmit={createMenuItem}>
                 <Flex direction="row" justifyContent="center">
                     <TextField
@@ -100,32 +138,7 @@ const App = ({ signOut }) => {
                     </Button>
                 </Flex>
             </View>
-            <Heading level={2}>Current Menu Items</Heading>
-            <View margin="3rem 0">
-                {menuItems.map((menuItem) => (
-                    <Flex
-                        key={menuItem.id || menuItem.title}
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Text as="strong" fontWeight={700}>
-                            {menuItem.title}
-                        </Text>
-                        <Text as="span">{menuItem.description}</Text>
-                        {menuItem.image && (
-                            <Image
-                                src={menuItem.image}
-                                alt={`${menuItem.title}`}
-                                style={{ width: 400 }}
-                            />
-                        )}
-                        <Button variation="link" onClick={() => deleteMenuItem(menuItem)}>
-                            Delete item
-                        </Button>
-                    </Flex>
-                ))}
-            </View>
+
             <Button onClick={signOut}>Sign Out</Button>
         </View>
     );
