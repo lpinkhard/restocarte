@@ -18,6 +18,7 @@ export declare type CategoryCreateFormInputValues = {
     enabled?: boolean;
     price?: number;
     image?: string;
+    owner?: string;
 };
 export declare type CategoryCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -25,6 +26,7 @@ export declare type CategoryCreateFormValidationValues = {
     enabled?: ValidationFunction<boolean>;
     price?: ValidationFunction<number>;
     image?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CategoryCreateFormOverridesProps = {
@@ -34,6 +36,7 @@ export declare type CategoryCreateFormOverridesProps = {
     enabled?: PrimitiveOverrideProps<SwitchFieldProps>;
     price?: PrimitiveOverrideProps<TextFieldProps>;
     image?: PrimitiveOverrideProps<TextFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CategoryCreateFormProps = React.PropsWithChildren<{
     overrides?: CategoryCreateFormOverridesProps | undefined | null;

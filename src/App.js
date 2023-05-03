@@ -1,22 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
-import { API, Storage } from "aws-amplify";
-import {
-    Button,
-    Flex,
-    Heading,
-    Image,
-    Text,
-    TextField,
-    View,
-    withAuthenticator,
-} from '@aws-amplify/ui-react';
-import { listMenuItems } from "./graphql/queries";
-import {
-    createMenuItem as createMenuItemMutation,
-    deleteMenuItem as deleteMenuItemMutation,
-} from "./graphql/mutations";
+import {API, Storage} from "aws-amplify";
+import {Button, Flex, Heading, Image, Text, TextField, View, withAuthenticator,} from '@aws-amplify/ui-react';
+import {listMenuItems} from "./graphql/queries";
+import {createMenuItem as createMenuItemMutation, deleteMenuItem as deleteMenuItemMutation,} from "./graphql/mutations";
 
 const App = ({ signOut }) => {
     const [menuItems, setMenuItems] = useState([]);
@@ -30,9 +18,8 @@ const App = ({ signOut }) => {
         const menuItemsFromAPI = apiData.data.listMenuItems.items;
         await Promise.all(
             menuItemsFromAPI.map(async (menuItem) => {
-                if (menuItems.image) {
-                    const url = await Storage.get(menuItems.id);
-                    menuItem.image = url;
+                if (menuItem.image) {
+                    menuItem.image = await Storage.get(menuItem.id);
                 }
                 return menuItem;
             })
@@ -49,7 +36,9 @@ const App = ({ signOut }) => {
             description: form.get("description"),
             image: image.name,
         };
-        if (!!data.image) await Storage.put(data.id, image);
+        if (!!data.image) {
+            await Storage.put(data.id, image);
+        }
         await API.graphql({
             query: createMenuItemMutation,
             variables: { input: data },

@@ -34,6 +34,7 @@ export default function MenuItemCreateForm(props) {
     enabled: false,
     price: "",
     image: "",
+    owner: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
@@ -42,6 +43,7 @@ export default function MenuItemCreateForm(props) {
   const [enabled, setEnabled] = React.useState(initialValues.enabled);
   const [price, setPrice] = React.useState(initialValues.price);
   const [image, setImage] = React.useState(initialValues.image);
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -49,6 +51,7 @@ export default function MenuItemCreateForm(props) {
     setEnabled(initialValues.enabled);
     setPrice(initialValues.price);
     setImage(initialValues.image);
+    setOwner(initialValues.owner);
     setErrors({});
   };
   const validations = {
@@ -57,6 +60,7 @@ export default function MenuItemCreateForm(props) {
     enabled: [],
     price: [],
     image: [],
+    owner: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -89,6 +93,7 @@ export default function MenuItemCreateForm(props) {
           enabled,
           price,
           image,
+          owner,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -148,6 +153,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -176,6 +182,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -204,6 +211,7 @@ export default function MenuItemCreateForm(props) {
               enabled: value,
               price,
               image,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.enabled ?? value;
@@ -236,6 +244,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price: value,
               image,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -264,6 +273,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image: value,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -277,6 +287,35 @@ export default function MenuItemCreateForm(props) {
         errorMessage={errors.image?.errorMessage}
         hasError={errors.image?.hasError}
         {...getOverrideProps(overrides, "image")}
+      ></TextField>
+      <TextField
+        label="Owner"
+        isRequired={false}
+        isReadOnly={false}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              enabled,
+              price,
+              image,
+              owner: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
       ></TextField>
       <Flex
         justifyContent="space-between"

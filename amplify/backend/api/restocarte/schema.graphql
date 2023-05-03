@@ -13,6 +13,7 @@ type MenuItem
   enabled: Boolean
   price: Float
   image: String
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
 type Category
@@ -30,6 +31,7 @@ type Category
   price: Float
   image: String
   menuItems: [MenuItem] @hasMany
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }
 
 type Restaurant
@@ -44,4 +46,5 @@ type Restaurant
   name: String!
   logo: String
   categories: [Category] @hasMany
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
 }

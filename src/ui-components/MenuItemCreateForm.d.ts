@@ -18,6 +18,7 @@ export declare type MenuItemCreateFormInputValues = {
     enabled?: boolean;
     price?: number;
     image?: string;
+    owner?: string;
 };
 export declare type MenuItemCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -25,6 +26,7 @@ export declare type MenuItemCreateFormValidationValues = {
     enabled?: ValidationFunction<boolean>;
     price?: ValidationFunction<number>;
     image?: ValidationFunction<string>;
+    owner?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type MenuItemCreateFormOverridesProps = {
@@ -34,6 +36,7 @@ export declare type MenuItemCreateFormOverridesProps = {
     enabled?: PrimitiveOverrideProps<SwitchFieldProps>;
     price?: PrimitiveOverrideProps<TextFieldProps>;
     image?: PrimitiveOverrideProps<TextFieldProps>;
+    owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type MenuItemCreateFormProps = React.PropsWithChildren<{
     overrides?: MenuItemCreateFormOverridesProps | undefined | null;

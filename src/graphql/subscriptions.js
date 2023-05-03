@@ -17,13 +17,9 @@ export const onCreateMenuItem = /* GraphQL */ `
         image
         menuItems {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         restaurantCategoriesId
         owner
       }
@@ -34,9 +30,6 @@ export const onCreateMenuItem = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       categoryMenuItemsId
       owner
     }
@@ -58,13 +51,9 @@ export const onUpdateMenuItem = /* GraphQL */ `
         image
         menuItems {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         restaurantCategoriesId
         owner
       }
@@ -75,9 +64,6 @@ export const onUpdateMenuItem = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       categoryMenuItemsId
       owner
     }
@@ -99,13 +85,9 @@ export const onDeleteMenuItem = /* GraphQL */ `
         image
         menuItems {
           nextToken
-          startedAt
         }
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         restaurantCategoriesId
         owner
       }
@@ -116,9 +98,6 @@ export const onDeleteMenuItem = /* GraphQL */ `
       image
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       categoryMenuItemsId
       owner
     }
@@ -146,20 +125,13 @@ export const onCreateCategory = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           categoryMenuItemsId
           owner
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       restaurantCategoriesId
       owner
     }
@@ -187,20 +159,13 @@ export const onUpdateCategory = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           categoryMenuItemsId
           owner
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       restaurantCategoriesId
       owner
     }
@@ -228,20 +193,13 @@ export const onDeleteCategory = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           categoryMenuItemsId
           owner
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       restaurantCategoriesId
       owner
     }
@@ -266,20 +224,13 @@ export const onCreateRestaurant = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           restaurantCategoriesId
           owner
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -303,20 +254,13 @@ export const onUpdateRestaurant = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           restaurantCategoriesId
           owner
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }
@@ -340,20 +284,13 @@ export const onDeleteRestaurant = /* GraphQL */ `
           image
           createdAt
           updatedAt
-          _version
-          _deleted
-          _lastChangedAt
           restaurantCategoriesId
           owner
         }
         nextToken
-        startedAt
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       owner
     }
   }

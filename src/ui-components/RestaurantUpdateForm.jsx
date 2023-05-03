@@ -26,9 +26,11 @@ export default function RestaurantUpdateForm(props) {
   const initialValues = {
     name: "",
     logo: "",
+    owner: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [logo, setLogo] = React.useState(initialValues.logo);
+  const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = restaurantRecord
@@ -36,6 +38,7 @@ export default function RestaurantUpdateForm(props) {
       : initialValues;
     setName(cleanValues.name);
     setLogo(cleanValues.logo);
+    setOwner(cleanValues.owner);
     setErrors({});
   };
   const [restaurantRecord, setRestaurantRecord] =
@@ -53,6 +56,7 @@ export default function RestaurantUpdateForm(props) {
   const validations = {
     name: [{ type: "Required" }],
     logo: [],
+    owner: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -82,6 +86,7 @@ export default function RestaurantUpdateForm(props) {
         let modelFields = {
           name,
           logo,
+          owner,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -139,6 +144,7 @@ export default function RestaurantUpdateForm(props) {
             const modelFields = {
               name: value,
               logo,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -164,6 +170,7 @@ export default function RestaurantUpdateForm(props) {
             const modelFields = {
               name,
               logo: value,
+              owner,
             };
             const result = onChange(modelFields);
             value = result?.logo ?? value;
@@ -177,6 +184,32 @@ export default function RestaurantUpdateForm(props) {
         errorMessage={errors.logo?.errorMessage}
         hasError={errors.logo?.hasError}
         {...getOverrideProps(overrides, "logo")}
+      ></TextField>
+      <TextField
+        label="Owner"
+        isRequired={false}
+        isReadOnly={false}
+        value={owner}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              logo,
+              owner: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.owner ?? value;
+          }
+          if (errors.owner?.hasError) {
+            runValidationTasks("owner", value);
+          }
+          setOwner(value);
+        }}
+        onBlur={() => runValidationTasks("owner", owner)}
+        errorMessage={errors.owner?.errorMessage}
+        hasError={errors.owner?.hasError}
+        {...getOverrideProps(overrides, "owner")}
       ></TextField>
       <Flex
         justifyContent="space-between"
