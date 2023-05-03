@@ -1,0 +1,15 @@
+{
+  "resourceName": "imagestore",
+  "policyUUID": "a2962bed",
+  "bucketName": "restocartecb9477f2b6b8405ea7c2b5e3990727dd",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "groupAccess": {}
+}

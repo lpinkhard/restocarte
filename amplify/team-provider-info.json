@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "restocarted4b87b7d": {}
+      },
+      "api": {
+        "restocarte": {}
+      },
+      "storage": {
+        "imagestore": {}
       }
     }
   }

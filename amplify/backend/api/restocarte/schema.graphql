@@ -1,0 +1,47 @@
+type MenuItem
+@model
+@auth(
+  rules: [
+    { allow: owner, provider: userPools, operations: [create, update, read, delete] }
+    { allow: public, provider: iam, operations: [read] }
+  ]
+) {
+  id: ID!
+  category: Category @belongsTo
+  title: String!
+  description: String
+  enabled: Boolean
+  price: Float
+  image: String
+}
+
+type Category
+@model
+@auth(
+  rules: [
+    { allow: owner, provider: userPools, operations: [create, update, read, delete] }
+    { allow: public, provider: iam, operations: [read] }
+  ]
+) {
+  id: ID!
+  title: String!
+  description: String
+  enabled: Boolean
+  price: Float
+  image: String
+  menuItems: [MenuItem] @hasMany
+}
+
+type Restaurant
+@model
+@auth(
+  rules: [
+    { allow: owner, provider: userPools, operations: [create, update, read, delete] }
+    { allow: public, provider: iam, operations: [read] }
+  ]
+) {
+  id: ID!
+  name: String!
+  logo: String
+  categories: [Category] @hasMany
+}
