@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
 import {API, Storage} from "aws-amplify";
-import {Button, Card, Collection, Divider, Flex, Heading, Image, Text, TextField, View, withAuthenticator,} from '@aws-amplify/ui-react';
+import {Button, Card, Collection, Divider, Grid, Heading, Image, Text, TextField, TextAreaField, View, withAuthenticator,} from '@aws-amplify/ui-react';
 import {listMenuItems} from "./graphql/queries";
 import {createMenuItem as createMenuItemMutation, deleteMenuItem as deleteMenuItemMutation,} from "./graphql/mutations";
 
@@ -19,8 +19,7 @@ const App = ({ signOut }) => {
                 .toString(16)
                 .substring(1);
         }
-        return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-            s4() + '-' + s4() + s4() + s4();
+        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
     }
 
     async function fetchMenuItems() {
@@ -62,7 +61,10 @@ const App = ({ signOut }) => {
     async function deleteMenuItem({ id, image }) {
         const newMenuItems = menuItems.filter((menuItem) => menuItem.id !== id);
         setMenuItems(newMenuItems);
-        await Storage.remove(image);
+        try {
+            await Storage.remove(image);
+        } catch {
+        }
         await API.graphql({
             query: deleteMenuItemMutation,
             variables: { input: { id } },
@@ -110,34 +112,31 @@ const App = ({ signOut }) => {
 
             <Divider orientation="horizontal" />
 
-            <View as="form" margin="3rem 0" onSubmit={createMenuItem}>
-                <Flex direction="row" justifyContent="center">
-                    <TextField
-                        name="title"
-                        placeholder="Item Title"
-                        label="Item Title"
-                        labelHidden
-                        variation="quiet"
-                        required
-                    />
-                    <TextField
-                        name="description"
-                        placeholder="Item Description"
-                        label="Item Description"
-                        labelHidden
-                        variation="quiet"
-                    />
-                    <View
-                        name="image"
-                        as="input"
-                        type="file"
-                        style={{ alignSelf: "end" }}
-                    />
-                    <Button type="submit" variation="primary">
-                        Create Item
-                    </Button>
-                </Flex>
-            </View>
+            <Heading level={2}>New Item</Heading>
+            <Grid as="form" rowGap="15px" columnGap="15px" padding="20px" onSubmit={createMenuItem}>
+                <TextField
+                    name="title"
+                    placeholder="Item Title"
+                    label="Title"
+                    variation="quiet"
+                    required
+                />
+                <TextAreaField
+                    name="description"
+                    placeholder="Item Description"
+                    label="Description"
+                    variation="quiet"
+                />
+                <TextField
+                    name="image"
+                    label="Image"
+                    variation="quiet"
+                    type="file"
+                />
+                <Button type="submit" variation="primary">
+                    Create Item
+                </Button>
+            </Grid>
 
             <Button onClick={signOut}>Sign Out</Button>
         </View>
