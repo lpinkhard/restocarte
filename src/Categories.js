@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {
-    Button,
-    Card,
-    Collection,
     Divider,
     Grid,
-    Heading,
-    Image,
-    Text,
     TextAreaField,
     TextField,
     View
@@ -15,10 +9,12 @@ import {
 import {createCategory as createCategoryMutation, deleteCategory as deleteCategoryMutation,} from "./graphql/mutations";
 import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
+import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 
 const Categories = ({isManager, loadCategory}) => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
 
     useEffect(() => {
         fetchCategories();
@@ -71,7 +67,8 @@ const Categories = ({isManager, loadCategory}) => {
 
     async function createCategory(event) {
         event.preventDefault();
-        const form = new FormData(event.target);
+        const target = document.getElementById('newCategoryForm');
+        const form = new FormData(target);
         const image = form.get("image");
         const data = {
             title: form.get("title"),
@@ -88,7 +85,8 @@ const Categories = ({isManager, loadCategory}) => {
             variables: { input: data },
         });
         await fetchCategories();
-        event.target.reset();
+        target.reset();
+        toggleCreate(false);
     }
 
     async function deleteCategory({ id, image }) {
@@ -106,51 +104,59 @@ const Categories = ({isManager, loadCategory}) => {
 
     function NewCategory() {
         if (!isManager) {
-            return <View className="NewCategory" />
+            return <Modal className="NewCategory" />
         }
         return (
-            <View className="NewCategory">
-                <Divider orientation="horizontal"/>
-
-                <Heading level={2}>New Category</Heading>
-                <Grid as="form" rowGap="15px" columnGap="15px" padding="20px" onSubmit={createCategory}>
-                    <TextField
-                        name="title"
-                        placeholder="Category Title"
-                        label="Title"
-                        variation="quiet"
-                        required
-                    />
-                    <TextAreaField
-                        name="description"
-                        placeholder="Category Description"
-                        label="Description"
-                        variation="quiet"
-                    />
-                    <TextField
-                        name="image"
-                        label="Image"
-                        variation="quiet"
-                        type="file"
-                    />
-                    <Button type="submit" variation="primary">
-                        Create Category
+            <Modal className="NewCategory" dimmer="blurring" open={isCreateOpen}>
+                <Modal.Header>New Category</Modal.Header>
+                <Modal.Content>
+                    <Grid id="newCategoryForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                        <TextField
+                            name="title"
+                            placeholder="Category Title"
+                            label="Title"
+                            variation="quiet"
+                            required
+                        />
+                        <TextAreaField
+                            name="description"
+                            placeholder="Category Description"
+                            label="Description"
+                            variation="quiet"
+                        />
+                        <TextField
+                            name="image"
+                            label="Image"
+                            variation="quiet"
+                            type="file"
+                        />
+                    </Grid>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button positive onClick={createCategory}>
+                        Create
                     </Button>
-                </Grid>
-            </View>
+                    <Button negative onClick={() => toggleCreate(false)}>
+                        Cancel
+                    </Button>
+                </Modal.Actions>
+            </Modal>
         );
     }
 
-    function DeleteCategory(category) {
+    function toggleCreate(value) {
+        setIsCreateOpen(value);
+    }
+
+    function DeleteCategory(id, image) {
         if (!isManager) {
             return <View className="DeleteCategory" />
         }
 
         return (
             <View className="DeleteCategory">
-                <Divider padding="xs"/>
-                <Button variation="link" isFullWidth onClick={() => deleteCategory(category)}>
-                    Delete category
+                <Button icon onClick={(e) => { e.stopPropagation(); deleteCategory(id, image);}}>
+                    <Icon name="delete" />
                 </Button>
             </View>
         );
@@ -160,7 +166,7 @@ const Categories = ({isManager, loadCategory}) => {
         if (isManager) {
             return (
                 <View className="HeadingDisplay">
-                    <Heading level={1}>Categories</Heading>
+                    <Header as="h2" textAlign="center">Categories</Header>
                 </View>
             )
         }
@@ -171,24 +177,9 @@ const Categories = ({isManager, loadCategory}) => {
     return (
         <View className="Category">
             <HeadingDisplay />
-            <Collection
-                items={categories}
-                type="list"
-                direction="row"
-                gap="20px"
-                wrap="wrap"
-                margin="1rem"
-                alignItems="center"
-                alignSelf="center"
-            >
-                {(category) => (
-                    <Card
-                        key={category.id}
-                        borderRadius="medium"
-                        width="20rem"
-                        variation="outlined"
-                        onClick={() => selectCategory(category.id)}
-                    >
+            <Card.Group centered>
+                {categories.map((category) => (
+                        <Card key={category.id} onClick={() => selectCategory(category.id)}>
                         {category.image && (
                             <Image
                                 src={category.image}
@@ -196,16 +187,23 @@ const Categories = ({isManager, loadCategory}) => {
                                 style={{width: 400}}
                             />
                         )}
-                        <View padding="xs">
-                            <Heading padding="medium">{category.title}</Heading>
-                            <Text as="span">{category.description}</Text>
-                            <DeleteCategory category={category} />
-                        </View>
+                        <Card.Content>
+                            <DeleteCategory id={category.id} image={category.image}/>
+                            <Card.Header textAlign="center">{category.title}</Card.Header>
+                            {category.description && (
+                                <Card.Description>{category.description}</Card.Description>
+                            )}
+                        </Card.Content>
                     </Card>
-                )}
-            </Collection>
+                    ))}
+            </Card.Group>
 
             <NewCategory />
+            {(isManager & !isCreateOpen) && (
+                <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
+                    <Icon name="plus" />
+                </Button>
+            )}
         </View>
     );
 }

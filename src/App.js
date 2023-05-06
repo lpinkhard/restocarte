@@ -1,4 +1,6 @@
 import React from 'react';
+import 'semantic-ui-css/semantic.min.css';
+import "@aws-amplify/ui-react/styles.css";
 import './App.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Manage from './Manage';

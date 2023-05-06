@@ -1,6 +1,4 @@
 import React, {useCallback, useState} from "react";
-import "./App.css";
-import "@aws-amplify/ui-react/styles.css";
 import {Heading, Text, View} from '@aws-amplify/ui-react';
 
 import Categories from './Categories'

@@ -1,13 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {
-    Button,
-    Card,
-    Collection,
     Divider,
     Grid,
-    Heading,
-    Image,
-    Text,
     TextAreaField,
     TextField,
     View
@@ -15,11 +9,13 @@ import {
 import {createMenuItem as createMenuItemMutation, deleteMenuItem as deleteMenuItemMutation,} from "./graphql/mutations";
 import {API, Auth, graphqlOperation, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
+import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 
 const MenuItems = ({isManager, category, loadCategory}) => {
     const [menuItems, setMenuItems] = useState([]);
     const [categoryTitle, setCategoryTitle] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(category);
+    const [isCreateOpen, setIsCreateOpen] = useState(false);
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -101,7 +97,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
 
     async function createMenuItem(event) {
         event.preventDefault();
-        const form = new FormData(event.target);
+        const target = document.getElementById('newMenuItemForm');
+        const form = new FormData(target);
         const image = form.get("image");
         const data = {
             title: form.get("title"),
@@ -119,7 +116,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             variables: { input: data },
         });
         await fetchMenuItems();
-        event.target.reset();
+        target.reset();
+        toggleCreate(false);
     }
 
     async function deleteMenuItem({ id, image }) {
@@ -135,77 +133,102 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         });
     }
 
+    function toggleCreate(value) {
+        setIsCreateOpen(value);
+    }
+
     function NewItem() {
         if (!isManager) {
-            return <View className="NewItem" />
+            return <Modal className="NewItem" />
         }
         return (
-            <View className="NewItem">
-                <Divider orientation="horizontal"/>
-
-                <Heading level={2}>New Item</Heading>
-                <Grid as="form" rowGap="15px" columnGap="15px" padding="20px" onSubmit={createMenuItem}>
-                    <TextField
-                        name="title"
-                        placeholder="Item Title"
-                        label="Title"
-                        variation="quiet"
-                        required
-                    />
-                    <TextAreaField
-                        name="description"
-                        placeholder="Item Description"
-                        label="Description"
-                        variation="quiet"
-                    />
-                    <TextField
-                        name="image"
-                        label="Image"
-                        variation="quiet"
-                        type="file"
-                    />
-                    <Button type="submit" variation="primary">
-                        Create Item
+            <Modal className="NewItem" dimmer="blurring" open={isCreateOpen}>
+                <Modal.Header>New Item</Modal.Header>
+                <Modal.Content>
+                    <Grid id="newMenuItemForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                        <TextField
+                            name="title"
+                            placeholder="Item Title"
+                            label="Title"
+                            variation="quiet"
+                            required
+                        />
+                        <TextAreaField
+                            name="description"
+                            placeholder="Item Description"
+                            label="Description"
+                            variation="quiet"
+                        />
+                        <TextField
+                            name="image"
+                            label="Image"
+                            variation="quiet"
+                            type="file"
+                        />
+                        <Button type="submit" primary>
+                            Create Item
+                        </Button>
+                    </Grid>
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button positive onClick={createMenuItem}>
+                        Create
                     </Button>
-                </Grid>
-            </View>
+                    <Button negative onClick={() => toggleCreate(false)}>
+                        Cancel
+                    </Button>
+                </Modal.Actions>
+            </Modal>
         );
     }
 
-    function DeleteItem(menuItem) {
+    function DeleteItem(id, image) {
         if (!isManager) {
             return <View className="DeleteItem" />
         }
 
         return (
             <View className="DeleteItem">
-                <Button variation="link" isFullWidth onClick={() => deleteMenuItem(menuItem)}>
-                    Delete item
+                <Button icon onClick={(e) => { e.stopPropagation(); deleteMenuItem(id, image);}}>
+                    <Icon name="delete" />
                 </Button>
             </View>
         );
     }
 
+    function FormatCurrency({value}) {
+        let val = value.toString().replace(/\$|\,/g, '');
+        if (isNaN(val))
+        {
+            val = "0";
+        }
+
+        val = Math.floor(val * 100 + 0.50000000001);
+        let cents = val % 100;
+        val = Math.floor(val / 100).toString();
+
+        if (cents < 10)
+        {
+            cents = "0" + cents;
+        }
+        for (let i = 0; i < Math.floor((val.length - (1 + i)) / 3); i++)
+        {
+            val = val.substring(0, val.length - (4 * i + 3)) + ',' + val.substring(val.length - (4 * i + 3));
+        }
+
+        const formattedValue = '$' + val + '.' + cents;
+
+        return (
+            <Container fluid>{formattedValue}</Container>
+        );
+    }
+
     return (
         <View className="MenuItems">
-            <Heading level={1}>{categoryTitle}</Heading>
-            <Collection
-                items={menuItems}
-                type="list"
-                direction="row"
-                gap="20px"
-                wrap="wrap"
-                margin="1rem"
-                alignItems="center"
-                alignSelf="center"
-            >
-                {(menuItem) => (
-                    <Card
-                        key={menuItem.id}
-                        borderRadius="medium"
-                        width="20rem"
-                        variation="outlined"
-                    >
+            <Header as="h2" textAlign="center">{categoryTitle}</Header>
+            <Card.Group centered>
+                {menuItems.map((menuItem) => (
+                    <Card key={menuItem.id}>
                         {menuItem.image && (
                             <Image
                                 src={menuItem.image}
@@ -213,17 +236,27 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                                 style={{width: 400}}
                             />
                         )}
-                        <View padding="xs">
-                            <Heading padding="medium">{menuItem.title}</Heading>
-                            <Text as="span">{menuItem.description}</Text>
-                            <Divider padding="xs"/>
-                            <DeleteItem menuItem={menuItem} />
-                        </View>
+                        <Card.Content>
+                            <DeleteItem id={menuItem.id} image={menuItem.image}/>
+                            <Card.Header textAlign="center">{menuItem.title}</Card.Header>
+                            {menuItem.description && (
+                                <Card.Description>{menuItem.description}</Card.Description>
+                            )}
+                        </Card.Content>
+                        {menuItem.price && (
+                            <Card.Content extra>
+                                <FormatCurrency value={menuItem.price} />
+                            </Card.Content>
+                        )}
                     </Card>
-                )}
-            </Collection>
-
+                ))}
+            </Card.Group>
             <NewItem />
+            {(isManager & !isCreateOpen) && (
+                <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
+                    <Icon name="plus" />
+                </Button>
+            )}
         </View>
     );
 }
