@@ -6,23 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b2800890-f41d-4e7e-9592-25fbb9744267" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/restocarte/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/restocarte/schema.graphql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Categories.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainHeading.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainHeading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MenuItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/MenuItems.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/subscriptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/subscriptions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/CategoryCreateForm.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/CategoryCreateForm.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/CategoryCreateForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/CategoryCreateForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/CategoryUpdateForm.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/CategoryUpdateForm.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/CategoryUpdateForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/CategoryUpdateForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/MenuItemCreateForm.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/MenuItemCreateForm.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/MenuItemCreateForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/MenuItemCreateForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/MenuItemUpdateForm.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/MenuItemUpdateForm.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/MenuItemUpdateForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/MenuItemUpdateForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +55,7 @@
       <updated>1683111395504</updated>
       <workItem from="1683111399932" duration="13158000" />
       <workItem from="1683310904742" duration="4486000" />
-      <workItem from="1683357655348" duration="30148000" />
+      <workItem from="1683357655348" duration="32944000" />
     </task>
     <servers />
   </component>

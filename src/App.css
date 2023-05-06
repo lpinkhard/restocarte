@@ -5,7 +5,7 @@
     cursor: pointer;
 }
 
-.DeleteCategory, .DeleteItem {
+.DeleteCategory, .DeleteItem, .EditCategory, .EditItem {
     float: right;
 }
 

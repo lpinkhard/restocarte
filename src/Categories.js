@@ -12,12 +12,14 @@ import {
 } from "./graphql/mutations";
 import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
-import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
+import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
 
 const Categories = ({isManager, loadCategory}) => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [editingCategory, setEditingCategory] = useState(null);
     const [dragId, setDragId] = useState();
     const [maxOrderId, setMaxOrderId] = useState(0);
 
@@ -99,6 +101,30 @@ const Categories = ({isManager, loadCategory}) => {
         toggleCreate(false);
     }
 
+    async function updateCategory(event) {
+        event.preventDefault();
+        const target = document.getElementById('editCategoryForm');
+        const form = new FormData(target);
+        const image = form.get("image");
+        const data = {
+            id: editingCategory.id,
+            title: form.get("title"),
+            description: form.get("description"),
+        };
+        if (image.name.length > 0) {
+            const fileId = guid();
+            await Storage.put(fileId, image);
+            data.image = fileId;
+        }
+        await API.graphql({
+            query: updateCategoryMutation,
+            variables: { input: data },
+        });
+        await fetchCategories();
+        target.reset();
+        setIsEditOpen(false);
+    }
+
     async function deleteCategory({ id, image }) {
         const newCategories = categories.filter((category) => category.id !== id);
         setCategories(newCategories);
@@ -110,6 +136,11 @@ const Categories = ({isManager, loadCategory}) => {
             query: deleteCategoryMutation,
             variables: { input: { id } },
         });
+    }
+
+    function editCategory({id}) {
+        setEditingCategory(categories.find((item) => item.id === id));
+        setIsEditOpen(true);
     }
 
     function NewCategory() {
@@ -156,6 +187,67 @@ const Categories = ({isManager, loadCategory}) => {
 
     function toggleCreate(value) {
         setIsCreateOpen(value);
+    }
+
+    function EditCategoryModal() {
+        if (!isManager) {
+            return <Modal className="EditCategoryModal" />
+        }
+
+        return (
+            <Modal className="EditCategoryModal" dimmer="blurring" open={isEditOpen}>
+                <Modal.Header>Edit Category</Modal.Header>
+                <Modal.Content>
+                    {editingCategory && (
+                    <Grid id="editCategoryForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                        <TextField
+                            name="title"
+                            placeholder="Category Title"
+                            label="Title"
+                            variation="quiet"
+                            defaultValue={editingCategory.title}
+                            required
+                        />
+                        <TextAreaField
+                            name="description"
+                            placeholder="Category Description"
+                            label="Description"
+                            variation="quiet"
+                            defaultValue={editingCategory.description}
+                        />
+                        <TextField
+                            name="image"
+                            label="Image"
+                            variation="quiet"
+                            type="file"
+                        />
+                    </Grid>
+                    )}
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button positive onClick={updateCategory}>
+                        Update
+                    </Button>
+                    <Button negative onClick={() => setIsEditOpen(false)}>
+                        Cancel
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        );
+    }
+
+    function EditCategory(id) {
+        if (!isManager) {
+            return <View className="EditCategory" />
+        }
+
+        return (
+            <View className="EditCategory">
+                <Button icon onClick={(e) => { e.stopPropagation(); editCategory(id);}}>
+                    <Icon name="edit" />
+                </Button>
+            </View>
+        );
     }
 
     function DeleteCategory(id, image) {
@@ -251,6 +343,7 @@ const Categories = ({isManager, loadCategory}) => {
                         )}
                         <Card.Content>
                             <DeleteCategory id={category.id} image={category.image}/>
+                            <EditCategory id={category.id} />
                             <Card.Header textAlign="center">{category.title}</Card.Header>
                             {category.description && (
                                 <Card.Description>{category.description}</Card.Description>
@@ -261,6 +354,7 @@ const Categories = ({isManager, loadCategory}) => {
             </Card.Group>
 
             <NewCategory />
+            <EditCategoryModal />
             {(isManager & !isCreateOpen) && (
                 <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
                     <Icon name="plus" />
