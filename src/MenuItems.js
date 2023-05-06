@@ -91,11 +91,11 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     }
 
     async function fetchCategory() {
-        const apiData = await API.graphql(
+        const { data } = await API.graphql(
             graphqlOperation(getCategory, { id: selectedCategory })
         );
 
-        const categoryData = apiData.data.getCategory;
+        const categoryData = data.getCategory;
         setCategoryTitle(categoryData.title);
     }
 
