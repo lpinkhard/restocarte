@@ -18,20 +18,20 @@ export const createMenuItem = /* GraphQL */ `
         menuItems {
           nextToken
         }
+        owner
         createdAt
         updatedAt
         restaurantCategoriesId
-        owner
       }
       title
       description
       enabled
       price
       image
+      owner
       createdAt
       updatedAt
       categoryMenuItemsId
-      owner
     }
   }
 `;
@@ -52,20 +52,20 @@ export const updateMenuItem = /* GraphQL */ `
         menuItems {
           nextToken
         }
+        owner
         createdAt
         updatedAt
         restaurantCategoriesId
-        owner
       }
       title
       description
       enabled
       price
       image
+      owner
       createdAt
       updatedAt
       categoryMenuItemsId
-      owner
     }
   }
 `;
@@ -86,20 +86,20 @@ export const deleteMenuItem = /* GraphQL */ `
         menuItems {
           nextToken
         }
+        owner
         createdAt
         updatedAt
         restaurantCategoriesId
-        owner
       }
       title
       description
       enabled
       price
       image
+      owner
       createdAt
       updatedAt
       categoryMenuItemsId
-      owner
     }
   }
 `;
@@ -123,17 +123,17 @@ export const createCategory = /* GraphQL */ `
           enabled
           price
           image
+          owner
           createdAt
           updatedAt
           categoryMenuItemsId
-          owner
         }
         nextToken
       }
+      owner
       createdAt
       updatedAt
       restaurantCategoriesId
-      owner
     }
   }
 `;
@@ -157,17 +157,17 @@ export const updateCategory = /* GraphQL */ `
           enabled
           price
           image
+          owner
           createdAt
           updatedAt
           categoryMenuItemsId
-          owner
         }
         nextToken
       }
+      owner
       createdAt
       updatedAt
       restaurantCategoriesId
-      owner
     }
   }
 `;
@@ -191,17 +191,17 @@ export const deleteCategory = /* GraphQL */ `
           enabled
           price
           image
+          owner
           createdAt
           updatedAt
           categoryMenuItemsId
-          owner
         }
         nextToken
       }
+      owner
       createdAt
       updatedAt
       restaurantCategoriesId
-      owner
     }
   }
 `;
@@ -222,16 +222,16 @@ export const createRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          owner
           createdAt
           updatedAt
           restaurantCategoriesId
-          owner
         }
         nextToken
       }
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -252,16 +252,16 @@ export const updateRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          owner
           createdAt
           updatedAt
           restaurantCategoriesId
-          owner
         }
         nextToken
       }
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -282,16 +282,16 @@ export const deleteRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          owner
           createdAt
           updatedAt
           restaurantCategoriesId
-          owner
         }
         nextToken
       }
+      owner
       createdAt
       updatedAt
-      owner
     }
   }
 `;

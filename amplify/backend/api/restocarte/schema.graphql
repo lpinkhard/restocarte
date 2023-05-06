@@ -1,9 +1,12 @@
 type MenuItem
 @model
+@aws_iam
+@aws_cognito_user_pools
 @auth(
   rules: [
     { allow: owner, provider: userPools, operations: [create, update, read, delete] }
     { allow: public, provider: iam, operations: [read] }
+    { allow: groups, groups: ["everyone"], operations: [read] }
   ]
 ) {
   id: ID!
@@ -13,15 +16,18 @@ type MenuItem
   enabled: Boolean
   price: Float
   image: String
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }
 
 type Category
 @model
+@aws_iam
+@aws_cognito_user_pools
 @auth(
   rules: [
     { allow: owner, provider: userPools, operations: [create, update, read, delete] }
     { allow: public, provider: iam, operations: [read] }
+    { allow: groups, groups: ["everyone"], operations: [read] }
   ]
 ) {
   id: ID!
@@ -31,20 +37,23 @@ type Category
   price: Float
   image: String
   menuItems: [MenuItem] @hasMany
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }
 
 type Restaurant
 @model
+@aws_iam
+@aws_cognito_user_pools
 @auth(
   rules: [
     { allow: owner, provider: userPools, operations: [create, update, read, delete] }
     { allow: public, provider: iam, operations: [read] }
+    { allow: groups, groups: ["everyone"], operations: [read] }
   ]
 ) {
   id: ID!
   name: String!
   logo: String
   categories: [Category] @hasMany
-  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }])
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }

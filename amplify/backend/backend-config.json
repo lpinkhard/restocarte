@@ -32,7 +32,17 @@
   "auth": {
     "restocarted4b87b7d": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "restocarted4b87b7dPostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OPTIONAL",
         "mfaTypes": [
@@ -53,6 +63,39 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "restocarted4b87b7dPostConfirmation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_restocarted4b87b7dPostConfirmation_GROUP": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restocarted4b87b7dPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_restocarted4b87b7dPostConfirmation_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restocarted4b87b7dPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_restocarted4b87b7dPostConfirmation_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "restocarted4b87b7dPostConfirmation"
+        }
+      ]
     }
   },
   "storage": {
