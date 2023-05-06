@@ -34,6 +34,7 @@ export default function MenuItemCreateForm(props) {
     enabled: false,
     price: "",
     image: "",
+    order: "",
     owner: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
@@ -43,6 +44,7 @@ export default function MenuItemCreateForm(props) {
   const [enabled, setEnabled] = React.useState(initialValues.enabled);
   const [price, setPrice] = React.useState(initialValues.price);
   const [image, setImage] = React.useState(initialValues.image);
+  const [order, setOrder] = React.useState(initialValues.order);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -51,6 +53,7 @@ export default function MenuItemCreateForm(props) {
     setEnabled(initialValues.enabled);
     setPrice(initialValues.price);
     setImage(initialValues.image);
+    setOrder(initialValues.order);
     setOwner(initialValues.owner);
     setErrors({});
   };
@@ -60,6 +63,7 @@ export default function MenuItemCreateForm(props) {
     enabled: [],
     price: [],
     image: [],
+    order: [],
     owner: [],
   };
   const runValidationTasks = async (
@@ -93,6 +97,7 @@ export default function MenuItemCreateForm(props) {
           enabled,
           price,
           image,
+          order,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -153,6 +158,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image,
+              order,
               owner,
             };
             const result = onChange(modelFields);
@@ -182,6 +188,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image,
+              order,
               owner,
             };
             const result = onChange(modelFields);
@@ -211,6 +218,7 @@ export default function MenuItemCreateForm(props) {
               enabled: value,
               price,
               image,
+              order,
               owner,
             };
             const result = onChange(modelFields);
@@ -244,6 +252,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price: value,
               image,
+              order,
               owner,
             };
             const result = onChange(modelFields);
@@ -273,6 +282,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image: value,
+              order,
               owner,
             };
             const result = onChange(modelFields);
@@ -289,6 +299,40 @@ export default function MenuItemCreateForm(props) {
         {...getOverrideProps(overrides, "image")}
       ></TextField>
       <TextField
+        label="Order"
+        isRequired={false}
+        isReadOnly={false}
+        type="number"
+        step="any"
+        value={order}
+        onChange={(e) => {
+          let value = isNaN(parseInt(e.target.value))
+            ? e.target.value
+            : parseInt(e.target.value);
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              enabled,
+              price,
+              image,
+              order: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.order ?? value;
+          }
+          if (errors.order?.hasError) {
+            runValidationTasks("order", value);
+          }
+          setOrder(value);
+        }}
+        onBlur={() => runValidationTasks("order", order)}
+        errorMessage={errors.order?.errorMessage}
+        hasError={errors.order?.hasError}
+        {...getOverrideProps(overrides, "order")}
+      ></TextField>
+      <TextField
         label="Owner"
         isRequired={false}
         isReadOnly={false}
@@ -302,6 +346,7 @@ export default function MenuItemCreateForm(props) {
               enabled,
               price,
               image,
+              order,
               owner: value,
             };
             const result = onChange(modelFields);

@@ -15,6 +15,7 @@ export const createMenuItem = /* GraphQL */ `
         enabled
         price
         image
+        order
         menuItems {
           nextToken
         }
@@ -28,6 +29,7 @@ export const createMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      order
       owner
       createdAt
       updatedAt
@@ -49,6 +51,7 @@ export const updateMenuItem = /* GraphQL */ `
         enabled
         price
         image
+        order
         menuItems {
           nextToken
         }
@@ -62,6 +65,7 @@ export const updateMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      order
       owner
       createdAt
       updatedAt
@@ -83,6 +87,7 @@ export const deleteMenuItem = /* GraphQL */ `
         enabled
         price
         image
+        order
         menuItems {
           nextToken
         }
@@ -96,6 +101,7 @@ export const deleteMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      order
       owner
       createdAt
       updatedAt
@@ -115,6 +121,7 @@ export const createCategory = /* GraphQL */ `
       enabled
       price
       image
+      order
       menuItems {
         items {
           id
@@ -123,6 +130,7 @@ export const createCategory = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -149,6 +157,7 @@ export const updateCategory = /* GraphQL */ `
       enabled
       price
       image
+      order
       menuItems {
         items {
           id
@@ -157,6 +166,7 @@ export const updateCategory = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -183,6 +193,7 @@ export const deleteCategory = /* GraphQL */ `
       enabled
       price
       image
+      order
       menuItems {
         items {
           id
@@ -191,6 +202,7 @@ export const deleteCategory = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -222,6 +234,7 @@ export const createRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -252,6 +265,7 @@ export const updateRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -282,6 +296,7 @@ export const deleteRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt

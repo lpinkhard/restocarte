@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {
-    Divider,
     Grid,
     TextAreaField,
     TextField,
     View
 } from "@aws-amplify/ui-react";
-import {createCategory as createCategoryMutation, deleteCategory as deleteCategoryMutation,} from "./graphql/mutations";
+import {
+    createCategory as createCategoryMutation,
+    updateCategory as updateCategoryMutation,
+    deleteCategory as deleteCategoryMutation,
+} from "./graphql/mutations";
 import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
@@ -15,6 +18,8 @@ const Categories = ({isManager, loadCategory}) => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [dragId, setDragId] = useState();
+    const [maxOrderId, setMaxOrderId] = useState(0);
 
     useEffect(() => {
         fetchCategories();
@@ -59,9 +64,13 @@ const Categories = ({isManager, loadCategory}) => {
                 if (category.image) {
                     category.image = await Storage.get(category.image);
                 }
+                if (category.order > maxOrderId) {
+                    setMaxOrderId(category.order);
+                }
                 return category;
             })
         );
+
         setCategories(categoriesFromAPI);
     }
 
@@ -74,6 +83,7 @@ const Categories = ({isManager, loadCategory}) => {
             title: form.get("title"),
             description: form.get("description"),
             image: image.name,
+            order: maxOrderId + 1,
         };
         if (!!data.image) {
             const fileId = guid();
@@ -174,12 +184,64 @@ const Categories = ({isManager, loadCategory}) => {
         return <View className="HeadingDisplay" />
     }
 
+    function handleDrag(event) {
+        if (!isManager) {
+            return false;
+        }
+
+        setDragId(event.currentTarget.id);
+    }
+
+    async function updateOrder(id, order) {
+        const mutationDetails = {
+            id: id,
+            order: order,
+        };
+
+        await API.graphql({
+            query: updateCategoryMutation,
+            variables: { input: mutationDetails }
+        });
+    }
+
+    function handleDrop(event) {
+        if (!isManager) {
+            return false;
+        }
+
+        const dragItem = categories.find((item) => item.id === dragId);
+        const dropItem = categories.find((items) => items.id === event.currentTarget.id);
+
+        const dragItemOrder = dragItem.order;
+        const dropItemOrder = dropItem.order;
+
+        const newOrderState = categories.map((category) => {
+            if (category.id === dragId) {
+                category.order = dropItemOrder;
+                updateOrder(category.id, category.order);
+            }
+            if (category.id === event.currentTarget.id) {
+                category.order = dragItemOrder;
+                updateOrder(category.id, category.order);
+            }
+            return category;
+        });
+
+        setCategories(newOrderState);
+    }
+
     return (
         <View className="Category">
             <HeadingDisplay />
             <Card.Group centered>
-                {categories.map((category) => (
-                        <Card key={category.id} onClick={() => selectCategory(category.id)}>
+                {categories.sort((a, b) => a.order - b.order).map((category) => (
+                    <Card id={category.id}
+                          key={category.id}
+                          draggable={isManager ? "true" : "false"}
+                          onDragOver={(ev) => ev.preventDefault()}
+                          onDragStart={handleDrag}
+                          onDrop={handleDrop}
+                          onClick={() => selectCategory(category.id)}>
                         {category.image && (
                             <Image
                                 src={category.image}

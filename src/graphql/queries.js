@@ -12,6 +12,7 @@ export const getMenuItem = /* GraphQL */ `
         enabled
         price
         image
+        order
         menuItems {
           nextToken
         }
@@ -25,6 +26,7 @@ export const getMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      order
       owner
       createdAt
       updatedAt
@@ -48,6 +50,7 @@ export const listMenuItems = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -58,6 +61,7 @@ export const listMenuItems = /* GraphQL */ `
         enabled
         price
         image
+        order
         owner
         createdAt
         updatedAt
@@ -76,6 +80,7 @@ export const getCategory = /* GraphQL */ `
       enabled
       price
       image
+      order
       menuItems {
         items {
           id
@@ -84,6 +89,7 @@ export const getCategory = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt
@@ -112,6 +118,7 @@ export const listCategories = /* GraphQL */ `
         enabled
         price
         image
+        order
         menuItems {
           nextToken
         }
@@ -138,6 +145,7 @@ export const getRestaurant = /* GraphQL */ `
           enabled
           price
           image
+          order
           owner
           createdAt
           updatedAt

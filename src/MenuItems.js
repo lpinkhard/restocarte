@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {
-    Divider,
     Grid,
     TextAreaField,
     TextField,
     View
 } from "@aws-amplify/ui-react";
-import {createMenuItem as createMenuItemMutation, deleteMenuItem as deleteMenuItemMutation,} from "./graphql/mutations";
+import {
+    createMenuItem as createMenuItemMutation,
+    deleteMenuItem as deleteMenuItemMutation,
+    updateMenuItem as updateMenuItemMutation,
+} from "./graphql/mutations";
 import {API, Auth, graphqlOperation, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
@@ -16,6 +19,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     const [categoryTitle, setCategoryTitle] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(category);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [dragId, setDragId] = useState();
+    const [maxOrderId, setMaxOrderId] = useState(0);
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -80,6 +85,9 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                 if (menuItem.image) {
                     menuItem.image = await Storage.get(menuItem.image);
                 }
+                if (menuItem.order > maxOrderId) {
+                    setMaxOrderId(menuItem.order);
+                }
                 return menuItem;
             })
         );
@@ -104,6 +112,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             title: form.get("title"),
             description: form.get("description"),
             image: image.name,
+            order: maxOrderId + 1,
             categoryMenuItemsId: category,
         };
         if (!!data.image) {
@@ -223,12 +232,68 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         );
     }
 
+    function handleDrag(event) {
+        if (!isManager) {
+            return false;
+        }
+
+        setDragId(event.currentTarget.id);
+    }
+
+    async function updateOrder(id, order) {
+        const mutationDetails = {
+            id: id,
+            order: order,
+        };
+
+        await API.graphql({
+            query: updateMenuItemMutation,
+            variables: { input: mutationDetails }
+        });
+    }
+
+    function handleDrop(event) {
+        if (!isManager) {
+            return false;
+        }
+
+        const dragItem = menuItems.find((item) => item.id === dragId);
+        const dropItem = menuItems.find((items) => items.id === event.currentTarget.id);
+
+        const dragItemOrder = dragItem.order;
+        const dropItemOrder = dropItem.order;
+
+        const newOrderState = menuItems.map((menuItem) => {
+            if (menuItem.id === dragId) {
+                menuItem.order = dropItemOrder;
+                updateOrder(menuItem.id, menuItem.order);
+            }
+            if (menuItem.id === event.currentTarget.id) {
+                menuItem.order = dragItemOrder;
+                updateOrder(menuItem.id, menuItem.order);
+            }
+            return menuItem;
+        });
+
+        setMenuItems(newOrderState);
+    }
+
     return (
         <View className="MenuItems">
-            <Header as="h2" textAlign="center">{categoryTitle}</Header>
+            <Header as="h2" textAlign="center">
+                {categoryTitle && (
+                    <Icon name="caret left" onClick={resetCategory} className="backButton"/>
+                )}
+                {categoryTitle}
+            </Header>
             <Card.Group centered>
-                {menuItems.map((menuItem) => (
-                    <Card key={menuItem.id}>
+                {menuItems.sort((a, b) => a.order - b.order).map((menuItem) => (
+                    <Card id={menuItem.id}
+                          key={menuItem.id}
+                          draggable={isManager ? "true" : "false"}
+                          onDragOver={(ev) => ev.preventDefault()}
+                          onDragStart={handleDrag}
+                          onDrop={handleDrop}>
                         {menuItem.image && (
                             <Image
                                 src={menuItem.image}

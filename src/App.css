@@ -2,6 +2,7 @@
     margin-top: 1rem;
     margin-bottom: 3rem;
     font-size: 4rem;
+    cursor: pointer;
 }
 
 .DeleteCategory, .DeleteItem {
@@ -22,4 +23,8 @@
     position: fixed;
     bottom: 2rem;
     right: 2rem;
+}
+
+.backButton {
+    cursor: pointer;
 }

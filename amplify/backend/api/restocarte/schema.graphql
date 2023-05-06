@@ -16,6 +16,7 @@ type MenuItem
   enabled: Boolean
   price: Float
   image: String
+  order: Int
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }
 
@@ -36,6 +37,7 @@ type Category
   enabled: Boolean
   price: Float
   image: String
+  order: Int
   menuItems: [MenuItem] @hasMany
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }
