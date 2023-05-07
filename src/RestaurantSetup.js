@@ -1,24 +1,29 @@
 import React, {useCallback, useState} from "react";
-import {Grid, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
+import {Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
-import {Button, Header} from "semantic-ui-react";
+import {Button, Container, Header} from "semantic-ui-react";
 import {
     createRestaurant as createRestaurantMutation,
     updateRestaurant as updateRestaurantMutation
 } from "./graphql/mutations";
 import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
+import CurrencyList from 'currency-list';
 
 const RestaurantSetup = () => {
     const [ restaurant, setRestaurant ] = useState(null);
     const [ contentReady, setContentReady ] = useState(false);
+    const [ selectedCurrency, setSelectedCurrency ] = useState("USD");
 
     const restaurantLoaded = useCallback((val) => {
         setRestaurant(val);
         if (!val) {
             newRestaurant();
+        }
+        if (val && val.currency && val.currency.length > 0) {
+            setSelectedCurrency(val.currency);
         }
     }, [setRestaurant]);
 
@@ -106,6 +111,8 @@ const RestaurantSetup = () => {
         target.reset();
     }
 
+    const currencies = Object.values(CurrencyList.getAll("en_US"));
+
     return (
         <View className="Restaurant">
             <ManagerMenu />
@@ -114,38 +121,49 @@ const RestaurantSetup = () => {
                 <View>
                     <Header as="h2" textAlign="center">Restaurant Setup</Header>
                     {restaurant && (
-                        <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
-                            <TextField
-                                name="name"
-                                placeholder="Restaurant Name"
-                                label="Name"
-                                variation="quiet"
-                                defaultValue={restaurant.name}
-                                required
-                            />
-                            <TextField
-                                name="tagline"
-                                placeholder="Restaurant Tagline"
-                                label="Tagline"
-                                variation="quiet"
-                                defaultValue={restaurant.tagline}
-                            />
-                            <TextField
-                                name="image"
-                                label="Logo"
-                                variation="quiet"
-                                type="file"
-                            />
-                            <TextField
-                                name="favicon"
-                                label="Favicon"
-                                variation="quiet"
-                                type="file"
-                            />
-                            <Button positive onClick={updateRestaurant}>
-                                Update
-                            </Button>
-                        </Grid>
+                        <Container>
+                            <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                                <TextField
+                                    name="name"
+                                    placeholder="Restaurant Name"
+                                    label="Name"
+                                    descriptiveText="Name of the restaurant"
+                                    defaultValue={restaurant.name}
+                                    required
+                                />
+                                <TextField
+                                    name="tagline"
+                                    placeholder="Restaurant Tagline"
+                                    label="Tagline"
+                                    descriptiveText="Text displayed under headers"
+                                    defaultValue={restaurant.tagline}
+                                />
+                                <SelectField
+                                    name="currency"
+                                    label="Currency"
+                                    descriptiveText="Currency used for prices"
+                                >
+                                    {currencies.map((currency) => (
+                                        <option value={currency.code} selected={currency.code === selectedCurrency}>{currency.name}</option>
+                                    ))}
+                                </SelectField>
+                                <TextField
+                                    name="image"
+                                    label="Logo"
+                                    descriptiveText="Logo displayed in headers"
+                                    type="file"
+                                />
+                                <TextField
+                                    name="favicon"
+                                    label="Favicon"
+                                    descriptiveText="Browser icon used on all pages"
+                                    type="file"
+                                />
+                                <Button primary onClick={updateRestaurant}>
+                                    Update
+                                </Button>
+                            </Grid>
+                        </Container>
                     )}
                 </View>
             )}

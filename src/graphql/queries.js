@@ -156,6 +156,7 @@ export const getRestaurant = /* GraphQL */ `
         nextToken
       }
       userId
+      currency
       owner
       createdAt
       updatedAt
@@ -179,6 +180,7 @@ export const listRestaurants = /* GraphQL */ `
           nextToken
         }
         userId
+        currency
         owner
         createdAt
         updatedAt

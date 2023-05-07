@@ -245,6 +245,7 @@ export const onCreateRestaurant = /* GraphQL */ `
         nextToken
       }
       userId
+      currency
       owner
       createdAt
       updatedAt
@@ -279,6 +280,7 @@ export const onUpdateRestaurant = /* GraphQL */ `
         nextToken
       }
       userId
+      currency
       owner
       createdAt
       updatedAt
@@ -313,6 +315,7 @@ export const onDeleteRestaurant = /* GraphQL */ `
         nextToken
       }
       userId
+      currency
       owner
       createdAt
       updatedAt

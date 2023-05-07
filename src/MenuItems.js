@@ -24,6 +24,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     const [editingMenuItem, setEditingMenuItem] = useState(null);
     const [dragId, setDragId] = useState();
     const [maxOrderId, setMaxOrderId] = useState(0);
+    const [titleError, setTitleError] = useState("");
+    const [titleHasError, setTitleHasError] = useState(false);
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -127,9 +129,17 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         event.preventDefault();
         const target = document.getElementById('newMenuItemForm');
         const form = new FormData(target);
+
+        const title = form.get("title");
+        if (!title || title.length <= 0) {
+            setTitleError("A title is required");
+            setTitleHasError(true);
+            return;
+        }
+
         const image = form.get("image");
         const data = {
-            title: form.get("title"),
+            title: title,
             description: form.get("description"),
             image: image.name,
             enabled: form.get("enabled") != null,
@@ -154,10 +164,18 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         event.preventDefault();
         const target = document.getElementById('editMenuItemForm');
         const form = new FormData(target);
+
+        const title = form.get("title");
+        if (!title || title.length <= 0) {
+            setTitleError("A title is required");
+            setTitleHasError(true);
+            return;
+        }
+
         const image = form.get("image");
         const data = {
             id: editingMenuItem.id,
-            title: form.get("title"),
+            title: title,
             description: form.get("description"),
             enabled: form.get("enabled") != null,
         };
@@ -190,10 +208,14 @@ const MenuItems = ({isManager, category, loadCategory}) => {
 
     function editMenuItem({id}) {
         setEditingMenuItem(menuItems.find((item) => item.id === id));
+        setTitleError("");
+        setTitleHasError(false);
         setIsEditOpen(true);
     }
 
     function toggleCreate(value) {
+        setTitleError("");
+        setTitleHasError(false);
         setIsCreateOpen(value);
     }
 
@@ -211,22 +233,24 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                             <TextField
                                 name="title"
                                 placeholder="Item Title"
-                                label="Title"
-                                variation="quiet"
+                                descriptiveText="Title for the menu item"
+                                label="Title *"
+                                hasError={titleHasError}
+                                errorMessage={titleError}
                                 defaultValue={editingMenuItem.title}
                                 required
                             />
                             <TextAreaField
                                 name="description"
                                 placeholder="Item Description"
+                                descriptiveText="Description displayed below title"
                                 label="Description"
-                                variation="quiet"
                                 defaultValue={editingMenuItem.description}
                             />
                             <TextField
                                 name="image"
                                 label="Image"
-                                variation="quiet"
+                                descriptiveText="Image representing the menu item"
                                 type="file"
                             />
                             <CheckboxField
@@ -276,20 +300,22 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                         <TextField
                             name="title"
                             placeholder="Item Title"
-                            label="Title"
-                            variation="quiet"
+                            descriptiveText="Title for the menu item"
+                            label="Title *"
+                            hasError={titleHasError}
+                            errorMessage={titleError}
                             required
                         />
                         <TextAreaField
                             name="description"
                             placeholder="Item Description"
+                            descriptiveText="Description displayed below title"
                             label="Description"
-                            variation="quiet"
                         />
                         <TextField
                             name="image"
                             label="Image"
-                            variation="quiet"
+                            placeholder="Image representing the menu item"
                             type="file"
                         />
                         <CheckboxField

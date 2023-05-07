@@ -23,6 +23,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
     const [editingCategory, setEditingCategory] = useState(null);
     const [dragId, setDragId] = useState();
     const [maxOrderId, setMaxOrderId] = useState(0);
+    const [titleError, setTitleError] = useState("");
+    const [titleHasError, setTitleHasError] = useState(false);
 
     useEffect(() => {
         fetchCategories();
@@ -104,6 +106,11 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         setCategories(categoriesFromAPI);
     }
 
+    function clearValidationErrors() {
+        setTitleError("");
+        setTitleHasError(false);
+    }
+
     async function createCategory(event) {
         event.preventDefault();
 
@@ -113,9 +120,17 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
 
         const target = document.getElementById('newCategoryForm');
         const form = new FormData(target);
+
+        const title = form.get("title");
+        if (!title || title.length <= 0) {
+            setTitleError("A title is required");
+            setTitleHasError(true);
+            return;
+        }
+
         const image = form.get("image");
         const data = {
-            title: form.get("title"),
+            title: title,
             description: form.get("description"),
             image: image.name,
             enabled: form.get("enabled") != null,
@@ -140,6 +155,14 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         event.preventDefault();
         const target = document.getElementById('editCategoryForm');
         const form = new FormData(target);
+
+        const title = form.get("title");
+        if (!title || title.length <= 0) {
+            setTitleError("A title is required");
+            setTitleHasError(true);
+            return;
+        }
+
         const image = form.get("image");
         const data = {
             id: editingCategory.id,
@@ -175,6 +198,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
     }
 
     function editCategory({id}) {
+        setTitleError("");
+        setTitleHasError(false);
         setEditingCategory(categories.find((item) => item.id === id));
         setIsEditOpen(true);
     }
@@ -191,20 +216,22 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
                         <TextField
                             name="title"
                             placeholder="Category Title"
-                            label="Title"
-                            variation="quiet"
+                            descriptiveText="Title used for the category"
+                            hasError={titleHasError}
+                            errorMessage={titleError}
+                            label="Title *"
                             required
                         />
                         <TextAreaField
                             name="description"
                             placeholder="Category Description"
+                            descriptiveText="Description displayed below title"
                             label="Description"
-                            variation="quiet"
                         />
                         <TextField
                             name="image"
                             label="Image"
-                            variation="quiet"
+                            descriptiveText="Image representing the category"
                             type="file"
                         />
                         <CheckboxField
@@ -228,6 +255,7 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
     }
 
     function toggleCreate(value) {
+        clearValidationErrors();
         setIsCreateOpen(value);
     }
 
@@ -245,8 +273,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
                         <TextField
                             name="title"
                             placeholder="Category Title"
+                            descriptiveText="Title used for the category"
                             label="Title"
-                            variation="quiet"
                             defaultValue={editingCategory.title}
                             required
                         />
@@ -254,13 +282,13 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
                             name="description"
                             placeholder="Category Description"
                             label="Description"
-                            variation="quiet"
+                            descriptiveText="Description displayed below title"
                             defaultValue={editingCategory.description}
                         />
                         <TextField
                             name="image"
                             label="Image"
-                            variation="quiet"
+                            descriptiveText="Image representing the category"
                             type="file"
                         />
                         <CheckboxField

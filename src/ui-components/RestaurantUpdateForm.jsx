@@ -29,6 +29,7 @@ export default function RestaurantUpdateForm(props) {
     logo: "",
     favicon: "",
     userId: "",
+    currency: "",
     owner: "",
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -36,6 +37,7 @@ export default function RestaurantUpdateForm(props) {
   const [logo, setLogo] = React.useState(initialValues.logo);
   const [favicon, setFavicon] = React.useState(initialValues.favicon);
   const [userId, setUserId] = React.useState(initialValues.userId);
+  const [currency, setCurrency] = React.useState(initialValues.currency);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -47,6 +49,7 @@ export default function RestaurantUpdateForm(props) {
     setLogo(cleanValues.logo);
     setFavicon(cleanValues.favicon);
     setUserId(cleanValues.userId);
+    setCurrency(cleanValues.currency);
     setOwner(cleanValues.owner);
     setErrors({});
   };
@@ -68,6 +71,7 @@ export default function RestaurantUpdateForm(props) {
     logo: [],
     favicon: [],
     userId: [{ type: "Required" }],
+    currency: [],
     owner: [],
   };
   const runValidationTasks = async (
@@ -101,6 +105,7 @@ export default function RestaurantUpdateForm(props) {
           logo,
           favicon,
           userId,
+          currency,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -162,6 +167,7 @@ export default function RestaurantUpdateForm(props) {
               logo,
               favicon,
               userId,
+              currency,
               owner,
             };
             const result = onChange(modelFields);
@@ -191,6 +197,7 @@ export default function RestaurantUpdateForm(props) {
               logo,
               favicon,
               userId,
+              currency,
               owner,
             };
             const result = onChange(modelFields);
@@ -220,6 +227,7 @@ export default function RestaurantUpdateForm(props) {
               logo: value,
               favicon,
               userId,
+              currency,
               owner,
             };
             const result = onChange(modelFields);
@@ -249,6 +257,7 @@ export default function RestaurantUpdateForm(props) {
               logo,
               favicon: value,
               userId,
+              currency,
               owner,
             };
             const result = onChange(modelFields);
@@ -278,6 +287,7 @@ export default function RestaurantUpdateForm(props) {
               logo,
               favicon,
               userId: value,
+              currency,
               owner,
             };
             const result = onChange(modelFields);
@@ -294,6 +304,36 @@ export default function RestaurantUpdateForm(props) {
         {...getOverrideProps(overrides, "userId")}
       ></TextField>
       <TextField
+        label="Currency"
+        isRequired={false}
+        isReadOnly={false}
+        value={currency}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline,
+              logo,
+              favicon,
+              userId,
+              currency: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.currency ?? value;
+          }
+          if (errors.currency?.hasError) {
+            runValidationTasks("currency", value);
+          }
+          setCurrency(value);
+        }}
+        onBlur={() => runValidationTasks("currency", currency)}
+        errorMessage={errors.currency?.errorMessage}
+        hasError={errors.currency?.hasError}
+        {...getOverrideProps(overrides, "currency")}
+      ></TextField>
+      <TextField
         label="Owner"
         isRequired={false}
         isReadOnly={false}
@@ -307,6 +347,7 @@ export default function RestaurantUpdateForm(props) {
               logo,
               favicon,
               userId,
+              currency,
               owner: value,
             };
             const result = onChange(modelFields);

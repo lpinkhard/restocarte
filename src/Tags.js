@@ -4,7 +4,7 @@ import QRCode from 'react-qr-code';
 import toImg from 'react-svg-to-image';
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
-import {Button, Header, Modal} from "semantic-ui-react";
+import {Button, Container, Header, Modal} from "semantic-ui-react";
 import {
     createRestaurant as createRestaurantMutation
 } from "./graphql/mutations";
@@ -129,24 +129,27 @@ const Tags = () => {
                 <View>
                     <Header as="h2" textAlign="center">Create Tags</Header>
                     {restaurant && (
-                        <Grid id="createTagForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
-                            <TextField
-                                name="table"
-                                placeholder="Table Number"
-                                label="Table"
-                                variation="quiet"
-                                type="number"
-                            />
-                            <CheckboxField
-                                label="NFC Link"
-                                name="nfc"
-                                value="yes"
-                                defaultChecked={linkIsNFC}
-                            />
-                            <Button positive onClick={createTag}>
-                                Create
-                            </Button>
-                        </Grid>
+                        <Container>
+                            <Grid id="createTagForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                                <TextField
+                                    name="table"
+                                    placeholder="Table Number"
+                                    descriptiveText="Table number to be embedded in the tag"
+                                    label="Table"
+                                    type="number"
+                                />
+                                <CheckboxField
+                                    label="NFC Link"
+                                    descriptiveText="Generate a link for an NFC tag rather than a QR code"
+                                    name="nfc"
+                                    value="yes"
+                                    defaultChecked={linkIsNFC}
+                                />
+                                <Button primary onClick={createTag}>
+                                    Create
+                                </Button>
+                            </Grid>
+                        </Container>
                     )}
                     <Modal open={modalOpen}>
                         <Modal.Header>Table Tag</Modal.Header>
