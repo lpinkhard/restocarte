@@ -296,9 +296,6 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                             value="yes"
                             defaultChecked="true"
                         />
-                        <Button type="submit" primary>
-                            Create Item
-                        </Button>
                     </Grid>
                 </Modal.Content>
                 <Modal.Actions>

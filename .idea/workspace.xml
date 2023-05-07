@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b2800890-f41d-4e7e-9592-25fbb9744267" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MainHeading.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainHeading.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ManagerMenu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ManagerMenu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RestaurantSetup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/RestaurantSetup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MenuItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/MenuItems.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tags.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tags.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +57,7 @@
       <updated>1683111395504</updated>
       <workItem from="1683111399932" duration="13158000" />
       <workItem from="1683310904742" duration="4486000" />
-      <workItem from="1683357655348" duration="54827000" />
+      <workItem from="1683357655348" duration="56995000" />
     </task>
     <servers />
   </component>
