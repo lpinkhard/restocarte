@@ -1,4 +1,38 @@
 {
+  "main": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-restocarte-main-205627-authRole",
+      "UnauthRoleArn": "arn:aws:iam::314711318289:role/amplify-restocarte-main-205627-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::314711318289:role/amplify-restocarte-main-205627-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-restocarte-main-205627-deployment",
+      "UnauthRoleName": "amplify-restocarte-main-205627-unauthRole",
+      "StackName": "amplify-restocarte-main-205627",
+      "StackId": "arn:aws:cloudformation:us-east-1:314711318289:stack/amplify-restocarte-main-205627/a2f2f470-ed19-11ed-a99e-0a2bc878981f",
+      "AmplifyAppId": "d10li48b3ubv4a",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-restocarte-main-205627-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    },
+    "categories": {
+      "function": {
+        "restocarted4b87b7dPostConfirmation": {
+          "GROUP": "everyone",
+          "deploymentBucketName": "amplify-restocarte-main-205627-deployment",
+          "s3Key": "amplify-builds/restocarted4b87b7dPostConfirmation-4d52516e335748424561-build.zip"
+        },
+        "stripewebhook": {
+          "secretsPathAmplifyAppId": "d10li48b3ubv4a",
+          "deploymentBucketName": "amplify-restocarte-main-205627-deployment",
+          "s3Key": "amplify-builds/stripewebhook-6174523565516d2b5966-build.zip"
+        }
+      },
+      "auth": {
+        "restocarted4b87b7d": {}
+      },
+      "storage": {
+        "imagestore": {}
+      }
+    }
+  },
   "staging": {
     "awscloudformation": {
       "AuthRoleName": "amplify-amplifyc2b381c3fbab4-staging-112910-authRole",
