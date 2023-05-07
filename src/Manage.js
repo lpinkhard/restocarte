@@ -1,16 +1,14 @@
 import React from "react";
-import {Menu as NavMenu, MenuItem as NavMenuItem, View, withAuthenticator} from '@aws-amplify/ui-react';
-import {Button, Container} from "semantic-ui-react";
+import {View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import Menu from './Menu'
 import MainHeading from "./MainHeading";
+import ManagerMenu from "./ManagerMenu";
 
-const Manage = ( {signOut} ) => {
+const Manage = () => {
     return (
         <View className="Manage">
-            <NavMenu>
-                <NavMenuItem onClick={signOut}>Sign Out</NavMenuItem>
-            </NavMenu>
+            <ManagerMenu />
             <MainHeading />
             <Menu isManager />
         </View>

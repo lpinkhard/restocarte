@@ -24,22 +24,30 @@ export default function RestaurantCreateForm(props) {
   } = props;
   const initialValues = {
     name: "",
+    tagline: "",
     logo: "",
+    userId: "",
     owner: "",
   };
   const [name, setName] = React.useState(initialValues.name);
+  const [tagline, setTagline] = React.useState(initialValues.tagline);
   const [logo, setLogo] = React.useState(initialValues.logo);
+  const [userId, setUserId] = React.useState(initialValues.userId);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setName(initialValues.name);
+    setTagline(initialValues.tagline);
     setLogo(initialValues.logo);
+    setUserId(initialValues.userId);
     setOwner(initialValues.owner);
     setErrors({});
   };
   const validations = {
-    name: [{ type: "Required" }],
+    name: [],
+    tagline: [],
     logo: [],
+    userId: [{ type: "Required" }],
     owner: [],
   };
   const runValidationTasks = async (
@@ -69,7 +77,9 @@ export default function RestaurantCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           name,
+          tagline,
           logo,
+          userId,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -118,7 +128,7 @@ export default function RestaurantCreateForm(props) {
     >
       <TextField
         label="Name"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
@@ -126,7 +136,9 @@ export default function RestaurantCreateForm(props) {
           if (onChange) {
             const modelFields = {
               name: value,
+              tagline,
               logo,
+              userId,
               owner,
             };
             const result = onChange(modelFields);
@@ -143,6 +155,34 @@ export default function RestaurantCreateForm(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
+        label="Tagline"
+        isRequired={false}
+        isReadOnly={false}
+        value={tagline}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline: value,
+              logo,
+              userId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.tagline ?? value;
+          }
+          if (errors.tagline?.hasError) {
+            runValidationTasks("tagline", value);
+          }
+          setTagline(value);
+        }}
+        onBlur={() => runValidationTasks("tagline", tagline)}
+        errorMessage={errors.tagline?.errorMessage}
+        hasError={errors.tagline?.hasError}
+        {...getOverrideProps(overrides, "tagline")}
+      ></TextField>
+      <TextField
         label="Logo"
         isRequired={false}
         isReadOnly={false}
@@ -152,7 +192,9 @@ export default function RestaurantCreateForm(props) {
           if (onChange) {
             const modelFields = {
               name,
+              tagline,
               logo: value,
+              userId,
               owner,
             };
             const result = onChange(modelFields);
@@ -169,6 +211,34 @@ export default function RestaurantCreateForm(props) {
         {...getOverrideProps(overrides, "logo")}
       ></TextField>
       <TextField
+        label="User id"
+        isRequired={true}
+        isReadOnly={false}
+        value={userId}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline,
+              logo,
+              userId: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.userId ?? value;
+          }
+          if (errors.userId?.hasError) {
+            runValidationTasks("userId", value);
+          }
+          setUserId(value);
+        }}
+        onBlur={() => runValidationTasks("userId", userId)}
+        errorMessage={errors.userId?.errorMessage}
+        hasError={errors.userId?.hasError}
+        {...getOverrideProps(overrides, "userId")}
+      ></TextField>
+      <TextField
         label="Owner"
         isRequired={false}
         isReadOnly={false}
@@ -178,7 +248,9 @@ export default function RestaurantCreateForm(props) {
           if (onChange) {
             const modelFields = {
               name,
+              tagline,
               logo,
+              userId,
               owner: value,
             };
             const result = onChange(modelFields);

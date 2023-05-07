@@ -225,6 +225,7 @@ export const createRestaurant = /* GraphQL */ `
     createRestaurant(input: $input, condition: $condition) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -242,6 +243,7 @@ export const createRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt
@@ -256,6 +258,7 @@ export const updateRestaurant = /* GraphQL */ `
     updateRestaurant(input: $input, condition: $condition) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -273,6 +276,7 @@ export const updateRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt
@@ -287,6 +291,7 @@ export const deleteRestaurant = /* GraphQL */ `
     deleteRestaurant(input: $input, condition: $condition) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -304,6 +309,7 @@ export const deleteRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt

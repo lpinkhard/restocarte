@@ -225,6 +225,7 @@ export const onCreateRestaurant = /* GraphQL */ `
     onCreateRestaurant(filter: $filter, owner: $owner) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -242,6 +243,7 @@ export const onCreateRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt
@@ -256,6 +258,7 @@ export const onUpdateRestaurant = /* GraphQL */ `
     onUpdateRestaurant(filter: $filter, owner: $owner) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -273,6 +276,7 @@ export const onUpdateRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt
@@ -287,6 +291,7 @@ export const onDeleteRestaurant = /* GraphQL */ `
     onDeleteRestaurant(filter: $filter, owner: $owner) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -304,6 +309,7 @@ export const onDeleteRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt

@@ -136,6 +136,7 @@ export const getRestaurant = /* GraphQL */ `
     getRestaurant(id: $id) {
       id
       name
+      tagline
       logo
       categories {
         items {
@@ -153,6 +154,7 @@ export const getRestaurant = /* GraphQL */ `
         }
         nextToken
       }
+      userId
       owner
       createdAt
       updatedAt
@@ -169,10 +171,12 @@ export const listRestaurants = /* GraphQL */ `
       items {
         id
         name
+        tagline
         logo
         categories {
           nextToken
         }
+        userId
         owner
         createdAt
         updatedAt

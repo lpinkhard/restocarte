@@ -54,8 +54,10 @@ type Restaurant
   ]
 ) {
   id: ID!
-  name: String!
+  name: String
+  tagline: String
   logo: String
   categories: [Category] @hasMany
+  userId: String!
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }
