@@ -44,4 +44,5 @@ amplifytools.xcconfig
 **.sample
 #amplify-do-not-edit-end
 
-.idea/*
+**/.idea/workspace.xml
+**/.idea/tasks.xml
