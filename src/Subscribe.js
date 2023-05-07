@@ -1,19 +1,20 @@
 import { loadStripe } from '@stripe/stripe-js'
 import { Button } from '@aws-amplify/ui-react';
+
 export default function Subscribe ({plan, comingSoon}) {
     const handleSubscribe = async e => {
         let price_key;
         switch (parseInt(plan)) {
             case 1:
                 // Advanced plan
-                price_key = 'price_1N4URcJlwbqaAWHszIj27NsN';
+                price_key = process.env.REACT_APP_STRIPE_PLAN_1;
                 break;
             default:
                 // Standard plan
-                price_key = 'price_1N4UQeJlwbqaAWHsh9gJhF6v';
+                price_key = process.env.REACT_APP_STRIPE_PLAN_0;
                 break;
         }
-        const stripe = await loadStripe('pk_test_51KtYPUJlwbqaAWHsXdJc7kAIYQIqpFgi0hdecopXGCOoMxCQSW90w7UrzSx0LIrtTRNKuQXRhJ4yHqa9f6HA0xTl00usLrEtJX')
+        const stripe = await loadStripe(process.env.REACT_APP_STRIPE_PK);
         const baseUrl = window.location.protocol + '//' + window.location.host + '/';
         const { error } = await stripe.redirectToCheckout({
             lineItems: [{
