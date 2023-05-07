@@ -16,16 +16,17 @@ import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 
 const MenuItems = ({isManager, category, loadCategory}) => {
-    const [menuItems, setMenuItems] = useState([]);
-    const [categoryTitle, setCategoryTitle] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState(category);
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [isEditOpen, setIsEditOpen] = useState(false);
-    const [editingMenuItem, setEditingMenuItem] = useState(null);
-    const [dragId, setDragId] = useState();
-    const [maxOrderId, setMaxOrderId] = useState(0);
-    const [titleError, setTitleError] = useState("");
-    const [titleHasError, setTitleHasError] = useState(false);
+    const [ menuItems, setMenuItems ] = useState([]);
+    const [ categoryTitle, setCategoryTitle ] = useState('');
+    const [ selectedCategory, setSelectedCategory ] = useState(category);
+    const [ isCreateOpen, setIsCreateOpen ] = useState(false);
+    const [ isEditOpen, setIsEditOpen ] = useState(false);
+    const [ editingMenuItem, setEditingMenuItem ] = useState(null);
+    const [ dragId, setDragId ] = useState();
+    const [ maxOrderId, setMaxOrderId ] = useState(0);
+    const [ titleError, setTitleError ] = useState("");
+    const [ titleHasError, setTitleHasError ] = useState(false);
+    const [ busyUpdating, setBusyUpdating ] = useState(false);
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -112,6 +113,10 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             })
         );
         setMenuItems(menuItemsFromAPI);
+
+        if (menuItemsFromAPI.length === 0) {
+            setIsCreateOpen(true);
+        }
     }
 
     async function fetchCategory() {
@@ -127,6 +132,9 @@ const MenuItems = ({isManager, category, loadCategory}) => {
 
     async function createMenuItem(event) {
         event.preventDefault();
+
+        setBusyUpdating(true);
+
         const target = document.getElementById('newMenuItemForm');
         const form = new FormData(target);
 
@@ -156,12 +164,17 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             variables: { input: data },
         });
         await fetchMenuItems();
-        target.reset();
         toggleCreate(false);
+
+        target.reset();
+        setBusyUpdating(false);
     }
 
     async function updateMenuItem(event) {
         event.preventDefault();
+
+        setBusyUpdating(true);
+
         const target = document.getElementById('editMenuItemForm');
         const form = new FormData(target);
 
@@ -189,8 +202,10 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             variables: { input: data },
         });
         await fetchMenuItems();
-        target.reset();
         setIsEditOpen(false);
+
+        target.reset();
+        setBusyUpdating(false);
     }
 
     async function deleteMenuItem({ id, image }) {
@@ -204,6 +219,10 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             query: deleteMenuItemMutation,
             variables: { input: { id } },
         });
+
+        if (newMenuItems.length === 0) {
+            setIsCreateOpen(true);
+        }
     }
 
     function editMenuItem({id}) {
@@ -263,10 +282,10 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                     )}
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive onClick={updateMenuItem}>
+                    <Button positive onClick={updateMenuItem} disabled={busyUpdating}>
                         Update
                     </Button>
-                    <Button negative onClick={() => setIsEditOpen(false)}>
+                    <Button negative onClick={() => setIsEditOpen(false)} disabled={busyUpdating}>
                         Cancel
                     </Button>
                 </Modal.Actions>
@@ -315,7 +334,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                         <TextField
                             name="image"
                             label="Image"
-                            placeholder="Image representing the menu item"
+                            descriptiveText="Image representing the menu item"
                             type="file"
                         />
                         <CheckboxField
@@ -327,10 +346,10 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                     </Grid>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive onClick={createMenuItem}>
+                    <Button positive onClick={createMenuItem} disabled={busyUpdating}>
                         Create
                     </Button>
-                    <Button negative onClick={() => toggleCreate(false)}>
+                    <Button negative onClick={() => toggleCreate(false)} disabled={busyUpdating}>
                         Cancel
                     </Button>
                 </Modal.Actions>

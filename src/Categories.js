@@ -16,15 +16,16 @@ import {listCategories} from "./graphql/queries";
 import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
 
 const Categories = ({isManager, loadCategory, restaurant}) => {
-    const [categories, setCategories] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [isEditOpen, setIsEditOpen] = useState(false);
-    const [editingCategory, setEditingCategory] = useState(null);
-    const [dragId, setDragId] = useState();
-    const [maxOrderId, setMaxOrderId] = useState(0);
-    const [titleError, setTitleError] = useState("");
-    const [titleHasError, setTitleHasError] = useState(false);
+    const [ categories, setCategories ] = useState([]);
+    const [ selectedCategory, setSelectedCategory ] = useState(null);
+    const [ isCreateOpen, setIsCreateOpen ] = useState(false);
+    const [ isEditOpen, setIsEditOpen ] = useState(false);
+    const [ editingCategory, setEditingCategory ] = useState(null);
+    const [ dragId, setDragId ] = useState();
+    const [ maxOrderId, setMaxOrderId ] = useState(0);
+    const [ titleError, setTitleError ] = useState("");
+    const [ titleHasError, setTitleHasError ] = useState(false);
+    const [ busyUpdating, setBusyUpdating ] = useState(false);
 
     useEffect(() => {
         fetchCategories();
@@ -104,6 +105,10 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         );
 
         setCategories(categoriesFromAPI);
+
+        if (categoriesFromAPI.length === 0) {
+            setIsCreateOpen(true);
+        }
     }
 
     function clearValidationErrors() {
@@ -113,6 +118,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
 
     async function createCategory(event) {
         event.preventDefault();
+
+        setBusyUpdating(true);
 
         if (!restaurant) {
             return;
@@ -147,12 +154,17 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
             variables: { input: data },
         });
         await fetchCategories();
-        target.reset();
         toggleCreate(false);
+
+        target.reset();
+        setBusyUpdating(false);
     }
 
     async function updateCategory(event) {
         event.preventDefault();
+
+        setBusyUpdating(true);
+
         const target = document.getElementById('editCategoryForm');
         const form = new FormData(target);
 
@@ -180,8 +192,10 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
             variables: { input: data },
         });
         await fetchCategories();
-        target.reset();
         setIsEditOpen(false);
+
+        target.reset();
+        setBusyUpdating(false);
     }
 
     async function deleteCategory({ id, image }) {
@@ -195,6 +209,10 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
             query: deleteCategoryMutation,
             variables: { input: { id } },
         });
+
+        if (newCategories.length === 0) {
+            setIsCreateOpen(true);
+        }
     }
 
     function editCategory({id}) {
@@ -243,10 +261,10 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
                     </Grid>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive onClick={createCategory}>
+                    <Button positive onClick={createCategory} disabled={busyUpdating}>
                         Create
                     </Button>
-                    <Button negative onClick={() => toggleCreate(false)}>
+                    <Button negative onClick={() => toggleCreate(false)} disabled={busyUpdating}>
                         Cancel
                     </Button>
                 </Modal.Actions>
@@ -301,10 +319,10 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
                     )}
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button positive onClick={updateCategory}>
+                    <Button positive onClick={updateCategory} disabled={busyUpdating}>
                         Update
                     </Button>
-                    <Button negative onClick={() => setIsEditOpen(false)}>
+                    <Button negative onClick={() => setIsEditOpen(false)} disabled={busyUpdating}>
                         Cancel
                     </Button>
                 </Modal.Actions>

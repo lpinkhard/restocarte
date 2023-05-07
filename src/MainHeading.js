@@ -15,7 +15,9 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
     useEffect(() => {
         loadRestaurant(restaurant);
         if (restaurant) {
-            document.title = restaurant.name;
+            if (restaurant.name && restaurant.name.length > 0) {
+                document.title = restaurant.name;
+            }
             if (restaurant.favicon) {
                 let link = document.querySelector("link[rel~='icon']");
                 if (!link) {

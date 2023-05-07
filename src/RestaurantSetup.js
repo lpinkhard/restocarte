@@ -16,6 +16,7 @@ const RestaurantSetup = () => {
     const [ restaurant, setRestaurant ] = useState(null);
     const [ contentReady, setContentReady ] = useState(false);
     const [ selectedCurrency, setSelectedCurrency ] = useState("USD");
+    const [ busyUpdating, setBusyUpdating ] = useState(false);
 
     const restaurantLoaded = useCallback((val) => {
         setRestaurant(val);
@@ -84,6 +85,9 @@ const RestaurantSetup = () => {
 
     async function updateRestaurant(event) {
         event.preventDefault();
+
+        setBusyUpdating(true);
+
         const target = document.getElementById('editRestaurantForm');
         const form = new FormData(target);
         const image = form.get("image");
@@ -109,6 +113,8 @@ const RestaurantSetup = () => {
         });
         await fetchRestaurant();
         target.reset();
+
+        setBusyUpdating(false);
     }
 
     const currencies = Object.values(CurrencyList.getAll("en_US"));
@@ -142,9 +148,10 @@ const RestaurantSetup = () => {
                                     name="currency"
                                     label="Currency"
                                     descriptiveText="Currency used for prices"
+                                    defaultValue={selectedCurrency}
                                 >
                                     {currencies.map((currency) => (
-                                        <option value={currency.code} selected={currency.code === selectedCurrency}>{currency.name}</option>
+                                        <option key={currency.code} value={currency.code}>{currency.name}</option>
                                     ))}
                                 </SelectField>
                                 <TextField
@@ -159,7 +166,7 @@ const RestaurantSetup = () => {
                                     descriptiveText="Browser icon used on all pages"
                                     type="file"
                                 />
-                                <Button primary onClick={updateRestaurant}>
+                                <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
                                     Update
                                 </Button>
                             </Grid>
