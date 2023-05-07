@@ -1,9 +1,9 @@
 import { loadStripe } from '@stripe/stripe-js'
 import { Button } from '@aws-amplify/ui-react';
-export default function Subscribe (plan) {
+export default function Subscribe ({plan, comingSoon}) {
     const handleSubscribe = async e => {
         let price_key;
-        switch (plan) {
+        switch (parseInt(plan)) {
             case 1:
                 // Advanced plan
                 price_key = 'price_1N4URcJlwbqaAWHszIj27NsN';
@@ -26,5 +26,5 @@ export default function Subscribe (plan) {
         })
     }
 
-    return <Button onClick={handleSubscribe}>Subscribe</Button>
+    return <Button className="orderButton" onClick={handleSubscribe} disabled={comingSoon}>{comingSoon ? 'Coming Soon' : 'Subscribe'}</Button>
 }

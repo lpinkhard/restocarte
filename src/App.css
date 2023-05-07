@@ -32,3 +32,7 @@
 .backButton {
     cursor: pointer;
 }
+
+.orderButton {
+    float: right;
+}
