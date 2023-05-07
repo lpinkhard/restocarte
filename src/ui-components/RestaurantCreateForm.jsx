@@ -26,12 +26,14 @@ export default function RestaurantCreateForm(props) {
     name: "",
     tagline: "",
     logo: "",
+    favicon: "",
     userId: "",
     owner: "",
   };
   const [name, setName] = React.useState(initialValues.name);
   const [tagline, setTagline] = React.useState(initialValues.tagline);
   const [logo, setLogo] = React.useState(initialValues.logo);
+  const [favicon, setFavicon] = React.useState(initialValues.favicon);
   const [userId, setUserId] = React.useState(initialValues.userId);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
@@ -39,6 +41,7 @@ export default function RestaurantCreateForm(props) {
     setName(initialValues.name);
     setTagline(initialValues.tagline);
     setLogo(initialValues.logo);
+    setFavicon(initialValues.favicon);
     setUserId(initialValues.userId);
     setOwner(initialValues.owner);
     setErrors({});
@@ -47,6 +50,7 @@ export default function RestaurantCreateForm(props) {
     name: [],
     tagline: [],
     logo: [],
+    favicon: [],
     userId: [{ type: "Required" }],
     owner: [],
   };
@@ -79,6 +83,7 @@ export default function RestaurantCreateForm(props) {
           name,
           tagline,
           logo,
+          favicon,
           userId,
           owner,
         };
@@ -138,6 +143,7 @@ export default function RestaurantCreateForm(props) {
               name: value,
               tagline,
               logo,
+              favicon,
               userId,
               owner,
             };
@@ -166,6 +172,7 @@ export default function RestaurantCreateForm(props) {
               name,
               tagline: value,
               logo,
+              favicon,
               userId,
               owner,
             };
@@ -194,6 +201,7 @@ export default function RestaurantCreateForm(props) {
               name,
               tagline,
               logo: value,
+              favicon,
               userId,
               owner,
             };
@@ -211,6 +219,35 @@ export default function RestaurantCreateForm(props) {
         {...getOverrideProps(overrides, "logo")}
       ></TextField>
       <TextField
+        label="Favicon"
+        isRequired={false}
+        isReadOnly={false}
+        value={favicon}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline,
+              logo,
+              favicon: value,
+              userId,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.favicon ?? value;
+          }
+          if (errors.favicon?.hasError) {
+            runValidationTasks("favicon", value);
+          }
+          setFavicon(value);
+        }}
+        onBlur={() => runValidationTasks("favicon", favicon)}
+        errorMessage={errors.favicon?.errorMessage}
+        hasError={errors.favicon?.hasError}
+        {...getOverrideProps(overrides, "favicon")}
+      ></TextField>
+      <TextField
         label="User id"
         isRequired={true}
         isReadOnly={false}
@@ -222,6 +259,7 @@ export default function RestaurantCreateForm(props) {
               name,
               tagline,
               logo,
+              favicon,
               userId: value,
               owner,
             };
@@ -250,6 +288,7 @@ export default function RestaurantCreateForm(props) {
               name,
               tagline,
               logo,
+              favicon,
               userId,
               owner: value,
             };

@@ -227,6 +227,7 @@ export const onCreateRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id
@@ -260,6 +261,7 @@ export const onUpdateRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id
@@ -293,6 +295,7 @@ export const onDeleteRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id

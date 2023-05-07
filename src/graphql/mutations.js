@@ -227,6 +227,7 @@ export const createRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id
@@ -260,6 +261,7 @@ export const updateRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id
@@ -293,6 +295,7 @@ export const deleteRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id

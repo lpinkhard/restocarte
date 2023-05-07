@@ -138,6 +138,7 @@ export const getRestaurant = /* GraphQL */ `
       name
       tagline
       logo
+      favicon
       categories {
         items {
           id
@@ -173,6 +174,7 @@ export const listRestaurants = /* GraphQL */ `
         name
         tagline
         logo
+        favicon
         categories {
           nextToken
         }

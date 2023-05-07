@@ -16,6 +16,7 @@ export declare type RestaurantCreateFormInputValues = {
     name?: string;
     tagline?: string;
     logo?: string;
+    favicon?: string;
     userId?: string;
     owner?: string;
 };
@@ -23,6 +24,7 @@ export declare type RestaurantCreateFormValidationValues = {
     name?: ValidationFunction<string>;
     tagline?: ValidationFunction<string>;
     logo?: ValidationFunction<string>;
+    favicon?: ValidationFunction<string>;
     userId?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
@@ -32,6 +34,7 @@ export declare type RestaurantCreateFormOverridesProps = {
     name?: PrimitiveOverrideProps<TextFieldProps>;
     tagline?: PrimitiveOverrideProps<TextFieldProps>;
     logo?: PrimitiveOverrideProps<TextFieldProps>;
+    favicon?: PrimitiveOverrideProps<TextFieldProps>;
     userId?: PrimitiveOverrideProps<TextFieldProps>;
     owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
