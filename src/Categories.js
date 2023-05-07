@@ -236,7 +236,7 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
                         />
                         <CheckboxField
                             label="Enabled"
-                            name="Enabled"
+                            name="enabled"
                             value="yes"
                             defaultChecked="true"
                         />
