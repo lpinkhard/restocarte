@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
+    CheckboxField,
     Grid,
     TextAreaField,
     TextField,
@@ -7,7 +8,7 @@ import {
 } from "@aws-amplify/ui-react";
 import {
     createMenuItem as createMenuItemMutation,
-    deleteMenuItem as deleteMenuItemMutation, updateCategory as updateCategoryMutation,
+    deleteMenuItem as deleteMenuItemMutation,
     updateMenuItem as updateMenuItemMutation,
 } from "./graphql/mutations";
 import {API, Auth, graphqlOperation, Storage} from "aws-amplify";
@@ -67,13 +68,28 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     }
 
     async function fetchMenuItems() {
-        const variables = {
-            filter: {
-                categoryMenuItemsId: {
-                    eq: category
+        let variables;
+
+        if (isManager) {
+            variables = {
+                filter: {
+                    categoryMenuItemsId: {
+                        eq: category
+                    }
                 }
-            }
-        };
+            };
+        } else {
+            variables = {
+                filter: {
+                    categoryMenuItemsId: {
+                        eq: category
+                    },
+                    enabled: {
+                        eq: true
+                    }
+                }
+            };
+        }
 
         let apiData;
         if (await isAuthenticated()) {
@@ -114,6 +130,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             title: form.get("title"),
             description: form.get("description"),
             image: image.name,
+            enabled: form.get("enabled") != null,
             order: maxOrderId + 1,
             categoryMenuItemsId: category,
         };
@@ -140,6 +157,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             id: editingMenuItem.id,
             title: form.get("title"),
             description: form.get("description"),
+            enabled: form.get("enabled") != null,
         };
         if (image.name.length > 0) {
             const fileId = guid();
@@ -209,6 +227,12 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                                 variation="quiet"
                                 type="file"
                             />
+                            <CheckboxField
+                                label="Enabled"
+                                name="enabled"
+                                value="yes"
+                                defaultChecked={editingMenuItem.enabled}
+                            />
                         </Grid>
                     )}
                 </Modal.Content>
@@ -266,6 +290,12 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                             variation="quiet"
                             type="file"
                         />
+                        <CheckboxField
+                            label="Enabled"
+                            name="enabled"
+                            value="yes"
+                            defaultChecked="true"
+                        />
                         <Button type="submit" primary>
                             Create Item
                         </Button>
@@ -298,8 +328,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     }
 
     function FormatCurrency({value}) {
-        let val = value.toString().replace(/\$|\,/g, '');
-        if (isNaN(val))
+        let val = value.toString().replace(/[$,]/g, '');
+        if (isNaN(value))
         {
             val = "0";
         }
@@ -409,13 +439,19 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                     </Card>
                 ))}
             </Card.Group>
-            <NewItem />
-            <EditMenuItemModal />
-            {(isManager & !isCreateOpen) && (
-                <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
-                    <Icon name="plus" />
-                </Button>
+
+            {isManager && (
+                <View>
+                    <NewItem />
+                    <EditMenuItemModal />
+                    {!isCreateOpen && (
+                        <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
+                            <Icon name="plus" />
+                        </Button>
+                    )}
+                </View>
             )}
+
         </View>
     );
 }

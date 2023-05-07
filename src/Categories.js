@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
+    CheckboxField,
     Grid,
     TextAreaField,
     TextField,
@@ -54,11 +55,28 @@ const Categories = ({isManager, loadCategory}) => {
     }
 
     async function fetchCategories() {
+        let variables;
+
+        if (isManager) {
+            variables = {
+                filter: {
+                }
+            };
+        } else {
+            variables = {
+                filter: {
+                    enabled: {
+                        eq: true
+                    }
+                }
+            };
+        }
+
         let apiData;
         if (await isAuthenticated()) {
-            apiData = await API.graphql({ query: listCategories, authMode: "AMAZON_COGNITO_USER_POOLS" });
+            apiData = await API.graphql({ query: listCategories, variables, authMode: "AMAZON_COGNITO_USER_POOLS" });
         } else {
-            apiData = await API.graphql({query: listCategories, authMode: "AWS_IAM"});
+            apiData = await API.graphql({query: listCategories, variables, authMode: "AWS_IAM"});
         }
         const categoriesFromAPI = apiData.data.listCategories.items;
         await Promise.all(
@@ -85,6 +103,7 @@ const Categories = ({isManager, loadCategory}) => {
             title: form.get("title"),
             description: form.get("description"),
             image: image.name,
+            enabled: form.get("enabled") != null,
             order: maxOrderId + 1,
         };
         if (!!data.image) {
@@ -110,6 +129,7 @@ const Categories = ({isManager, loadCategory}) => {
             id: editingCategory.id,
             title: form.get("title"),
             description: form.get("description"),
+            enabled: form.get("enabled") != null,
         };
         if (image.name.length > 0) {
             const fileId = guid();
@@ -171,6 +191,12 @@ const Categories = ({isManager, loadCategory}) => {
                             variation="quiet"
                             type="file"
                         />
+                        <CheckboxField
+                            label="Enabled"
+                            name="Enabled"
+                            value="yes"
+                            defaultChecked="true"
+                        />
                     </Grid>
                 </Modal.Content>
                 <Modal.Actions>
@@ -220,6 +246,12 @@ const Categories = ({isManager, loadCategory}) => {
                             label="Image"
                             variation="quiet"
                             type="file"
+                        />
+                        <CheckboxField
+                            label="Enabled"
+                            name="enabled"
+                            value="yes"
+                            defaultChecked={editingCategory.enabled}
                         />
                     </Grid>
                     )}
@@ -323,7 +355,7 @@ const Categories = ({isManager, loadCategory}) => {
     }
 
     return (
-        <View className="Category">
+        <View className="Categories">
             <HeadingDisplay />
             <Card.Group centered>
                 {categories.sort((a, b) => a.order - b.order).map((category) => (
@@ -353,13 +385,18 @@ const Categories = ({isManager, loadCategory}) => {
                     ))}
             </Card.Group>
 
-            <NewCategory />
-            <EditCategoryModal />
-            {(isManager & !isCreateOpen) && (
-                <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
-                    <Icon name="plus" />
-                </Button>
+            {isManager && (
+                <View>
+                    <NewCategory />
+                    <EditCategoryModal />
+                    {!isCreateOpen && (
+                        <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
+                            <Icon name="plus" />
+                        </Button>
+                    )}
+                </View>
             )}
+
         </View>
     );
 }
