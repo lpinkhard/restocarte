@@ -1,5 +1,5 @@
-import React, {useCallback, useState} from "react";
-import {Grid, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
+import React, {useCallback, useEffect, useState} from "react";
+import {Grid, TextAreaField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
@@ -11,7 +11,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
 
-const RestaurantSetup = () => {
+const Tags = () => {
     const [ restaurant, setRestaurant ] = useState(null);
     const [ contentReady, setContentReady ] = useState(false);
 
@@ -77,32 +77,18 @@ const RestaurantSetup = () => {
         await fetchRestaurant();
     }
 
-    async function updateRestaurant(event) {
+    async function createTag(event) {
         event.preventDefault();
-        const target = document.getElementById('editRestaurantForm');
+        const target = document.getElementById('createTagForm');
         const form = new FormData(target);
-        const image = form.get("image");
-        const favicon = form.get("favicon");
-        const data = {
-            id: restaurant.id,
-            name: form.get("name"),
-            tagline: form.get("tagline"),
-        };
-        if (image.name.length > 0) {
-            const fileId = guid();
-            await Storage.put(fileId, image);
-            data.logo = fileId;
+        const table = form.get("table");
+
+        let link = window.location.protocol + '//' + window.location.host + '/' + restaurant.id;
+        if (table && table.length > 0) {
+            link += '/' + table;
         }
-        if (favicon.name.length > 0) {
-            const fileId = guid();
-            await Storage.put(fileId, favicon);
-            data.favicon = fileId;
-        }
-        await API.graphql({
-            query: updateRestaurantMutation,
-            variables: { input: data },
-        });
-        await fetchRestaurant();
+        console.log(link)
+
         target.reset();
     }
 
@@ -112,38 +98,18 @@ const RestaurantSetup = () => {
             <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} />
             {contentReady && (
                 <View>
-                    <Header as="h2" textAlign="center">Restaurant Setup</Header>
+                    <Header as="h2" textAlign="center">Create Tags</Header>
                     {restaurant && (
-                        <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                        <Grid id="createTagForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                             <TextField
-                                name="name"
-                                placeholder="Restaurant Name"
-                                label="Name"
+                                name="table"
+                                placeholder="Table Number"
+                                label="Table"
                                 variation="quiet"
-                                defaultValue={restaurant.name}
-                                required
+                                type="number"
                             />
-                            <TextField
-                                name="tagline"
-                                placeholder="Restaurant Tagline"
-                                label="Tagline"
-                                variation="quiet"
-                                defaultValue={restaurant.tagline}
-                            />
-                            <TextField
-                                name="image"
-                                label="Logo"
-                                variation="quiet"
-                                type="file"
-                            />
-                            <TextField
-                                name="favicon"
-                                label="Favicon"
-                                variation="quiet"
-                                type="file"
-                            />
-                            <Button positive onClick={updateRestaurant}>
-                                Update
+                            <Button positive onClick={createTag}>
+                                Create
                             </Button>
                         </Grid>
                     )}
@@ -153,4 +119,4 @@ const RestaurantSetup = () => {
     );
 };
 
-export default withAuthenticator(RestaurantSetup, { hideSignUp: true });
+export default withAuthenticator(Tags, { hideSignUp: true });

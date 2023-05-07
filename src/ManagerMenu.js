@@ -7,6 +7,8 @@ const ManagerMenu = ( {signOut} ) => {
         <View className="ManagerMenu">
             <NavMenu>
                 <NavMenuItem><Link to="/manage">Manage Menu</Link></NavMenuItem>
+                <NavMenuItem><Link to="/tags">Create Tags</Link></NavMenuItem>
+                <Divider />
                 <NavMenuItem><Link to="/restaurant-setup">Restaurant Setup</Link></NavMenuItem>
                 <Divider />
                 <NavMenuItem onClick={signOut}><Link to="#">Sign Out</Link></NavMenuItem>

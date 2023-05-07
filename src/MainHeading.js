@@ -73,7 +73,12 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady} ) 
         );
 
         const restaurantData = data.getRestaurant;
+        if (restaurantData.logo) {
+            restaurantData.logo = await Storage.get(restaurantData.logo);
+        }
+
         setRestaurant(restaurantData);
+
         if (!restaurantData.logo) {
             setContentLoaded(true);
         }

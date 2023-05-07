@@ -7,13 +7,16 @@ import Manage from './Manage';
 import Present from './Present';
 import SignUp from './SignUp';
 import RestaurantSetup from "./RestaurantSetup";
+import Tags from "./Tags";
 
 function App() {
     return (
         <Router>
             <Routes>
                 <Route path="/:restaurantId" element={<Present/>}/>
+                <Route path="/:restaurantId/:tableId" element={<Present/>}/>
                 <Route path='/manage' element={<Manage/>} />
+                <Route path='/tags' element={<Tags/>} />
                 <Route path='/restaurant-setup' element={<RestaurantSetup/>} />
                 <Route path='/sign-up' element={<SignUp/>} />
             </Routes>
