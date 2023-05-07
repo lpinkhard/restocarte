@@ -6,17 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="b2800890-f41d-4e7e-9592-25fbb9744267" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/restocarte/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/restocarte/schema.graphql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Categories.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Categories.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainHeading.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/MainHeading.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Manage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Manage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/subscriptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/subscriptions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/RestaurantCreateForm.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/RestaurantCreateForm.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/RestaurantCreateForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/RestaurantCreateForm.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/RestaurantUpdateForm.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/RestaurantUpdateForm.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ui-components/RestaurantUpdateForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui-components/RestaurantUpdateForm.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Menu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Present.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Present.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RestaurantSetup.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/RestaurantSetup.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +60,7 @@
       <updated>1683111395504</updated>
       <workItem from="1683111399932" duration="13158000" />
       <workItem from="1683310904742" duration="4486000" />
-      <workItem from="1683357655348" duration="42253000" />
+      <workItem from="1683357655348" duration="46072000" />
     </task>
     <servers />
   </component>

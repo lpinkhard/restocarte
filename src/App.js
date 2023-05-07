@@ -12,7 +12,7 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route exact path='/' element={<Present />} />
+                <Route path="/:restaurantId" element={<Present/>}/>
                 <Route path='/manage' element={<Manage/>} />
                 <Route path='/restaurant-setup' element={<RestaurantSetup/>} />
                 <Route path='/sign-up' element={<SignUp/>} />

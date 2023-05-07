@@ -15,7 +15,7 @@ import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
 import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
 
-const Categories = ({isManager, loadCategory}) => {
+const Categories = ({isManager, loadCategory, restaurant}) => {
     const [categories, setCategories] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -56,15 +56,25 @@ const Categories = ({isManager, loadCategory}) => {
 
     async function fetchCategories() {
         let variables;
+        
+        if (!restaurant) {
+            return;
+        }
 
         if (isManager) {
             variables = {
                 filter: {
+                    restaurantCategoriesId: {
+                        eq: restaurant.id
+                    }
                 }
             };
         } else {
             variables = {
                 filter: {
+                    restaurantCategoriesId: {
+                        eq: restaurant.id
+                    },
                     enabled: {
                         eq: true
                     }
@@ -96,6 +106,11 @@ const Categories = ({isManager, loadCategory}) => {
 
     async function createCategory(event) {
         event.preventDefault();
+
+        if (!restaurant) {
+            return;
+        }
+
         const target = document.getElementById('newCategoryForm');
         const form = new FormData(target);
         const image = form.get("image");
@@ -105,6 +120,7 @@ const Categories = ({isManager, loadCategory}) => {
             image: image.name,
             enabled: form.get("enabled") != null,
             order: maxOrderId + 1,
+            restaurantCategoriesId: restaurant.id
         };
         if (!!data.image) {
             const fileId = guid();

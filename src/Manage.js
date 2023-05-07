@@ -9,7 +9,7 @@ const Manage = () => {
     return (
         <View className="Manage">
             <ManagerMenu />
-            <MainHeading />
+            <MainHeading isManager />
             <Menu isManager />
         </View>
     );

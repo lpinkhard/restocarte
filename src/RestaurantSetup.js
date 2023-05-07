@@ -3,7 +3,7 @@ import {Grid, TextAreaField, TextField, View, withAuthenticator} from '@aws-ampl
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
-import {Button} from "semantic-ui-react";
+import {Button, Header} from "semantic-ui-react";
 import {
     createRestaurant as createRestaurantMutation,
     updateRestaurant as updateRestaurantMutation
@@ -55,7 +55,7 @@ const RestaurantSetup = () => {
     }
 
     async function newRestaurant() {
-        const user = await Auth.currentAuthenticatedUser();;
+        const user = await Auth.currentAuthenticatedUser();
         const data = {
             userId: user.username,
         };
@@ -86,7 +86,7 @@ const RestaurantSetup = () => {
         if (image.name.length > 0) {
             const fileId = guid();
             await Storage.put(fileId, image);
-            data.image = fileId;
+            data.logo = fileId;
         }
         await API.graphql({
             query: updateRestaurantMutation,
@@ -99,7 +99,8 @@ const RestaurantSetup = () => {
     return (
         <View className="Restaurant">
             <ManagerMenu />
-            <MainHeading />
+            <MainHeading isManager />
+            <Header as="h2" textAlign="center">Restaurant Setup</Header>
             {restaurant && (
                 <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                     <TextField
