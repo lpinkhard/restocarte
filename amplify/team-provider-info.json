@@ -66,7 +66,7 @@
         "stripewebhook": {
           "secretsPathAmplifyAppId": "d10li48b3ubv4a",
           "deploymentBucketName": "amplify-amplifyc2b381c3fbab4-staging-112910-deployment",
-          "s3Key": "amplify-builds/stripewebhook-6174523565516d2b5966-build.zip"
+          "s3Key": "amplify-builds/stripewebhook-49536547436459693633-build.zip"
         }
       }
     }

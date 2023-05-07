@@ -62,16 +62,23 @@ app.post('/webhook', async function (req, res) {
   const stripeKey = await getStripeKey()
   const stripe = require('stripe')(stripeKey)
 
+  console.log(stripeKey);
+
   const customer = await stripe.customers.retrieve(
       req.body.data.object.customer
   )
 
-  if (req.body.data.object.plan.product === 'prod_NqAmL5iL1pt5SQ') {
+  console.log('got customer');
+
+  if (req.body.data.object.plan.product === 'prod_NqAmL5iL1pt5SQ' || req.body.data.object.plan.product === 'prod_NqApdPKO20vrK7') {
     // Standard plan
-  } else if (req.body.data.object.plan.id === 'prod_NqAnKmDpGEY8vh') {
+    console.log('standard plan');
+  } else if (req.body.data.object.plan.id === 'prod_NqAnKmDpGEY8vh' || req.body.data.object.plan.product === 'prod_NqApV0IeLDdwy9') {
     // Advanced plan
+    console.log('advanced plan');
   } else {
     // Something else
+    console.log('wrong plan');
     return;
   }
 
