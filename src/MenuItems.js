@@ -7,7 +7,7 @@ import {
 } from "@aws-amplify/ui-react";
 import {
     createMenuItem as createMenuItemMutation,
-    deleteMenuItem as deleteMenuItemMutation,
+    deleteMenuItem as deleteMenuItemMutation, updateCategory as updateCategoryMutation,
     updateMenuItem as updateMenuItemMutation,
 } from "./graphql/mutations";
 import {API, Auth, graphqlOperation, Storage} from "aws-amplify";
@@ -19,6 +19,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     const [categoryTitle, setCategoryTitle] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(category);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [editingMenuItem, setEditingMenuItem] = useState(null);
     const [dragId, setDragId] = useState();
     const [maxOrderId, setMaxOrderId] = useState(0);
 
@@ -129,6 +131,30 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         toggleCreate(false);
     }
 
+    async function updateMenuItem(event) {
+        event.preventDefault();
+        const target = document.getElementById('editMenuItemForm');
+        const form = new FormData(target);
+        const image = form.get("image");
+        const data = {
+            id: editingMenuItem.id,
+            title: form.get("title"),
+            description: form.get("description"),
+        };
+        if (image.name.length > 0) {
+            const fileId = guid();
+            await Storage.put(fileId, image);
+            data.image = fileId;
+        }
+        await API.graphql({
+            query: updateMenuItemMutation,
+            variables: { input: data },
+        });
+        await fetchMenuItems();
+        target.reset();
+        setIsEditOpen(false);
+    }
+
     async function deleteMenuItem({ id, image }) {
         const newMenuItems = menuItems.filter((menuItem) => menuItem.id !== id);
         setMenuItems(newMenuItems);
@@ -142,8 +168,74 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         });
     }
 
+    function editMenuItem({id}) {
+        setEditingMenuItem(menuItems.find((item) => item.id === id));
+        setIsEditOpen(true);
+    }
+
     function toggleCreate(value) {
         setIsCreateOpen(value);
+    }
+
+    function EditMenuItemModal() {
+        if (!isManager) {
+            return <Modal className="EditMenuItemModal" />
+        }
+
+        return (
+            <Modal className="EditMenuItemModal" dimmer="blurring" open={isEditOpen}>
+                <Modal.Header>Edit Item</Modal.Header>
+                <Modal.Content>
+                    {editingMenuItem && (
+                        <Grid id="editMenuItemForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                            <TextField
+                                name="title"
+                                placeholder="Item Title"
+                                label="Title"
+                                variation="quiet"
+                                defaultValue={editingMenuItem.title}
+                                required
+                            />
+                            <TextAreaField
+                                name="description"
+                                placeholder="Item Description"
+                                label="Description"
+                                variation="quiet"
+                                defaultValue={editingMenuItem.description}
+                            />
+                            <TextField
+                                name="image"
+                                label="Image"
+                                variation="quiet"
+                                type="file"
+                            />
+                        </Grid>
+                    )}
+                </Modal.Content>
+                <Modal.Actions>
+                    <Button positive onClick={updateMenuItem}>
+                        Update
+                    </Button>
+                    <Button negative onClick={() => setIsEditOpen(false)}>
+                        Cancel
+                    </Button>
+                </Modal.Actions>
+            </Modal>
+        );
+    }
+
+    function EditMenuItem(id) {
+        if (!isManager) {
+            return <View className="EditMenuItem" />
+        }
+
+        return (
+            <View className="EditMenuItem">
+                <Button icon onClick={(e) => { e.stopPropagation(); editMenuItem(id);}}>
+                    <Icon name="edit" />
+                </Button>
+            </View>
+        );
     }
 
     function NewItem() {
@@ -303,6 +395,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                         )}
                         <Card.Content>
                             <DeleteItem id={menuItem.id} image={menuItem.image}/>
+                            <EditMenuItem id={menuItem.id} />
                             <Card.Header textAlign="center">{menuItem.title}</Card.Header>
                             {menuItem.description && (
                                 <Card.Description>{menuItem.description}</Card.Description>
@@ -317,6 +410,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                 ))}
             </Card.Group>
             <NewItem />
+            <EditMenuItemModal />
             {(isManager & !isCreateOpen) && (
                 <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
                     <Icon name="plus" />
