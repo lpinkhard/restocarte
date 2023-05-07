@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "auth": {
+      "restocarted4b87b7d": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "secretNames": [
+    "stripe_key"
+  ]
+}

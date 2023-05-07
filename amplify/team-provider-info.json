@@ -17,7 +17,8 @@
         "restocarted4b87b7d": {}
       },
       "api": {
-        "restocarte": {}
+        "restocarte": {},
+        "api9cd5a7a1": {}
       },
       "storage": {
         "imagestore": {}
@@ -27,6 +28,11 @@
           "GROUP": "everyone",
           "deploymentBucketName": "amplify-amplifyc2b381c3fbab4-staging-112910-deployment",
           "s3Key": "amplify-builds/restocarted4b87b7dPostConfirmation-572f707443432f6d7a67-build.zip"
+        },
+        "stripewebhook": {
+          "secretsPathAmplifyAppId": "d10li48b3ubv4a",
+          "deploymentBucketName": "amplify-amplifyc2b381c3fbab4-staging-112910-deployment",
+          "s3Key": "amplify-builds/stripewebhook-766555556663525a4846-build.zip"
         }
       }
     }

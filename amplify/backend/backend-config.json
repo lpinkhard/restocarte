@@ -1,5 +1,19 @@
 {
   "api": {
+    "api9cd5a7a1": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "stripewebhook"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "restocarte": {
       "dependsOn": [
         {
@@ -70,6 +84,20 @@
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "stripewebhook": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "restocarted4b87b7d"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -94,6 +122,30 @@
         {
           "category": "function",
           "resourceName": "restocarted4b87b7dPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripewebhook_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripewebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripewebhook_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripewebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_stripewebhook_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "stripewebhook"
         }
       ]
     }
