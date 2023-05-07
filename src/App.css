@@ -9,6 +9,10 @@
     float: right;
 }
 
+.MenuContent {
+    margin-top: 3rem;
+}
+
 .amplify-menu-trigger {
     position: fixed;
     top: 2rem;

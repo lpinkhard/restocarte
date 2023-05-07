@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {View} from '@aws-amplify/ui-react';
 import {Container, Header, Image} from "semantic-ui-react";
-import {API, Auth, graphqlOperation, Storage} from "aws-amplify";
+import {API, Auth, Storage} from "aws-amplify";
 import {getRestaurant, listRestaurants} from "./graphql/queries";
 
-const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady} ) => {
+const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, displayTagline} ) => {
     const [restaurant, setRestaurant] = useState(null);
     const [contentLoaded, setContentLoaded] = useState(false);
 
@@ -31,6 +31,15 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady} ) 
     useEffect(() => {
         contentReady(contentLoaded);
     }, [contentReady, contentLoaded]);
+
+    async function isAuthenticated() {
+        try {
+            await Auth.currentAuthenticatedUser();
+            return true;
+        } catch {
+            return false;
+        }
+    }
 
     async function fetchRestaurant() {
         if (isManager) {
@@ -68,9 +77,11 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady} ) 
             return;
         }
 
-        const { data } = await API.graphql(
-            graphqlOperation(getRestaurant, { id: restaurantId })
-        );
+        const { data } = await API.graphql({
+                query: getRestaurant,
+                variables: {id: restaurantId},
+                authMode: await isAuthenticated() ? "AMAZON_COGNITO_USER_POOLS" : "AWS_IAM",
+            });
 
         const restaurantData = data.getRestaurant;
         if (restaurantData.logo) {
@@ -94,7 +105,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady} ) 
 
     return (
         <View className="MainHeading">
-            <Container>
+            <Container fluid>
                 {restaurant && (
                     <Header as="h1" textAlign="center" onClick={refresh}>
                         {restaurant.logo && (
@@ -113,11 +124,15 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady} ) 
                     </Header>
                 )}
                 {restaurant && (
-                    <Header as="h2" textAlign="center">
-                        {!restaurant.tagline && (
-                            <Header.Content>{restaurant.tagline}</Header.Content>
+                    <View>
+                        {displayTagline && (
+                            <Header as="h2" textAlign="center">
+                                {restaurant.tagline && (
+                                    <Header.Content>{restaurant.tagline}</Header.Content>
+                                )}
+                            </Header>
                         )}
-                    </Header>
+                    </View>
                 )}
             </Container>
         </View>

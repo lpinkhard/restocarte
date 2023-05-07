@@ -11,7 +11,7 @@ import {
     deleteMenuItem as deleteMenuItemMutation,
     updateMenuItem as updateMenuItemMutation,
 } from "./graphql/mutations";
-import {API, Auth, graphqlOperation, Storage} from "aws-amplify";
+import {API, Auth, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 
@@ -113,9 +113,11 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     }
 
     async function fetchCategory() {
-        const { data } = await API.graphql(
-            graphqlOperation(getCategory, { id: selectedCategory })
-        );
+        const { data } = await API.graphql({
+            query: getCategory,
+            variables: {id: selectedCategory},
+            authMode: await isAuthenticated() ? "AMAZON_COGNITO_USER_POOLS" : "AWS_IAM",
+        });
 
         const categoryData = data.getCategory;
         setCategoryTitle(categoryData.title);
