@@ -61,21 +61,26 @@ app.use(function(req, res, next) {
 app.post('/webhook', async function (req, res) {
   const stripeKey = await getStripeKey()
   const stripe = require('stripe')(stripeKey)
-  console.log(stripeKey)
-
-  console.log('Request: ' + JSON.stringify(req));
 
   const customer = await stripe.customers.retrieve(
       req.body.data.object.customer
   )
 
-  console.log('Customer: ' + JSON.stringify(customer));
+  if (req.body.data.object.plan.product === 'prod_NqAmL5iL1pt5SQ') {
+    // Standard plan
+  } else if (req.body.data.object.plan.id === 'prod_NqAnKmDpGEY8vh') {
+    // Advanced plan
+  } else {
+    // Something else
+    return;
+  }
 
   const userEmail = customer.email
+  console.log(userEmail)
 
   const cognito = new aws.CognitoIdentityServiceProvider({ apiVersion: '2016-04-18' })
 
-  /* cognito.adminCreateUser({
+  cognito.adminCreateUser({
     UserPoolId: process.env.AUTH_RESTOCARTED4B87B7D_USERPOOLID,
     Username: userEmail,
     DesiredDeliveryMediums: [
@@ -99,7 +104,7 @@ app.post('/webhook', async function (req, res) {
       console.log(data)
       res.sendStatus(200)
     } // successful response
-  }) */
+  })
 })
 
 app.listen(3000, function() {

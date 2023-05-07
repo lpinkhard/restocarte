@@ -21,7 +21,7 @@ export default function Subscribe (plan) {
                 quantity: 1
             }],
             mode: 'subscription',
-            successUrl: baseUrl,
+            successUrl: baseUrl + 'restaurant-setup',
             cancelUrl: baseUrl + 'sign-up',
         })
     }
