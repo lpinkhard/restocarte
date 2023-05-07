@@ -30,15 +30,6 @@ const Tags = () => {
         setContentReady(val);
     }, [setContentReady]);
 
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
-    }
-
     async function fetchRestaurant() {
         const user = await Auth.currentAuthenticatedUser();
         const variables = {
@@ -137,6 +128,7 @@ const Tags = () => {
                                     descriptiveText="Table number to be embedded in the tag"
                                     label="Table"
                                     type="number"
+                                    inputMode="numeric"
                                 />
                                 <CheckboxField
                                     label="NFC Link"
