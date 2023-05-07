@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {Grid, TextAreaField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
@@ -12,11 +12,19 @@ import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
 
 const RestaurantSetup = () => {
-    const [restaurant, setRestaurant] = useState(null);
+    const [ restaurant, setRestaurant ] = useState(null);
+    const [ contentReady, setContentReady ] = useState(false);
 
-    useEffect(() => {
-        loadRestaurant();
-    }, []);
+    const restaurantLoaded = useCallback((val) => {
+        setRestaurant(val);
+        if (!val) {
+            newRestaurant();
+        }
+    }, [setRestaurant]);
+
+    const onContentReady = useCallback((val) => {
+        setContentReady(val);
+    }, [setContentReady]);
 
     function guid() {
         function s4() {
@@ -45,6 +53,9 @@ const RestaurantSetup = () => {
                 if (restaurant.logo) {
                     restaurant.logo = await Storage.get(restaurant.logo);
                 }
+                if (restaurant.favicon) {
+                    restaurant.favicon = await Storage.get(restaurant.favicon);
+                }
                 return restaurant;
             })
         );
@@ -66,18 +77,12 @@ const RestaurantSetup = () => {
         await fetchRestaurant();
     }
 
-    async function loadRestaurant() {
-        await fetchRestaurant();
-        if (!restaurant) {
-            await newRestaurant();
-        }
-    }
-
     async function updateRestaurant(event) {
         event.preventDefault();
         const target = document.getElementById('editRestaurantForm');
         const form = new FormData(target);
         const image = form.get("image");
+        const favicon = form.get("favicon");
         const data = {
             id: restaurant.id,
             name: form.get("name"),
@@ -87,6 +92,11 @@ const RestaurantSetup = () => {
             const fileId = guid();
             await Storage.put(fileId, image);
             data.logo = fileId;
+        }
+        if (favicon.name.length > 0) {
+            const fileId = guid();
+            await Storage.put(fileId, favicon);
+            data.favicon = fileId;
         }
         await API.graphql({
             query: updateRestaurantMutation,
@@ -99,35 +109,45 @@ const RestaurantSetup = () => {
     return (
         <View className="Restaurant">
             <ManagerMenu />
-            <MainHeading isManager />
-            <Header as="h2" textAlign="center">Restaurant Setup</Header>
-            {restaurant && (
-                <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
-                    <TextField
-                        name="name"
-                        placeholder="Restaurant Name"
-                        label="Name"
-                        variation="quiet"
-                        defaultValue={restaurant.name}
-                        required
-                    />
-                    <TextAreaField
-                        name="tagline"
-                        placeholder="Restaurant Tagline"
-                        label="Tagline"
-                        variation="quiet"
-                        defaultValue={restaurant.tagline}
-                    />
-                    <TextField
-                        name="image"
-                        label="Logo"
-                        variation="quiet"
-                        type="file"
-                    />
-                    <Button positive onClick={updateRestaurant}>
-                        Update
-                    </Button>
-                </Grid>
+            <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} />
+            {contentReady && (
+                <View>
+                    <Header as="h2" textAlign="center">Restaurant Setup</Header>
+                    {restaurant && (
+                        <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                            <TextField
+                                name="name"
+                                placeholder="Restaurant Name"
+                                label="Name"
+                                variation="quiet"
+                                defaultValue={restaurant.name}
+                                required
+                            />
+                            <TextField
+                                name="tagline"
+                                placeholder="Restaurant Tagline"
+                                label="Tagline"
+                                variation="quiet"
+                                defaultValue={restaurant.tagline}
+                            />
+                            <TextField
+                                name="image"
+                                label="Logo"
+                                variation="quiet"
+                                type="file"
+                            />
+                            <TextField
+                                name="favicon"
+                                label="Favicon"
+                                variation="quiet"
+                                type="file"
+                            />
+                            <Button positive onClick={updateRestaurant}>
+                                Update
+                            </Button>
+                        </Grid>
+                    )}
+                </View>
             )}
         </View>
     );
