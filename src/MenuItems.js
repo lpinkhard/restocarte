@@ -15,7 +15,7 @@ import {API, Auth, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 
-const MenuItems = ({isManager, category, loadCategory}) => {
+const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol}) => {
     const [ menuItems, setMenuItems ] = useState([]);
     const [ categoryTitle, setCategoryTitle ] = useState('');
     const [ selectedCategory, setSelectedCategory ] = useState(category);
@@ -26,6 +26,8 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     const [ maxOrderId, setMaxOrderId ] = useState(0);
     const [ titleError, setTitleError ] = useState("");
     const [ titleHasError, setTitleHasError ] = useState(false);
+    const [ priceError, setPriceError ] = useState("");
+    const [ priceHasError, setPriceHasError ] = useState(false);
     const [ busyUpdating, setBusyUpdating ] = useState(false);
 
     const onBackButtonEvent = (e) => {
@@ -145,6 +147,19 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             return;
         }
 
+        const price = form.get("price");
+        if (price) {
+            const precision = priceStep / 10;
+
+            const floatPrice = parseFloat(price);
+
+            if (Math.abs(floatPrice - floatPrice.toFixed(decimals)) > precision) {
+                setPriceError("Price is invalid");
+                setPriceHasError(true);
+                return;
+            }
+        }
+
         const image = form.get("image");
         const data = {
             title: title,
@@ -154,6 +169,9 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             order: maxOrderId + 1,
             categoryMenuItemsId: category,
         };
+        if (price) {
+            data.price = price;
+        }
         if (!!data.image) {
             const fileId = guid();
             await Storage.put(fileId, image);
@@ -185,6 +203,19 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             return;
         }
 
+        const price = form.get("price");
+        if (price) {
+            const precision = priceStep / 10;
+
+            const floatPrice = parseFloat(price);
+
+            if (Math.abs(floatPrice - floatPrice.toFixed(decimals)) > precision) {
+                setPriceError("Price is invalid");
+                setPriceHasError(true);
+                return;
+            }
+        }
+
         const image = form.get("image");
         const data = {
             id: editingMenuItem.id,
@@ -192,6 +223,9 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             description: form.get("description"),
             enabled: form.get("enabled") != null,
         };
+        if (price) {
+            data.price = price;
+        }
         if (image.name.length > 0) {
             const fileId = guid();
             await Storage.put(fileId, image);
@@ -229,12 +263,16 @@ const MenuItems = ({isManager, category, loadCategory}) => {
         setEditingMenuItem(menuItems.find((item) => item.id === id));
         setTitleError("");
         setTitleHasError(false);
+        setPriceError("");
+        setPriceHasError(false);
         setIsEditOpen(true);
     }
 
     function toggleCreate(value) {
         setTitleError("");
         setTitleHasError(false);
+        setPriceError("");
+        setPriceHasError(false);
         setIsCreateOpen(value);
     }
 
@@ -265,6 +303,18 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                                 descriptiveText="Description displayed below title"
                                 label="Description"
                                 defaultValue={editingMenuItem.description}
+                            />
+                            <TextField
+                                name="price"
+                                placeholder="Item Price"
+                                descriptiveText="Default price for the menu item"
+                                label="Price"
+                                hasError={priceHasError}
+                                errorMessage={priceError}
+                                type="number"
+                                step={priceStep}
+                                inputMode="decimal"
+                                defaultValue={editingMenuItem.price}
                             />
                             <TextField
                                 name="image"
@@ -332,6 +382,17 @@ const MenuItems = ({isManager, category, loadCategory}) => {
                             label="Description"
                         />
                         <TextField
+                            name="price"
+                            placeholder="Item Price"
+                            descriptiveText="Default price for the menu item"
+                            label="Price"
+                            hasError={priceHasError}
+                            errorMessage={priceError}
+                            type="number"
+                            step={priceStep}
+                            inputMode="decimal"
+                        />
+                        <TextField
                             name="image"
                             label="Image"
                             descriptiveText="Image representing the menu item"
@@ -372,17 +433,18 @@ const MenuItems = ({isManager, category, loadCategory}) => {
     }
 
     function FormatCurrency({value}) {
+        const centsInUnit = Math.pow(10, decimals);
         let val = value.toString().replace(/[$,]/g, '');
         if (isNaN(value))
         {
             val = "0";
         }
 
-        val = Math.floor(val * 100 + 0.50000000001);
-        let cents = val % 100;
-        val = Math.floor(val / 100).toString();
+        val = Math.floor(val * centsInUnit + 0.50000000001);
+        let cents = (val % centsInUnit).toString();
+        val = Math.floor(val / centsInUnit).toString();
 
-        if (cents < 10)
+        while (cents.length < decimals)
         {
             cents = "0" + cents;
         }
@@ -391,7 +453,7 @@ const MenuItems = ({isManager, category, loadCategory}) => {
             val = val.substring(0, val.length - (4 * i + 3)) + ',' + val.substring(val.length - (4 * i + 3));
         }
 
-        const formattedValue = '$' + val + '.' + cents;
+        const formattedValue = currencySymbol + ' ' + val + '.' + cents;
 
         return (
             <Container fluid>{formattedValue}</Container>
