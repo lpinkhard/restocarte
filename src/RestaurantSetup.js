@@ -107,6 +107,10 @@ const RestaurantSetup = () => {
             await Storage.put(fileId, favicon);
             data.favicon = fileId;
         }
+        const currency = form.get("currency");
+        if (currency) {
+            data.currency = currency;
+        }
         await API.graphql({
             query: updateRestaurantMutation,
             variables: { input: data },
