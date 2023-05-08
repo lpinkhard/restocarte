@@ -55,8 +55,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
                     userId: {
                         eq: user.username
                     }
-                },
-                limit: 1
+                }
             };
 
             const apiData = await API.graphql({ query: listRestaurants, variables, authMode: "AMAZON_COGNITO_USER_POOLS" });

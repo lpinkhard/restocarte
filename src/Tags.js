@@ -27,36 +27,6 @@ const Tags = () => {
         setContentReady(val);
     }, [setContentReady]);
 
-    async function fetchRestaurant() {
-        const user = await Auth.currentAuthenticatedUser();
-        const variables = {
-            filter: {
-                userId: {
-                    eq: user.username
-                }
-            },
-            limit: 1
-        };
-
-        const apiData = await API.graphql({ query: listRestaurants, variables, authMode: "AMAZON_COGNITO_USER_POOLS" });
-        const restaurantsFromAPI = apiData.data.listRestaurants.items;
-        await Promise.all(
-            restaurantsFromAPI.map(async (restaurant) => {
-                if (restaurant.logo) {
-                    restaurant.logo = await Storage.get(restaurant.logo);
-                }
-                if (restaurant.favicon) {
-                    restaurant.favicon = await Storage.get(restaurant.favicon);
-                }
-                return restaurant;
-            })
-        );
-
-        if (restaurantsFromAPI.length > 0) {
-            setRestaurant(restaurantsFromAPI[0]);
-        }
-    }
-
     async function createTag(event) {
         event.preventDefault();
         const target = document.getElementById('createTagForm');
