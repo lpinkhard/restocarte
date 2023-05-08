@@ -1,0 +1,7 @@
+{
+  "appId": "com.restocarte",
+  "appName": "Restocarte",
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {}
+}

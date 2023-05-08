@@ -1,0 +1,7 @@
+{
+  "name": "Restocarte",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
