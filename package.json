@@ -52,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@capacitor/assets": "^2.0.4",
     "@capacitor/cli": "^5.0.1"
   }
 }
