@@ -14,6 +14,10 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
 
     useEffect(() => {
         loadRestaurant(restaurant);
+        updateFavicon();
+    }, [loadRestaurant, restaurant, contentLoaded]);
+
+    async function updateFavicon() {
         if (restaurant) {
             if (restaurant.name && restaurant.name.length > 0) {
                 document.title = restaurant.name;
@@ -25,10 +29,10 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
                     link.rel = 'icon';
                     document.getElementsByTagName('head')[0].appendChild(link);
                 }
-                link.href = restaurant.favicon;
+                link.href = await Storage.get(restaurant.favicon);
             }
         }
-    }, [loadRestaurant, restaurant, contentLoaded]);
+    }
 
     useEffect(() => {
         contentReady(contentLoaded);
