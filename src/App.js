@@ -2,7 +2,7 @@ import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import "@aws-amplify/ui-react/styles.css";
 import './App.css';
-import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import Manage from './Manage';
 import Present from './Present';
 import SignUp from './SignUp';
@@ -19,6 +19,10 @@ function App() {
                 <Route path='/tags' element={<Tags/>} />
                 <Route path='/restaurant-setup' element={<RestaurantSetup/>} />
                 <Route path='/sign-up' element={<SignUp/>} />
+                <Route
+                    path="*"
+                    element={<Navigate to="/manage" replace />}
+                />
             </Routes>
         </Router>
     );

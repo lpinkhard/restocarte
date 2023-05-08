@@ -124,7 +124,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
                 {!restaurant && (
                     <Header as="h1" textAlign="center" onClick={refresh}>
                         {contentLoaded && (
-                            <Image src="logo512.png" alt="Restocarte" />
+                            <Image src="logo.png" alt="Restocarte" />
                         )}
                     </Header>
                 )}

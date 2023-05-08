@@ -11,7 +11,7 @@ const SignUp = () => {
             <View className="MainHeading">
                 <Container fluid>
                     <Header as="h1" textAlign="center">
-                        <Image src="logo512.png" alt="Restocarte" />
+                        <Image src="logo.png" alt="Restocarte" />
                     </Header>
                 </Container>
             </View>
