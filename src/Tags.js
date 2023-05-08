@@ -21,9 +21,6 @@ const Tags = () => {
 
     const restaurantLoaded = useCallback((val) => {
         setRestaurant(val);
-        if (!val) {
-            newRestaurant();
-        }
     }, [setRestaurant]);
 
     const onContentReady = useCallback((val) => {
@@ -58,18 +55,6 @@ const Tags = () => {
         if (restaurantsFromAPI.length > 0) {
             setRestaurant(restaurantsFromAPI[0]);
         }
-    }
-
-    async function newRestaurant() {
-        const user = await Auth.currentAuthenticatedUser();
-        const data = {
-            userId: user.username,
-        };
-        await API.graphql({
-            query: createRestaurantMutation,
-            variables: { input: data },
-        });
-        await fetchRestaurant();
     }
 
     async function createTag(event) {
