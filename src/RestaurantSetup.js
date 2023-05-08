@@ -11,6 +11,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
 import CurrencyList from 'currency-list';
+import {resizeImageFile} from "./Helpers";
 
 const RestaurantSetup = () => {
     const [ restaurant, setRestaurant ] = useState(null);
@@ -101,7 +102,7 @@ const RestaurantSetup = () => {
         };
         if (image.name.length > 0) {
             const fileId = guid();
-            await Storage.put(fileId, image);
+            await Storage.put(fileId, await resizeImageFile(image, 'PNG'));
             data.logo = fileId;
         }
         if (favicon.name.length > 0) {

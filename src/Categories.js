@@ -14,6 +14,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
 import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
+import {resizeImageFile} from "./Helpers";
 
 const Categories = ({isManager, loadCategory, restaurant}) => {
     const [ categories, setCategories ] = useState([]);
@@ -146,7 +147,7 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         };
         if (!!data.image) {
             const fileId = guid();
-            await Storage.put(fileId, image);
+            await Storage.put(fileId, await resizeImageFile(image, 'JPEG'));
             data.image = fileId;
         }
         await API.graphql({
@@ -184,7 +185,7 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         };
         if (image.name.length > 0) {
             const fileId = guid();
-            await Storage.put(fileId, image);
+            await Storage.put(fileId, await resizeImageFile(image, 'JPEG'));
             data.image = fileId;
         }
         await API.graphql({
