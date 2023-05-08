@@ -20,9 +20,6 @@ const RestaurantSetup = () => {
 
     const restaurantLoaded = useCallback((val) => {
         setRestaurant(val);
-        if (!val) {
-            newRestaurant();
-        }
         if (val && val.currency && val.currency.length > 0) {
             setSelectedCurrency(val.currency);
         }
@@ -75,6 +72,7 @@ const RestaurantSetup = () => {
         const user = await Auth.currentAuthenticatedUser();
         const data = {
             userId: user.username,
+            currency: 'USD'
         };
         await API.graphql({
             query: createRestaurantMutation,
@@ -87,6 +85,10 @@ const RestaurantSetup = () => {
         event.preventDefault();
 
         setBusyUpdating(true);
+
+        if (!restaurant) {
+            newRestaurant();
+        }
 
         const target = document.getElementById('editRestaurantForm');
         const form = new FormData(target);
@@ -108,8 +110,9 @@ const RestaurantSetup = () => {
             data.favicon = fileId;
         }
         const currency = form.get("currency");
-        if (currency) {
+        if (currency && currency.length > 0) {
             data.currency = currency;
+            setSelectedCurrency(currency);
         }
         await API.graphql({
             query: updateRestaurantMutation,
@@ -152,7 +155,52 @@ const RestaurantSetup = () => {
                                     name="currency"
                                     label="Currency"
                                     descriptiveText="Currency used for prices"
-                                    defaultValue={selectedCurrency}
+                                    value={selectedCurrency}
+                                    onChange={(e) => setSelectedCurrency(e.target.value)}
+                                >
+                                    {currencies.map((currency) => (
+                                        <option key={currency.code} value={currency.code}>{currency.name}</option>
+                                    ))}
+                                </SelectField>
+                                <TextField
+                                    name="image"
+                                    label="Logo"
+                                    descriptiveText="Logo displayed in headers"
+                                    type="file"
+                                />
+                                <TextField
+                                    name="favicon"
+                                    label="Favicon"
+                                    descriptiveText="Browser icon used on all pages"
+                                    type="file"
+                                />
+                                <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
+                                    Update
+                                </Button>
+                            </Grid>
+                        </Container>
+                    )}
+                    {!restaurant && (
+                        <Container>
+                            <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
+                                <TextField
+                                    name="name"
+                                    placeholder="Restaurant Name"
+                                    label="Name"
+                                    descriptiveText="Name of the restaurant"
+                                    required
+                                />
+                                <TextField
+                                    name="tagline"
+                                    placeholder="Restaurant Tagline"
+                                    label="Tagline"
+                                    descriptiveText="Text displayed under headers"
+                                />
+                                <SelectField
+                                    name="currency"
+                                    label="Currency"
+                                    descriptiveText="Currency used for prices"
+                                    value={selectedCurrency}
                                 >
                                     {currencies.map((currency) => (
                                         <option key={currency.code} value={currency.code}>{currency.name}</option>
