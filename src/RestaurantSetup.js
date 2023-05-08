@@ -66,7 +66,10 @@ const RestaurantSetup = () => {
 
         if (restaurantsFromAPI.length > 0) {
             setRestaurant(restaurantsFromAPI[0]);
+            return restaurantsFromAPI[0].id;
         }
+
+        return null;
     }
 
     async function newRestaurant() {
@@ -79,7 +82,7 @@ const RestaurantSetup = () => {
             query: createRestaurantMutation,
             variables: { input: data },
         });
-        await fetchRestaurant();
+        return await fetchRestaurant();
     }
 
     async function updateRestaurant(event) {
@@ -87,8 +90,11 @@ const RestaurantSetup = () => {
 
         setBusyUpdating(true);
 
-        if (!restaurant) {
-            newRestaurant();
+        let restaurantId;
+        if (restaurant) {
+            restaurantId = restaurant.id;
+        } else {
+            restaurantId = await newRestaurant();
         }
 
         const target = document.getElementById('editRestaurantForm');
@@ -96,7 +102,7 @@ const RestaurantSetup = () => {
         const image = form.get("image");
         const favicon = form.get("favicon");
         const data = {
-            id: restaurant.id,
+            id: restaurantId,
             name: form.get("name"),
             tagline: form.get("tagline"),
         };
@@ -202,6 +208,7 @@ const RestaurantSetup = () => {
                                     label="Currency"
                                     descriptiveText="Currency used for prices"
                                     value={selectedCurrency}
+                                    onChange={(e) => setSelectedCurrency(e.target.value)}
                                 >
                                     {currencies.map((currency) => (
                                         <option key={currency.code} value={currency.code}>{currency.name}</option>
