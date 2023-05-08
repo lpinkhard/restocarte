@@ -66,23 +66,7 @@ const RestaurantSetup = () => {
 
         if (restaurantsFromAPI.length > 0) {
             setRestaurant(restaurantsFromAPI[0]);
-            return restaurantsFromAPI[0].id;
         }
-
-        return null;
-    }
-
-    async function newRestaurant() {
-        const user = await Auth.currentAuthenticatedUser();
-        const data = {
-            userId: user.username,
-            currency: 'USD'
-        };
-        await API.graphql({
-            query: createRestaurantMutation,
-            variables: { input: data },
-        });
-        return await fetchRestaurant();
     }
 
     async function updateRestaurant(event) {
@@ -90,19 +74,11 @@ const RestaurantSetup = () => {
 
         setBusyUpdating(true);
 
-        let restaurantId;
-        if (restaurant) {
-            restaurantId = restaurant.id;
-        } else {
-            restaurantId = await newRestaurant();
-        }
-
         const target = document.getElementById('editRestaurantForm');
         const form = new FormData(target);
         const image = form.get("image");
         const favicon = form.get("favicon");
         const data = {
-            id: restaurantId,
             name: form.get("name"),
             tagline: form.get("tagline"),
         };
@@ -121,12 +97,25 @@ const RestaurantSetup = () => {
             data.currency = currency;
             setSelectedCurrency(currency);
         }
-        await API.graphql({
-            query: updateRestaurantMutation,
-            variables: { input: data },
-        });
+
+        if (restaurant) {
+            data.id = restaurant.id;
+
+            await API.graphql({
+                query: updateRestaurantMutation,
+                variables: { input: data },
+            });
+        } else {
+            const user = await Auth.currentAuthenticatedUser();
+            data.userId = user.username;
+
+            await API.graphql({
+                query: createRestaurantMutation,
+                variables: { input: data },
+            });
+        }
+
         await fetchRestaurant();
-        target.reset();
 
         setBusyUpdating(false);
     }
