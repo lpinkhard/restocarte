@@ -21,7 +21,7 @@ const Menu = ( {isManager, restaurant} ) => {
 
     function loadCurrency() {
         let currencyCode = 'USD';
-        if (restaurant && restaurant.currency && restaurant.length > 0) {
+        if (restaurant) {
             currencyCode = restaurant.currency;
         }
         const { decimal_digits, symbol } = CurrencyList.get(currencyCode);
