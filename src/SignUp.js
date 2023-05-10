@@ -1,8 +1,6 @@
 import React from 'react';
-import Menu from "./Menu";
 import {View} from "@aws-amplify/ui-react";
 import Subscribe from './Subscribe';
-import MainHeading from "./MainHeading";
 import {Card, Container, Header, Image, List} from "semantic-ui-react";
 
 const SignUp = () => {
