@@ -4,6 +4,7 @@ import {View, withAuthenticator} from '@aws-amplify/ui-react';
 import Menu from './Menu'
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
+import {hasWebPSupport} from "./Helpers";
 
 const Manage = () => {
     const [ restaurant, setRestaurant ] = useState(null);
@@ -17,12 +18,14 @@ const Manage = () => {
         setContentReady(val);
     }, [setContentReady]);
 
+    const webp = hasWebPSupport();
+
     return (
         <View className="Manage">
             <ManagerMenu />
-            <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} />
+            <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} />
             {contentReady && (
-                <Menu isManager restaurant={restaurant} />
+                <Menu isManager restaurant={restaurant} webp={webp} />
             )}
         </View>
     );

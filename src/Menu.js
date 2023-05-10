@@ -1,11 +1,11 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {View} from '@aws-amplify/ui-react';
+import React, {Suspense, useCallback, useEffect, useState} from "react";
 
-import Categories from './Categories'
-import MenuItems from './MenuItems'
 import CurrencyList from "currency-list";
 
-const Menu = ( {isManager, restaurant} ) => {
+const Categories = React.lazy(() => import('./Categories'));
+const MenuItems = React.lazy(() => import('./MenuItems'));
+
+const Menu = ( {isManager, restaurant, webp} ) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [priceStep, setPriceStep] = useState(0.01);
     const [decimals, setDecimals] = useState(2);
@@ -33,16 +33,16 @@ const Menu = ( {isManager, restaurant} ) => {
     function MenuContent(category) {
         if (selectedCategory) {
             return (
-                <View className="MenuContent">
-                    <MenuItems isManager={isManager} loadCategory={loadCategory} category={selectedCategory} decimals={decimals} priceStep={priceStep} currencySymbol={currencySymbol} />
-                </View>
+                <Suspense fallback={<div className="LoadingDisplay">Loading...</div>}>
+                    <MenuItems isManager={isManager} loadCategory={loadCategory} category={selectedCategory} decimals={decimals} priceStep={priceStep} currencySymbol={currencySymbol} webp={webp} />
+                </Suspense>
             );
         }
 
         return (
-            <View className="MenuContent">
-                <Categories isManager={isManager} loadCategory={loadCategory} restaurant={restaurant} selectedCategory={selectedCategory} />
-            </View>
+            <Suspense fallback={<div className="LoadingDisplay">Loading...</div>}>
+                <Categories isManager={isManager} loadCategory={loadCategory} restaurant={restaurant} selectedCategory={selectedCategory} webp={webp}/>
+            </Suspense>
         );
     }
 

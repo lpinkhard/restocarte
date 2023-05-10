@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {View} from '@aws-amplify/ui-react';
 import {Container, Header, Image} from "semantic-ui-react";
-import {API, Auth, Storage} from "aws-amplify";
+import {API, Auth} from "aws-amplify";
 import {getRestaurant, listRestaurants} from "./graphql/queries";
+import {cdnPath} from "./Helpers";
 
-const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, displayTagline} ) => {
+const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, webp, displayTagline} ) => {
     const [restaurant, setRestaurant] = useState(null);
     const [contentLoaded, setContentLoaded] = useState(false);
 
@@ -29,7 +30,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
                     link.rel = 'icon';
                     document.getElementsByTagName('head')[0].appendChild(link);
                 }
-                link.href = await Storage.get(restaurant.favicon);
+                link.href = cdnPath(restaurant.favicon);
             }
         }
     }
@@ -63,7 +64,11 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
             await Promise.all(
                 restaurantsFromAPI.map(async (restaurant) => {
                     if (restaurant.logo) {
-                        restaurant.logo = await Storage.get(restaurant.logo);
+                        if (webp) {
+                            restaurant.logo = cdnPath(restaurant.logo + '.webp');
+                        } else {
+                            restaurant.logo = cdnPath(restaurant.logo + '.png');
+                        }
                     }
                     return restaurant;
                 })
@@ -90,7 +95,11 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
 
         const restaurantData = data.getRestaurant;
         if (restaurantData.logo) {
-            restaurantData.logo = await Storage.get(restaurantData.logo);
+            if (webp) {
+                restaurantData.logo = cdnPath(restaurantData.logo + '.webp');
+            } else {
+                restaurantData.logo = cdnPath(restaurantData.logo + '.png');
+            }
         }
 
         setRestaurant(restaurantData);
@@ -123,7 +132,10 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, di
                 )}
                 {!restaurant && (
                     <Header as="h1" textAlign="center" onClick={refresh}>
-                        {contentLoaded && (
+                        {contentLoaded && webp (
+                            <Image src="logo.webp" alt="Restocarte" />
+                        )}
+                        {contentLoaded && !webp (
                             <Image src="logo.png" alt="Restocarte" />
                         )}
                     </Header>

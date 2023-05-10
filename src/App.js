@@ -13,7 +13,7 @@ const SignUp = lazy(() => import('./SignUp'));
 function App() {
     return (
         <Router>
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div className="LoadingDisplay">Loading...</div>}>
                 <Routes>
                     <Route path="/:restaurantId" element={<Present/>}/>
                     <Route path="/:restaurantId/:tableId" element={<Present/>}/>
