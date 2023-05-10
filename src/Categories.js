@@ -14,9 +14,9 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
 import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
-import {resizeImageFile} from "./Helpers";
+import {cdnPath, resizeImageFile} from "./Helpers";
 
-const Categories = ({isManager, loadCategory, restaurant}) => {
+const Categories = ({isManager, loadCategory, restaurant, webp}) => {
     const [ categories, setCategories ] = useState([]);
     const [ selectedCategory, setSelectedCategory ] = useState(null);
     const [ isCreateOpen, setIsCreateOpen ] = useState(false);
@@ -96,7 +96,11 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         await Promise.all(
             categoriesFromAPI.map(async (category) => {
                 if (category.image) {
-                    category.image = await Storage.get(category.image);
+                    if (webp) {
+                        category.image = cdnPath(category.image + '.webp');
+                    } else {
+                        category.image = cdnPath(category.image + '.jpg');
+                    }
                 }
                 if (category.order > maxOrderId) {
                     setMaxOrderId(category.order);
@@ -147,7 +151,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         };
         if (!!data.image) {
             const fileId = guid();
-            await Storage.put(fileId, await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.jpg', await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.webp', await resizeImageFile(image, 'WEBP'));
             data.image = fileId;
         }
         await API.graphql({
@@ -185,7 +190,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         };
         if (image.name.length > 0) {
             const fileId = guid();
-            await Storage.put(fileId, await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.jpg', await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.webp', await resizeImageFile(image, 'WEBP'));
             data.image = fileId;
         }
         await API.graphql({
@@ -203,7 +209,8 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         const newCategories = categories.filter((category) => category.id !== id);
         setCategories(newCategories);
         try {
-            await Storage.remove(image);
+            await Storage.remove(image + '.jpg');
+            await Storage.remove(image + '.webp');
         } catch {
         }
         await API.graphql({
@@ -417,6 +424,20 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
         setCategories(newOrderState);
     }
 
+    function ManagerView() {
+        return (
+            <View>
+                <NewCategory />
+                <EditCategoryModal />
+                {!isCreateOpen && (
+                    <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
+                        <Icon name="plus" />
+                    </Button>
+                )}
+            </View>
+        );
+    }
+
     return (
         <View className="Categories">
             <HeadingDisplay />
@@ -449,15 +470,7 @@ const Categories = ({isManager, loadCategory, restaurant}) => {
             </Card.Group>
 
             {isManager && (
-                <View>
-                    <NewCategory />
-                    <EditCategoryModal />
-                    {!isCreateOpen && (
-                        <Button primary circular icon className="floatingButton" onClick={() => toggleCreate(true)}>
-                            <Icon name="plus" />
-                        </Button>
-                    )}
-                </View>
+                <ManagerView />
             )}
 
         </View>

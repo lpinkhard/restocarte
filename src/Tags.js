@@ -5,11 +5,6 @@ import toImg from 'react-svg-to-image';
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
 import {Button, Container, Header, Modal} from "semantic-ui-react";
-import {
-    createRestaurant as createRestaurantMutation
-} from "./graphql/mutations";
-import {API, Auth, Storage} from "aws-amplify";
-import {listRestaurants} from "./graphql/queries";
 
 const Tags = () => {
     const [ restaurant, setRestaurant ] = useState(null);

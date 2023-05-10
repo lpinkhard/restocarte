@@ -14,9 +14,9 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
-import {resizeImageFile} from "./Helpers";
+import {cdnPath, resizeImageFile} from "./Helpers";
 
-const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol}) => {
+const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol, webp}) => {
     const [ menuItems, setMenuItems ] = useState([]);
     const [ categoryTitle, setCategoryTitle ] = useState('');
     const [ selectedCategory, setSelectedCategory ] = useState(category);
@@ -107,7 +107,11 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         await Promise.all(
             menuItemsFromAPI.map(async (menuItem) => {
                 if (menuItem.image) {
-                    menuItem.image = await Storage.get(menuItem.image);
+                    if (webp) {
+                        menuItem.image = cdnPath(menuItem.image + '.webp');
+                    } else {
+                        menuItem.image = cdnPath(menuItem.image + '.jpg');
+                    }
                 }
                 if (menuItem.order > maxOrderId) {
                     setMaxOrderId(menuItem.order);
@@ -175,7 +179,8 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         }
         if (!!data.image) {
             const fileId = guid();
-            await Storage.put(fileId, await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.jpg', await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.webp', await resizeImageFile(image, 'WEBP'));
             data.image = fileId;
         }
         await API.graphql({
@@ -229,7 +234,8 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         }
         if (image.name.length > 0) {
             const fileId = guid();
-            await Storage.put(fileId, await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.jpg', await resizeImageFile(image, 'JPEG'));
+            await Storage.put(fileId + '.webp', await resizeImageFile(image, 'WEBP'));
             data.image = fileId;
         }
         await API.graphql({
@@ -247,7 +253,8 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         const newMenuItems = menuItems.filter((menuItem) => menuItem.id !== id);
         setMenuItems(newMenuItems);
         try {
-            await Storage.remove(image);
+            await Storage.remove(image + '.jpg');
+            await Storage.remove(image + '.webp');
         } catch {
         }
         await API.graphql({

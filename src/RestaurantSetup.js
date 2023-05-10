@@ -11,7 +11,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
 import CurrencyList from 'currency-list';
-import {resizeImageFile} from "./Helpers";
+import {cdnPath, hasWebPSupport, resizeImageFile} from "./Helpers";
 
 const RestaurantSetup = () => {
     const [ restaurant, setRestaurant ] = useState(null);
@@ -53,10 +53,14 @@ const RestaurantSetup = () => {
         await Promise.all(
             restaurantsFromAPI.map(async (restaurant) => {
                 if (restaurant.logo) {
-                    restaurant.logo = await Storage.get(restaurant.logo);
+                    if (hasWebPSupport()) {
+                        restaurant.logo = cdnPath(restaurant.logo + '.webp');
+                    } else {
+                        restaurant.logo = cdnPath(restaurant.logo + '.png');
+                    }
                 }
                 if (restaurant.favicon) {
-                    restaurant.favicon = await Storage.get(restaurant.favicon);
+                    restaurant.favicon = cdnPath(restaurant.favicon);
                 }
                 return restaurant;
             })
@@ -82,7 +86,8 @@ const RestaurantSetup = () => {
         };
         if (image.name.length > 0) {
             const fileId = guid();
-            await Storage.put(fileId, await resizeImageFile(image, 'PNG'));
+            await Storage.put(fileId + '.png', await resizeImageFile(image, 'PNG'));
+            await Storage.put(fileId + '.webp', await resizeImageFile(image, 'WEBP'));
             data.logo = fileId;
         }
         if (favicon.name.length > 0) {

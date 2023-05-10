@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Restocarte</string>
+    <string name="title_activity_main">Restocarte</string>
+    <string name="package_name">com.restocarte</string>
+    <string name="custom_url_scheme">com.restocarte</string>
+</resources>

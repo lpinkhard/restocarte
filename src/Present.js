@@ -4,6 +4,7 @@ import MainHeading from './MainHeading';
 import Menu from './Menu';
 import React, {useCallback, useState} from "react";
 import {useParams} from "react-router-dom";
+import {hasWebPSupport} from "./Helpers";
 
 const Present = () => {
     const { restaurantId } = useParams();
@@ -18,11 +19,13 @@ const Present = () => {
         setContentReady(val);
     }, [setContentReady]);
 
+    const webp = hasWebPSupport();
+
     return (
         <View className="Present">
-            <MainHeading restaurantId={restaurantId} loadRestaurant={restaurantLoaded} contentReady={onContentReady} displayTagline />
+            <MainHeading restaurantId={restaurantId} loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} displayTagline />
             {contentReady && (
-                <Menu restaurant={restaurant} />
+                <Menu restaurant={restaurant} webp={webp} />
             )}
         </View>
     );
