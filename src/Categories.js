@@ -15,8 +15,11 @@ import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
 import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
 import {cdnPath, resizeImageFile} from "./Helpers";
+import {useTranslation} from "react-i18next";
 
 const Categories = ({isManager, loadCategory, restaurant, webp}) => {
+    const { t } = useTranslation();
+
     const [ categories, setCategories ] = useState([]);
     const [ selectedCategory, setSelectedCategory ] = useState(null);
     const [ isCreateOpen, setIsCreateOpen ] = useState(false);
@@ -135,7 +138,7 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
 
         const title = form.get("title");
         if (!title || title.length <= 0) {
-            setTitleError("A title is required");
+            setTitleError(t('title-required'));
             setTitleHasError(true);
             return;
         }
@@ -176,7 +179,7 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
 
         const title = form.get("title");
         if (!title || title.length <= 0) {
-            setTitleError("A title is required");
+            setTitleError(t('title-required'));
             setTitleHasError(true);
             return;
         }
@@ -236,32 +239,32 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
         }
         return (
             <Modal className="NewCategory" dimmer="blurring" open={isCreateOpen}>
-                <Modal.Header>New Category</Modal.Header>
+                <Modal.Header>{t('new-category')}</Modal.Header>
                 <Modal.Content>
                     <Grid id="newCategoryForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                         <TextField
                             name="title"
-                            placeholder="Category Title"
-                            descriptiveText="Title used for the category"
+                            placeholder={t('category-title')}
+                            descriptiveText={t('title-description-category')}
                             hasError={titleHasError}
                             errorMessage={titleError}
-                            label="Title *"
+                            label={t('title-label')}
                             required
                         />
                         <TextAreaField
                             name="description"
-                            placeholder="Category Description"
-                            descriptiveText="Description displayed below title"
-                            label="Description"
+                            placeholder={t('category-description')}
+                            descriptiveText={t('description-description')}
+                            label={t('description-label')}
                         />
                         <TextField
                             name="image"
-                            label="Image"
-                            descriptiveText="Image representing the category"
+                            label={t('image-label')}
+                            descriptiveText={t('image-description-category')}
                             type="file"
                         />
                         <CheckboxField
-                            label="Enabled"
+                            label={t('enabled')}
                             name="enabled"
                             value="yes"
                             defaultChecked="true"
@@ -270,10 +273,10 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
                 </Modal.Content>
                 <Modal.Actions>
                     <Button positive onClick={createCategory} disabled={busyUpdating}>
-                        Create
+                        {t('create')}
                     </Button>
                     <Button negative onClick={() => toggleCreate(false)} disabled={busyUpdating}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -292,33 +295,35 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
 
         return (
             <Modal className="EditCategoryModal" dimmer="blurring" open={isEditOpen}>
-                <Modal.Header>Edit Category</Modal.Header>
+                <Modal.Header>{t('edit-category')}</Modal.Header>
                 <Modal.Content>
                     {editingCategory && (
                     <Grid id="editCategoryForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                         <TextField
                             name="title"
-                            placeholder="Category Title"
-                            descriptiveText="Title used for the category"
-                            label="Title"
+                            placeholder={t('category-title')}
+                            descriptiveText={t('title-description-category')}
+                            label={t('title-label')}
+                            hasError={titleHasError}
+                            errorMessage={titleError}
                             defaultValue={editingCategory.title}
                             required
                         />
                         <TextAreaField
                             name="description"
-                            placeholder="Category Description"
-                            label="Description"
-                            descriptiveText="Description displayed below title"
+                            placeholder={t('category-description')}
+                            label={t('description-label')}
+                            descriptiveText={t('description-description')}
                             defaultValue={editingCategory.description}
                         />
                         <TextField
                             name="image"
-                            label="Image"
-                            descriptiveText="Image representing the category"
+                            label={t('image-label')}
+                            descriptiveText={t('image-description-category')}
                             type="file"
                         />
                         <CheckboxField
-                            label="Enabled"
+                            label={t('enabled')}
                             name="enabled"
                             value="yes"
                             defaultChecked={editingCategory.enabled}
@@ -328,10 +333,10 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
                 </Modal.Content>
                 <Modal.Actions>
                     <Button positive onClick={updateCategory} disabled={busyUpdating}>
-                        Update
+                        {t('update')}
                     </Button>
                     <Button negative onClick={() => setIsEditOpen(false)} disabled={busyUpdating}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -370,7 +375,7 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
         if (isManager) {
             return (
                 <View className="HeadingDisplay">
-                    <Header as="h2" textAlign="center">Categories</Header>
+                    <Header as="h2" textAlign="center">{t('categories')}</Header>
                 </View>
             )
         }

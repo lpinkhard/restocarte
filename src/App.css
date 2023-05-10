@@ -5,8 +5,12 @@
     cursor: pointer;
 }
 
-.DeleteCategory, .DeleteItem, .EditCategory, .EditMenuItem {
+.DeleteCategory, .DeleteItem, .EditCategory, .EditMenuItem, .orderButton {
     float: right;
+}
+
+.rtl .DeleteCategory, .rtl .DeleteItem, .rtl .EditCategory, .rtl .EditMenuItem, .rtl .orderButton {
+    float: left;
 }
 
 .MenuItems {
@@ -20,12 +24,18 @@
     -ms-transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
+    height: 100vh;
 }
 
 .amplify-menu-trigger {
     position: fixed;
     top: 2rem;
     left: 2rem;
+}
+
+.rtl .amplify-menu-trigger {
+    left: auto;
+    right: 2rem;
 }
 
 .ui.cards {
@@ -38,10 +48,19 @@
     right: 2rem;
 }
 
+.rtl .floatingButton {
+    right: auto;
+    left: 2rem;
+}
+
 .backButton {
     cursor: pointer;
 }
 
-.orderButton {
-    float: right;
+.rtl .ui.modal>.actions {
+    text-align: left;
+}
+
+.rtl .ui.modal, .rtl .ui.card>.extra.content {
+    text-align: right;
 }

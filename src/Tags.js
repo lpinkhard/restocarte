@@ -5,6 +5,7 @@ import toImg from 'react-svg-to-image';
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
 import {Button, Container, Header, Modal} from "semantic-ui-react";
+import {useTranslation} from "react-i18next";
 
 const Tags = () => {
     const [ restaurant, setRestaurant ] = useState(null);
@@ -21,6 +22,8 @@ const Tags = () => {
     const onContentReady = useCallback((val) => {
         setContentReady(val);
     }, [setContentReady]);
+
+    const { t } = useTranslation();
 
     async function createTag(event) {
         event.preventDefault();
@@ -68,53 +71,53 @@ const Tags = () => {
             <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} />
             {contentReady && (
                 <View>
-                    <Header as="h2" textAlign="center">Create Tags</Header>
+                    <Header as="h2" textAlign="center">{t('create-tags')}</Header>
                     {restaurant && (
                         <Container>
                             <Grid id="createTagForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                                 <TextField
                                     name="table"
-                                    placeholder="Table Number"
-                                    descriptiveText="Table number to be embedded in the tag"
-                                    label="Table"
+                                    placeholder={t('table-number')}
+                                    descriptiveText={t('table-number-description')}
+                                    label={t('table-label')}
                                     type="number"
                                     inputMode="numeric"
                                 />
                                 <CheckboxField
-                                    label="NFC Link"
-                                    descriptiveText="Generate a link for an NFC tag rather than a QR code"
+                                    label={t('nfc-link')}
+                                    descriptiveText={t('nfc-link-description')}
                                     name="nfc"
                                     value="yes"
                                     defaultChecked={linkIsNFC}
                                 />
                                 <Button primary onClick={createTag}>
-                                    Create
+                                    {t('create')}
                                 </Button>
                             </Grid>
                         </Container>
                     )}
                     <Modal open={modalOpen}>
-                        <Modal.Header>Table Tag</Modal.Header>
+                        <Modal.Header>{t('table-tag')}</Modal.Header>
                         {linkIsNFC && (
                             <Modal.Content>
-                                <Header as="h3" textAlign="center">NFC Link</Header>
+                                <Header as="h3" textAlign="center">{t('nfc-link')}</Header>
                                 <Text textAlign="center">{generatedLink}</Text>
                             </Modal.Content>
                         )}
                         {!linkIsNFC && (
                             <Modal.Content>
-                                <Header as="h3" textAlign="center">QR Code</Header>
+                                <Header as="h3" textAlign="center">{t('qr-code')}</Header>
                                 <QRCode id="qrCode" value={generatedLink} />
                             </Modal.Content>
                         )}
                         <Modal.Actions>
                             {!linkIsNFC && (
                                 <Button positive onClick={() => downloadQR()}>
-                                    Download
+                                    {t('download')}
                                 </Button>
                             )}
                             <Button negative onClick={() => setModalOpen(false)}>
-                                Close
+                                {t('close')}
                             </Button>
                         </Modal.Actions>
                     </Modal>

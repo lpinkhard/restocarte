@@ -1,6 +1,8 @@
 import React, {Suspense, useCallback, useEffect, useState} from "react";
 
 import CurrencyList from "currency-list";
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
 
 const Categories = React.lazy(() => import('./Categories'));
 const MenuItems = React.lazy(() => import('./MenuItems'));
@@ -15,6 +17,8 @@ const Menu = ( {isManager, restaurant, webp} ) => {
         setSelectedCategory(val);
     }, [setSelectedCategory]);
 
+    const {t} = useTranslation();
+
     useEffect(() => {
         loadCurrency();
     }, [restaurant]);
@@ -24,7 +28,24 @@ const Menu = ( {isManager, restaurant, webp} ) => {
         if (restaurant) {
             currencyCode = restaurant.currency;
         }
-        const { decimal_digits, symbol } = CurrencyList.get(currencyCode);
+
+        let currencyData, decimal_digits, symbol;
+        try {
+            currencyData = CurrencyList.get(currencyCode, i18n.language);
+            if (!currencyData) {
+                currencyData = CurrencyList.get(currencyCode);
+            }
+        } catch {
+            currencyData = CurrencyList.get(currencyCode);
+        }
+        if (currencyData) {
+            decimal_digits = currencyData.decimal_digits;
+            symbol = currencyData.symbol;
+        } else {
+            decimal_digits = 2;
+            symbol = "";
+        }
+
         setDecimals(decimal_digits);
         setPriceStep(1.0 / Math.pow(10, decimal_digits));
         setCurrencySymbol(symbol);
@@ -33,14 +54,14 @@ const Menu = ( {isManager, restaurant, webp} ) => {
     function MenuContent(category) {
         if (selectedCategory) {
             return (
-                <Suspense fallback={<div className="LoadingDisplay">Loading...</div>}>
+                <Suspense fallback={<div className="LoadingDisplay">{t('loading')}</div>}>
                     <MenuItems isManager={isManager} loadCategory={loadCategory} category={selectedCategory} decimals={decimals} priceStep={priceStep} currencySymbol={currencySymbol} webp={webp} />
                 </Suspense>
             );
         }
 
         return (
-            <Suspense fallback={<div className="LoadingDisplay">Loading...</div>}>
+            <Suspense fallback={<div className="LoadingDisplay">{t('loading')}</div>}>
                 <Categories isManager={isManager} loadCategory={loadCategory} restaurant={restaurant} selectedCategory={selectedCategory} webp={webp}/>
             </Suspense>
         );

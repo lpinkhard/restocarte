@@ -12,6 +12,8 @@ import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
 import CurrencyList from 'currency-list';
 import {cdnPath, hasWebPSupport, resizeImageFile} from "./Helpers";
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
 
 const RestaurantSetup = () => {
     const [ restaurant, setRestaurant ] = useState(null);
@@ -29,6 +31,9 @@ const RestaurantSetup = () => {
     const onContentReady = useCallback((val) => {
         setContentReady(val);
     }, [setContentReady]);
+
+    const { t } = useTranslation();
+
     function guid() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -123,7 +128,13 @@ const RestaurantSetup = () => {
         setBusyUpdating(false);
     }
 
-    const currencies = Object.values(CurrencyList.getAll("en_US"));
+    let currencyData;
+    try {
+        currencyData = CurrencyList.getAll(i18n.language.replace('-', '_'));
+    } catch {
+        currencyData = CurrencyList.getAll('en_US');
+    }
+    const currencies = Object.values(currencyData);
 
     return (
         <View className="Restaurant">
@@ -131,29 +142,29 @@ const RestaurantSetup = () => {
             <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} />
             {contentReady && (
                 <View>
-                    <Header as="h2" textAlign="center">Restaurant Setup</Header>
+                    <Header as="h2" textAlign="center">{t('restaurant-setup')}</Header>
                     {restaurant && (
                         <Container>
                             <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                                 <TextField
                                     name="name"
-                                    placeholder="Restaurant Name"
-                                    label="Name"
-                                    descriptiveText="Name of the restaurant"
+                                    placeholder={t('restaurant-name')}
+                                    label={t('name-label')}
+                                    descriptiveText={t('name-label')}
                                     defaultValue={restaurant.name}
                                     required
                                 />
                                 <TextField
                                     name="tagline"
-                                    placeholder="Restaurant Tagline"
-                                    label="Tagline"
-                                    descriptiveText="Text displayed under headers"
+                                    placeholder={t('restaurant-tagline')}
+                                    label={t('tagline-label')}
+                                    descriptiveText={t('tagline-description')}
                                     defaultValue={restaurant.tagline}
                                 />
                                 <SelectField
                                     name="currency"
-                                    label="Currency"
-                                    descriptiveText="Currency used for prices"
+                                    label={t('currency-label')}
+                                    descriptiveText={t('currency-description')}
                                     value={selectedCurrency}
                                     onChange={(e) => setSelectedCurrency(e.target.value)}
                                 >
@@ -163,18 +174,18 @@ const RestaurantSetup = () => {
                                 </SelectField>
                                 <TextField
                                     name="image"
-                                    label="Logo"
-                                    descriptiveText="Logo displayed in headers"
+                                    label={t('logo-label')}
+                                    descriptiveText={t('logo-description')}
                                     type="file"
                                 />
                                 <TextField
                                     name="favicon"
-                                    label="Favicon"
-                                    descriptiveText="Browser icon used on all pages"
+                                    label={t('favicon-label')}
+                                    descriptiveText={t('favicon-description')}
                                     type="file"
                                 />
                                 <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
-                                    Update
+                                    {t('update')}
                                 </Button>
                             </Grid>
                         </Container>
@@ -184,21 +195,21 @@ const RestaurantSetup = () => {
                             <Grid id="editRestaurantForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                                 <TextField
                                     name="name"
-                                    placeholder="Restaurant Name"
-                                    label="Name"
-                                    descriptiveText="Name of the restaurant"
+                                    placeholder={t('restaurant-name')}
+                                    label={t('name-label')}
+                                    descriptiveText={t('name-label')}
                                     required
                                 />
                                 <TextField
                                     name="tagline"
-                                    placeholder="Restaurant Tagline"
-                                    label="Tagline"
-                                    descriptiveText="Text displayed under headers"
+                                    placeholder={t('restaurant-tagline')}
+                                    label={t('tagline-label')}
+                                    descriptiveText={t('tagline-description')}
                                 />
                                 <SelectField
                                     name="currency"
-                                    label="Currency"
-                                    descriptiveText="Currency used for prices"
+                                    label={t('currency-label')}
+                                    descriptiveText={t('currency-description')}
                                     value={selectedCurrency}
                                     onChange={(e) => setSelectedCurrency(e.target.value)}
                                 >
@@ -208,18 +219,18 @@ const RestaurantSetup = () => {
                                 </SelectField>
                                 <TextField
                                     name="image"
-                                    label="Logo"
-                                    descriptiveText="Logo displayed in headers"
+                                    label={t('logo-label')}
+                                    descriptiveText={t('logo-description')}
                                     type="file"
                                 />
                                 <TextField
                                     name="favicon"
-                                    label="Favicon"
-                                    descriptiveText="Browser icon used on all pages"
+                                    label={t('favicon-label')}
+                                    descriptiveText={t('favicon-description')}
                                     type="file"
                                 />
                                 <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
-                                    Update
+                                    {t('update')}
                                 </Button>
                             </Grid>
                         </Container>
