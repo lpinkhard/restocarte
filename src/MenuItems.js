@@ -15,6 +15,8 @@ import {API, Auth, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 import {cdnPath, resizeImageFile} from "./Helpers";
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
 
 const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol, webp}) => {
     const [ menuItems, setMenuItems ] = useState([]);
@@ -36,6 +38,8 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         window.history.pushState(null, null, window.location.pathname);
         resetCategory()
     }
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         fetchCategory();
@@ -147,7 +151,7 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
 
         const title = form.get("title");
         if (!title || title.length <= 0) {
-            setTitleError("A title is required");
+            setTitleError(t('title-required'));
             setTitleHasError(true);
             return;
         }
@@ -159,7 +163,7 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
             const floatPrice = parseFloat(price);
 
             if (Math.abs(floatPrice - floatPrice.toFixed(decimals)) > precision) {
-                setPriceError("Price is invalid");
+                setPriceError(t('price-invalid'));
                 setPriceHasError(true);
                 return;
             }
@@ -204,7 +208,7 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
 
         const title = form.get("title");
         if (!title || title.length <= 0) {
-            setTitleError("A title is required");
+            setTitleError(t('title-required'));
             setTitleHasError(true);
             return;
         }
@@ -216,7 +220,7 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
             const floatPrice = parseFloat(price);
 
             if (Math.abs(floatPrice - floatPrice.toFixed(decimals)) > precision) {
-                setPriceError("Price is invalid");
+                setPriceError(t('price-invalid'));
                 setPriceHasError(true);
                 return;
             }
@@ -291,15 +295,15 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
 
         return (
             <Modal className="EditMenuItemModal" dimmer="blurring" open={isEditOpen}>
-                <Modal.Header>Edit Item</Modal.Header>
+                <Modal.Header>{t('edit-item')}</Modal.Header>
                 <Modal.Content>
                     {editingMenuItem && (
                         <Grid id="editMenuItemForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                             <TextField
                                 name="title"
-                                placeholder="Item Title"
-                                descriptiveText="Title for the menu item"
-                                label="Title *"
+                                placeholder={t('item-title')}
+                                descriptiveText={t('title-description-item')}
+                                label={t('title-label')}
                                 hasError={titleHasError}
                                 errorMessage={titleError}
                                 defaultValue={editingMenuItem.title}
@@ -307,16 +311,16 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                             />
                             <TextAreaField
                                 name="description"
-                                placeholder="Item Description"
-                                descriptiveText="Description displayed below title"
-                                label="Description"
+                                placeholder={t('item-description')}
+                                descriptiveText={t('description-description')}
+                                label={t('description-label')}
                                 defaultValue={editingMenuItem.description}
                             />
                             <TextField
                                 name="price"
-                                placeholder="Item Price"
-                                descriptiveText="Default price for the menu item"
-                                label="Price"
+                                placeholder={t('item-price')}
+                                descriptiveText={t('price-description')}
+                                label={t('price-label')}
                                 hasError={priceHasError}
                                 errorMessage={priceError}
                                 type="number"
@@ -326,12 +330,12 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                             />
                             <TextField
                                 name="image"
-                                label="Image"
-                                descriptiveText="Image representing the menu item"
+                                label={t('image-label')}
+                                descriptiveText={t('image-description-item')}
                                 type="file"
                             />
                             <CheckboxField
-                                label="Enabled"
+                                label={t('enabled')}
                                 name="enabled"
                                 value="yes"
                                 defaultChecked={editingMenuItem.enabled}
@@ -341,10 +345,10 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                 </Modal.Content>
                 <Modal.Actions>
                     <Button positive onClick={updateMenuItem} disabled={busyUpdating}>
-                        Update
+                        {t('update')}
                     </Button>
                     <Button negative onClick={() => setIsEditOpen(false)} disabled={busyUpdating}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -371,29 +375,29 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         }
         return (
             <Modal className="NewItem" dimmer="blurring" open={isCreateOpen}>
-                <Modal.Header>New Item</Modal.Header>
+                <Modal.Header>{t('new-item')}</Modal.Header>
                 <Modal.Content>
                     <Grid id="newMenuItemForm" as="form" rowGap="15px" columnGap="15px" padding="20px">
                         <TextField
                             name="title"
-                            placeholder="Item Title"
-                            descriptiveText="Title for the menu item"
-                            label="Title *"
+                            placeholder={t('item-title')}
+                            descriptiveText={t('title-description-item')}
+                            label={t('title-label')}
                             hasError={titleHasError}
                             errorMessage={titleError}
                             required
                         />
                         <TextAreaField
                             name="description"
-                            placeholder="Item Description"
-                            descriptiveText="Description displayed below title"
-                            label="Description"
+                            placeholder={t('item-description')}
+                            descriptiveText={t('description-description')}
+                            label={t('description-label')}
                         />
                         <TextField
                             name="price"
-                            placeholder="Item Price"
-                            descriptiveText="Default price for the menu item"
-                            label="Price"
+                            placeholder={t('item-price')}
+                            descriptiveText={t('price-description')}
+                            label={t('price-label')}
                             hasError={priceHasError}
                             errorMessage={priceError}
                             type="number"
@@ -402,12 +406,12 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                         />
                         <TextField
                             name="image"
-                            label="Image"
-                            descriptiveText="Image representing the menu item"
+                            label={t('image-label')}
+                            descriptiveText={t('image-description-item')}
                             type="file"
                         />
                         <CheckboxField
-                            label="Enabled"
+                            label={t('enabled')}
                             name="enabled"
                             value="yes"
                             defaultChecked="true"
@@ -416,10 +420,10 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                 </Modal.Content>
                 <Modal.Actions>
                     <Button positive onClick={createMenuItem} disabled={busyUpdating}>
-                        Create
+                        {t('create')}
                     </Button>
                     <Button negative onClick={() => toggleCreate(false)} disabled={busyUpdating}>
-                        Cancel
+                        {t('cancel')}
                     </Button>
                 </Modal.Actions>
             </Modal>
@@ -514,11 +518,23 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         setMenuItems(newOrderState);
     }
 
+    function BackButton() {
+        if (document.documentElement.dir === 'rtl') {
+            return (
+                <Icon name="caret right" onClick={resetCategory} className="backButton"/>
+            );
+        }
+
+        return (
+            <Icon name="caret left" onClick={resetCategory} className="backButton"/>
+        );
+    }
+
     return (
         <View className="MenuItems">
             <Header as="h2" textAlign="center">
                 {categoryTitle && (
-                    <Icon name="caret left" onClick={resetCategory} className="backButton"/>
+                    <BackButton />
                 )}
                 {categoryTitle}
             </Header>

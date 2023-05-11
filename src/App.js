@@ -3,6 +3,8 @@ import 'semantic-ui-css/semantic.min.css';
 import "@aws-amplify/ui-react/styles.css";
 import './App.css';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import {useTranslation} from "react-i18next";
+import i18n from "i18next";
 
 const Present = lazy(() => import('./Present'));
 const Manage = lazy(() => import('./Manage'));
@@ -11,9 +13,17 @@ const RestaurantSetup = lazy(() => import('./RestaurantSetup'));
 const SignUp = lazy(() => import('./SignUp'));
 
 function App() {
+    const { t } = useTranslation();
+
+    document.documentElement.lang = i18n.language;
+    if (i18n.language.startsWith('ar') || i18n.language.startsWith('he')) {
+        document.documentElement.dir = 'rtl';
+        document.documentElement.className = 'rtl';
+    }
+
     return (
         <Router>
-            <Suspense fallback={<div className="LoadingDisplay">Loading...</div>}>
+            <Suspense fallback={<div className="LoadingDisplay">{t('loading')}</div>}>
                 <Routes>
                     <Route path="/:restaurantId" element={<Present/>}/>
                     <Route path="/:restaurantId/:tableId" element={<Present/>}/>

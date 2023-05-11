@@ -1,7 +1,10 @@
 import { loadStripe } from '@stripe/stripe-js'
 import { Button } from '@aws-amplify/ui-react';
+import {useTranslation} from "react-i18next";
 
 export default function Subscribe ({plan, comingSoon}) {
+    const { t } = useTranslation();
+
     const handleSubscribe = async e => {
         let price_key;
         switch (parseInt(plan)) {
@@ -27,5 +30,5 @@ export default function Subscribe ({plan, comingSoon}) {
         })
     }
 
-    return <Button className="orderButton" onClick={handleSubscribe} disabled={comingSoon}>{comingSoon ? 'Coming Soon' : 'Subscribe'}</Button>
+    return <Button className="orderButton" onClick={handleSubscribe} disabled={comingSoon}>{comingSoon ? t('coming-soon') : t('subscribe')}</Button>
 }
