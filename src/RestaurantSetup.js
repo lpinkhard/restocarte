@@ -150,7 +150,7 @@ const RestaurantSetup = () => {
                                     name="name"
                                     placeholder={t('restaurant-name')}
                                     label={t('name-label')}
-                                    descriptiveText={t('name-label')}
+                                    descriptiveText={t('name-description')}
                                     defaultValue={restaurant.name}
                                     required
                                 />
