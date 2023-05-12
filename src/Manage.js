@@ -23,7 +23,7 @@ const Manage = () => {
     return (
         <View className="Manage">
             <ManagerMenu />
-            <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} />
+            <MainHeading isManager loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} isMenu />
             {contentReady && (
                 <Menu isManager restaurant={restaurant} webp={webp} />
             )}

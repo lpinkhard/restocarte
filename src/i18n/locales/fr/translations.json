@@ -53,5 +53,14 @@
   "logo-description": "Logo affiché dans les en-têtes",
   "favicon-label": "Favicon",
   "favicon-description": "Icône du navigateur utilisée sur toutes les pages",
-  "price-invalid": "Le prix n'est pas valide"
+  "price-invalid": "Le prix n'est pas valide",
+  "appearance": "Apparence",
+  "background-color-label": "Couleur d'Arrière-plan",
+  "background-color-description": "Couleur d'arrière-plan principale",
+  "text-color-label": "Couleur du Texte",
+  "text-color-description": "Couleur principale du texte",
+  "item-background-color-label": "Couleur d'Arrière-plan de l'Elément",
+  "item-background-color-description": "Couleur d'arrière-plan pour les catégories et les éléments de menu",
+  "item-text-color-label": "Couleur du Texte de l'Elément",
+  "item-text-color-description": "Couleur du texte pour les catégories et les éléments de menu"
 }

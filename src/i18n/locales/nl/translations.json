@@ -53,5 +53,14 @@
   "logo-description": "Logo weergegeven in koppen",
   "favicon-label": "Favicon",
   "favicon-description": "Browserpictogram gebruikt op alle pagina's",
-  "price-invalid": "Prijs is ongeldig"
+  "price-invalid": "Prijs is ongeldig",
+  "appearance": "Uiterlijk",
+  "background-color-label": "Achtergrondkleur",
+  "background-color-description": "Primaire achtergrondkleur",
+  "text-color-label": "Tekstkleur",
+  "text-color-description": "Primaire tekstkleur",
+  "item-background-color-label": "Item Achtergrondkleur",
+  "item-background-color-description": "Achtergrondkleur voor categorieën en menu-items",
+  "item-text-color-label": "Item Tekstkleur",
+  "item-text-color-description": "Tekstkleur voor categorieën en menu-items"
 }

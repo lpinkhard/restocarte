@@ -53,5 +53,14 @@
   "logo-description": "Logo displayed in headers",
   "favicon-label": "Favicon",
   "favicon-description": "Browser icon used on all pages",
-  "price-invalid": "Price is invalid"
+  "price-invalid": "Price is invalid",
+  "appearance": "Appearance",
+  "background-color-label": "Background Colour",
+  "background-color-description": "Primary background colour",
+  "text-color-label": "Text Colour",
+  "text-color-description": "Primary text colour",
+  "item-background-color-label": "Item Background Colour",
+  "item-background-color-description": "Background colour for categories and menu items",
+  "item-text-color-label": "Item Text Colour",
+  "item-text-color-description": "Text colour for categories and menu items"
 }

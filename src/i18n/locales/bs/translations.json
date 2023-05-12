@@ -53,5 +53,14 @@
   "logo-description": "Logotip prikazan u zaglavljima",
   "favicon-label": "Favicon",
   "favicon-description": "Ikona pretraživača se koristi na svim stranicama",
-  "price-invalid": "Cijena je nevažeća"
+  "price-invalid": "Cijena je nevažeća",
+  "appearance": "Izgled",
+  "background-color-label": "Boja Pozadine",
+  "background-color-description": "Primarna boja pozadine",
+  "text-color-label": "Boja Teksta",
+  "text-color-description": "Primarna boja teksta",
+  "item-background-color-label": "Boja Pozadine Stavke",
+  "item-background-color-description": "Boja pozadine za kategorije i stavke menija",
+  "item-text-color-label": "Boja Teksta Stavke",
+  "item-text-color-description": "Boja teksta za kategorije i stavke menija"
 }

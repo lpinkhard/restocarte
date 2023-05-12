@@ -246,6 +246,7 @@ export const onCreateRestaurant = /* GraphQL */ `
       }
       userId
       currency
+      styleData
       owner
       createdAt
       updatedAt
@@ -281,6 +282,7 @@ export const onUpdateRestaurant = /* GraphQL */ `
       }
       userId
       currency
+      styleData
       owner
       createdAt
       updatedAt
@@ -316,6 +318,7 @@ export const onDeleteRestaurant = /* GraphQL */ `
       }
       userId
       currency
+      styleData
       owner
       createdAt
       updatedAt

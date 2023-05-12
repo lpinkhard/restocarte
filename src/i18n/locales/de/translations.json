@@ -53,5 +53,14 @@
   "logo-description": "Logo wird in Überschriften angezeigt",
   "favicon-Label": "Favicon",
   "favicon-description": "Browsersymbol wird auf allen Seiten verwendet",
-  "price-invalid": "Preis ist ungültig"
+  "price-invalid": "Preis ist ungültig",
+  "appearance": "Aussehen",
+  "background-color-label": "Hintergrundfarbe",
+  "background-color-description": "Primäre Hintergrundfarbe",
+  "text-color-label": "Textfarbe",
+  "text-color-description": "Primäre Textfarbe",
+  "item-background-color-label": "Hintergrundfarbe des Artikels",
+  "item-background-color-description": "Hintergrundfarbe für Kategorien und Menüelemente",
+  "item-text-color-label": "Artikeltextfarbe",
+  "item-text-color-description": "Textfarbe für Kategorien und Menüpunkte"
 }

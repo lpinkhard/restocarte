@@ -53,5 +53,14 @@
   "logo-description": "Logotipo mostrado en los encabezados",
   "favicon-label": "Favicon",
   "favicon-description": "Icono del navegador usado en todas las páginas",
-  "price-invalid": "El precio no es válido"
+  "price-invalid": "El precio no es válido",
+  "appearance": "Apariencia",
+  "background-color-label": "Color de Fondo",
+  "background-color-description": "Color de fondo principal",
+  "text-color-label": "Color del Texto",
+  "text-color-description": "Color de texto principal",
+  "item-background-color-label": "Color de Fondo del Artículo",
+  "item-background-color-description": "Color de fondo para categorías y artículos de menú",
+  "item-text-color-label": "Color del Texto del Artículo",
+  "item-text-color-description": "Color de texto para categorías y artículos de menú"
 }

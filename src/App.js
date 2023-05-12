@@ -10,6 +10,7 @@ const Present = lazy(() => import('./Present'));
 const Manage = lazy(() => import('./Manage'));
 const Tags = lazy(() => import('./Tags'));
 const RestaurantSetup = lazy(() => import('./RestaurantSetup'));
+const Appearance = lazy(() => import('./Appearance'));
 const SignUp = lazy(() => import('./SignUp'));
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
                     <Route path='/manage' element={<Manage/>} />
                     <Route path='/tags' element={<Tags/>} />
                     <Route path='/restaurant-setup' element={<RestaurantSetup/>} />
+                    <Route path='/appearance' element={<Appearance/>} />
                     <Route path='/sign-up' element={<SignUp/>} />
                     <Route
                         path="*"

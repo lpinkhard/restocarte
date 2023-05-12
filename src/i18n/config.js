@@ -20,6 +20,9 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
         de: {
             translations: require('./locales/de/translations.json')
         },
+        'en-US': {
+            translations: require('./locales/en-US/translations.json')
+        },
         es: {
             translations: require('./locales/es/translations.json')
         },
@@ -29,14 +32,17 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
         ge: {
             translations: require('./locales/ge/translations.json')
         },
+        hr: {
+            translations: require('./locales/hr/translations.json')
+        },
         nl: {
             translations: require('./locales/nl/translations.json')
         },
-        sr: {
-            translations: require('./locales/sr/translations.json')
-        },
         ru: {
             translations: require('./locales/ru/translations.json')
+        },
+        sr: {
+            translations: require('./locales/sr/translations.json')
         },
         tr: {
             translations: require('./locales/tr/translations.json')
@@ -55,6 +61,6 @@ i18n.use(LanguageDetector).use(initReactI18next).init({
     }
 });
 
-i18n.languages = ['en', 'af', 'ar', 'bs', 'de', 'es', 'fr', 'ge', 'nl', 'ru', 'sr', 'tr', 'zh-CN', 'zh-TW'];
+i18n.languages = ['en', 'af', 'ar', 'bs', 'de', 'en-US', 'es', 'fr', 'ge', 'hr', 'nl', 'ru', 'sr', 'tr', 'zh-CN', 'zh-TW'];
 
 export default i18n;

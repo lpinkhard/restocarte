@@ -131,6 +131,9 @@ const RestaurantSetup = () => {
     let currencyData;
     try {
         currencyData = CurrencyList.getAll(i18n.language.replace('-', '_'));
+        if (!currencyData) {
+            currencyData = CurrencyList.getAll('en_US');
+        }
     } catch {
         currencyData = CurrencyList.getAll('en_US');
     }

@@ -61,5 +61,6 @@ type Restaurant
   categories: [Category] @hasMany
   userId: String!
   currency: String
+  styleData: String
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }

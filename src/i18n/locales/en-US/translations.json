@@ -1,0 +1,10 @@
+{
+  "background-color-label": "Background Color",
+  "background-color-description": "Primary background color",
+  "text-color-label": "Text Color",
+  "text-color-description": "Primary text color",
+  "item-background-color-label": "Item Background Color",
+  "item-background-color-description": "Background color for categories and menu items",
+  "item-text-color-label": "Item Text Color",
+  "item-text-color-description": "Text color for categories and menu items"
+}

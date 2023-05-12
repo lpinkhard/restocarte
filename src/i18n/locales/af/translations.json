@@ -53,5 +53,14 @@
   "logo-description": "Logo vertoon in opskrifte",
   "favicon-label": "Favicon",
   "favicon-description": "Blaaier-ikoon wat op alle bladsye gebruik word",
-  "price-invalid": "Prys is ongeldig"
+  "price-invalid": "Prys is ongeldig",
+  "appearance": "Voorkoms",
+  "background-color-label": "Agtergrondkleur",
+  "background-color-description": "Primêre agtergrondkleur",
+  "text-color-label": "Tekskleur",
+  "text-color-description": "Primêre tekskleur",
+  "item-background-color-label": "Item Agtergrondkleur",
+  "item-background-color-description": "Agtergrondkleur vir kategorieë en spyskaartitems",
+  "item-text-color-label": "Item Tekskleur",
+  "item-text-color-description": "Tekskleur vir kategorieë en spyskaartitems"
 }
