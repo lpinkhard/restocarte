@@ -62,5 +62,13 @@
   "item-background-color-label": "لون خلفية العنصر",
   "item-background-color-description": "لون الخلفية للفئات وعناصر القائمة",
   "item-text-color-label": "لون نص العنصر",
-  "item-text-color-description": "لون النص للفئات وعناصر القائمة"
+  "item-text-color-description": "لون النص للفئات وعناصر القائمة",
+  "social-login-label": "تسجيل الدخول الاجتماعي" ,
+  "social-login-description": "خيار تسجيل الدخول باستخدام الشبكة الاجتماعية" ,
+  "social-none": "لا شيء",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "تسجيل الدخول باستخدام Facebook",
+  "login-with-wechat": "تسجيل الدخول باستخدام WeChat",
+  "logout": "تسجيل الخروج"
 }

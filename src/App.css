@@ -27,6 +27,11 @@
     height: 100vh;
 }
 
+.socialContainer {
+    margin: 1rem;
+    text-align: center;
+}
+
 .amplify-menu-trigger {
     position: fixed;
     top: 2rem;

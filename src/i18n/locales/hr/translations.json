@@ -62,5 +62,13 @@
   "item-background-color-label": "Boja Pozadine Stavke",
   "item-background-color-description": "Boja pozadine za kategorije i stavke izbornika",
   "item-text-color-label": "Boja Teksta Stavke",
-  "item-text-color-description": "Boja teksta za kategorije i stavke izbornika"
+  "item-text-color-description": "Boja teksta za kategorije i stavke izbornika",
+  "social-login-label": "Prijava na Društvenim Mrežama",
+  "social-login-description": "Opcija prijave na društvene mreže",
+  "social-none": "Ništa",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Prijavite se putem Facebooka",
+  "login-with-wechat": "Prijavite se putem WeChata",
+  "logout": "Odjava"
 }

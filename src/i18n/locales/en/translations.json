@@ -62,5 +62,13 @@
   "item-background-color-label": "Item Background Colour",
   "item-background-color-description": "Background colour for categories and menu items",
   "item-text-color-label": "Item Text Colour",
-  "item-text-color-description": "Text colour for categories and menu items"
+  "item-text-color-description": "Text colour for categories and menu items",
+  "social-login-label": "Social Login",
+  "social-login-description": "Option to login with social network",
+  "social-none": "None",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Login with Facebook",
+  "login-with-wechat": "Login with WeChat",
+  "logout": "Logout"
 }

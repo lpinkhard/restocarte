@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from "react";
-import {Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
+import {CheckboxField, Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
@@ -19,12 +19,16 @@ const RestaurantSetup = () => {
     const [ restaurant, setRestaurant ] = useState(null);
     const [ contentReady, setContentReady ] = useState(false);
     const [ selectedCurrency, setSelectedCurrency ] = useState("USD");
+    const [ selectedSocialLogin, setSelectedSocialLogin ] = useState("none");
     const [ busyUpdating, setBusyUpdating ] = useState(false);
 
     const restaurantLoaded = useCallback((val) => {
         setRestaurant(val);
         if (val && val.currency && val.currency.length > 0) {
             setSelectedCurrency(val.currency);
+        }
+        if (val && val.socialLogin && val.socialLogin.length > 0) {
+            setSelectedSocialLogin(val.socialLogin);
         }
     }, [setRestaurant]);
 
@@ -105,6 +109,11 @@ const RestaurantSetup = () => {
             data.currency = currency;
             setSelectedCurrency(currency);
         }
+        const socialLogin = form.get("social-login");
+        if (socialLogin && socialLogin.length > 0) {
+            data.socialLogin = socialLogin;
+            setSelectedSocialLogin(socialLogin);
+        }
 
         if (restaurant) {
             data.id = restaurant.id;
@@ -175,6 +184,16 @@ const RestaurantSetup = () => {
                                         <option key={currency.code} value={currency.code}>{currency.name}</option>
                                     ))}
                                 </SelectField>
+                                <SelectField
+                                    name="social-login"
+                                    label={t('social-login-label')}
+                                    descriptiveText={t('social-login-description')}
+                                    value={selectedSocialLogin}
+                                    onChange={(e) => setSelectedSocialLogin(e.target.value)}
+                                >
+                                    <option key="none" value="none">{t('social-none')}</option>
+                                    <option key="facebook" value="facebook">{t('social-facebook')}</option>
+                                </SelectField>
                                 <TextField
                                     name="image"
                                     label={t('logo-label')}
@@ -219,6 +238,16 @@ const RestaurantSetup = () => {
                                     {currencies.map((currency) => (
                                         <option key={currency.code} value={currency.code}>{currency.name}</option>
                                     ))}
+                                </SelectField>
+                                <SelectField
+                                    name="social-login"
+                                    label={t('social-login-label')}
+                                    descriptiveText={t('social-login-description')}
+                                    value={selectedSocialLogin}
+                                    onChange={(e) => setSelectedSocialLogin(e.target.value)}
+                                >
+                                    <option key="none" value="none">{t('social-none')}</option>
+                                    <option key="facebook" value="facebook">{t('social-facebook')}</option>
                                 </SelectField>
                                 <TextField
                                     name="image"

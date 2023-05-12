@@ -62,5 +62,13 @@
   "item-background-color-label": "Öğe Arka Plan Rengi",
   "item-background-color-description": "Kategoriler ve menü öğeleri için arka plan rengi",
   "item-text-color-label": "Öğe Metin Rengi",
-  "item-text-color-description": "Kategoriler ve menü öğeleri için metin rengi"
+  "item-text-color-description": "Kategoriler ve menü öğeleri için metin rengi",
+  "social-login-label": "Sosyal Giriş",
+  "social-login-description": "Sosyal ağ ile giriş yapma seçeneği",
+  "social-none": "Yok",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Facebook ile giriş yap",
+  "login-with-wechat": "WeChat ile giriş yap",
+  "logout": "Çıkış"
 }

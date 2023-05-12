@@ -20,6 +20,7 @@ export declare type RestaurantUpdateFormInputValues = {
     favicon?: string;
     userId?: string;
     currency?: string;
+    socialLogin?: string;
     styleData?: string;
     owner?: string;
 };
@@ -30,6 +31,7 @@ export declare type RestaurantUpdateFormValidationValues = {
     favicon?: ValidationFunction<string>;
     userId?: ValidationFunction<string>;
     currency?: ValidationFunction<string>;
+    socialLogin?: ValidationFunction<string>;
     styleData?: ValidationFunction<string>;
     owner?: ValidationFunction<string>;
 };
@@ -42,6 +44,7 @@ export declare type RestaurantUpdateFormOverridesProps = {
     favicon?: PrimitiveOverrideProps<TextFieldProps>;
     userId?: PrimitiveOverrideProps<TextFieldProps>;
     currency?: PrimitiveOverrideProps<TextFieldProps>;
+    socialLogin?: PrimitiveOverrideProps<TextFieldProps>;
     styleData?: PrimitiveOverrideProps<TextFieldProps>;
     owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;

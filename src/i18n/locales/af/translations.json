@@ -62,5 +62,13 @@
   "item-background-color-label": "Item Agtergrondkleur",
   "item-background-color-description": "Agtergrondkleur vir kategorieë en spyskaartitems",
   "item-text-color-label": "Item Tekskleur",
-  "item-text-color-description": "Tekskleur vir kategorieë en spyskaartitems"
+  "item-text-color-description": "Tekskleur vir kategorieë en spyskaartitems",
+  "social-login-label": "Sosiale Aanmelding",
+  "social-login-description": "Opsie om met sosiale netwerk aan te meld",
+  "social-none": "Geen",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Meld aan met Facebook",
+  "login-with-wechat": "Meld aan met WeChat",
+  "logout": "Teken Uit"
 }

@@ -54,7 +54,7 @@
   "favicon-label": "網站圖標",
   "favicon-description": "所有頁面上使用的瀏覽器圖標",
   "price-invalid": "價格無效",
-  "外觀": "外觀",
+  "appearance": "外觀",
   "background-color-label": "背景色",
   "background-color-description": "主要背景顏色",
   "text-color-label": "文本顏色",
@@ -62,5 +62,13 @@
   "item-background-color-label": "項目背景色",
   "item-background-color-description": "類別和菜單項的背景顏色",
   "item-text-color-label": "項目文本顏色",
-  "item-text-color-description": "類別和菜單項的文本顏色"
+  "item-text-color-description": "類別和菜單項的文本顏色",
+  "social-login-label": "社交登錄",
+  "social-login-description": "使用社交網絡登錄的選項",
+  "social-none": "無",
+  "social-facebook": "Facebook",
+  "social-wechat": "微信",
+  "login-with-facebook": "Facebook 登錄",
+  "login-with-wechat": "微信登錄",
+  "logout": "註銷"
 }

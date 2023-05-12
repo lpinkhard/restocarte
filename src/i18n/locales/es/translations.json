@@ -62,5 +62,13 @@
   "item-background-color-label": "Color de Fondo del Artículo",
   "item-background-color-description": "Color de fondo para categorías y artículos de menú",
   "item-text-color-label": "Color del Texto del Artículo",
-  "item-text-color-description": "Color de texto para categorías y artículos de menú"
+  "item-text-color-description": "Color de texto para categorías y artículos de menú",
+  "social-login-label": "Inicio de Sesión Social",
+  "social-login-description": "Opción para iniciar sesión con la red social",
+  "social-none": "Ninguno",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Iniciar Sesión con Facebook",
+  "login-with-wechat": "Iniciar Sesión con WeChat",
+  "logout": "Cerrar Sesión"
 }

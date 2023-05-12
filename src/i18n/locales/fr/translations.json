@@ -62,5 +62,13 @@
   "item-background-color-label": "Couleur d'Arrière-plan de l'Elément",
   "item-background-color-description": "Couleur d'arrière-plan pour les catégories et les éléments de menu",
   "item-text-color-label": "Couleur du Texte de l'Elément",
-  "item-text-color-description": "Couleur du texte pour les catégories et les éléments de menu"
+  "item-text-color-description": "Couleur du texte pour les catégories et les éléments de menu",
+  "social-login-label": "Connexion Sociale",
+  "social-login-description": "Option de connexion avec un réseau social",
+  "social-none": "Aucun",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Connexion avec Facebook",
+  "login-with-wechat": "Connexion avec WeChat",
+  "logout": "Déconnexion"
 }

@@ -62,5 +62,13 @@
   "item-background-color-label": "项目背景色",
   "item-background-color-description": "类别和菜单项的背景颜色",
   "item-text-color-label": "项目文字颜色",
-  "item-text-color-description": "类别和菜单项的文本颜色"
+  "item-text-color-description": "类别和菜单项的文本颜色",
+  "social-login-label": "社交登录",
+  "social-login-description": "使用社交网络登录的选项",
+  "social-none": "无",
+  "social-facebook": "Facebook",
+  "social-wechat": "微信",
+  "login-with-facebook": "Facebook 登录",
+  "login-with-wechat": "微信登录",
+  "logout": "注销"
 }

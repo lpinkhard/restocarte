@@ -62,5 +62,13 @@
   "item-background-color-label": "Item Achtergrondkleur",
   "item-background-color-description": "Achtergrondkleur voor categorieën en menu-items",
   "item-text-color-label": "Item Tekstkleur",
-  "item-text-color-description": "Tekstkleur voor categorieën en menu-items"
+  "item-text-color-description": "Tekstkleur voor categorieën en menu-items",
+  "social-login-label": "Sociale Login",
+  "social-login-description": "Optie om in te loggen met sociaal netwerk",
+  "social-none": "Geen",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Log in met Facebook",
+  "login-with-wechat": "Log in met WeChat",
+  "logout": "Uitloggen"
 }
