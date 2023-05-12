@@ -25,12 +25,12 @@
     "react-qr-code": "^2.0.11",
     "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
+    "react-social-login": "^3.4.17",
     "react-svg-to-image": "^3.0.0",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.10",
-    "web-vitals": "^2.1.4",
-    "react-social-login": "file:../react-social-login"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
