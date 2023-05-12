@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from "react";
-import {CheckboxField, Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
+import {Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";

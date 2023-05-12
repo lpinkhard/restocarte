@@ -16,7 +16,6 @@ import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
 import {cdnPath, resizeImageFile} from "./Helpers";
 import {useTranslation} from "react-i18next";
-import i18n from "i18next";
 
 const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol, webp}) => {
     const [ menuItems, setMenuItems ] = useState([]);
