@@ -62,5 +62,13 @@
   "item-background-color-label": "цвет фона элемента",
   "item-background-color-description": "цвет фона для категорий и пунктов меню",
   "item-text-color-label": "цвет текста элемента",
-  "item-text-color-description": "цвет текста для категорий и пунктов меню"
+  "item-text-color-description": "цвет текста для категорий и пунктов меню",
+  "social-login-label": "вход через социальные сети",
+  "social-login-description": "возможность входа через социальную сеть",
+  "social-none": "нет",
+  "social-facebook": "фейсбук",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Войти через Facebook",
+  "login-with-wechat": "Войти через WeChat",
+  "logout": "выйти"
 }

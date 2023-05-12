@@ -62,5 +62,13 @@
   "item-background-color-label": "ელემენტის ფონის ფერი",
   "item-background-color-description": "ფონის ფერი კატეგორიებისა და მენიუს ელემენტებისთვის",
   "item-text-color-label": "ელემენტის ტექსტის ფერი",
-  "item-text-color-description": "ტექსტის ფერი კატეგორიებისა და მენიუს ელემენტებისთვის"
+  "item-text-color-description": "ტექსტის ფერი კატეგორიებისა და მენიუს ელემენტებისთვის",
+  "social-login-label": "სოციალური შესვლა",
+  "social-login-description": "სოციალური ქსელით შესვლის ვარიანტი",
+  "social-none": "არცერთი",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "შესვლა Facebook-ით",
+  "login-with-wechat": "შესვლა WeChat-ით",
+  "logout": "გამოსვლა"
 }

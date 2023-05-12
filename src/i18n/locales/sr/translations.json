@@ -62,5 +62,13 @@
   "item-background-color-label": "Боја Позадине Ставке",
   "item-background-color-description": "Боја позадине за категорије и ставке менија",
   "item-text-color-label": "Боја Текста Ставке",
-  "item-text-color-description": "Боја текста за категорије и ставке менија"
+  "item-text-color-description": "Боја текста за категорије и ставке менија",
+  "social-login-label": "Социал Логин",
+  "social-login-description": "Опција за пријаву преко друштвене мреже",
+  "social-none": "Ништа",
+  "social-facebook": "Фацебоок",
+  "social-wechat": "ВеЦхат",
+  "login-with-facebook": "Пријавите се преко Фацебоок-а",
+  "login-with-wechat": "Пријавите се са ВеЦхат-ом",
+  "logout": "Одјава"
 }

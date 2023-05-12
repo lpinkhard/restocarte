@@ -30,6 +30,7 @@ export default function RestaurantUpdateForm(props) {
     favicon: "",
     userId: "",
     currency: "",
+    socialLogin: "",
     styleData: "",
     owner: "",
   };
@@ -39,6 +40,9 @@ export default function RestaurantUpdateForm(props) {
   const [favicon, setFavicon] = React.useState(initialValues.favicon);
   const [userId, setUserId] = React.useState(initialValues.userId);
   const [currency, setCurrency] = React.useState(initialValues.currency);
+  const [socialLogin, setSocialLogin] = React.useState(
+    initialValues.socialLogin
+  );
   const [styleData, setStyleData] = React.useState(initialValues.styleData);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
@@ -52,6 +56,7 @@ export default function RestaurantUpdateForm(props) {
     setFavicon(cleanValues.favicon);
     setUserId(cleanValues.userId);
     setCurrency(cleanValues.currency);
+    setSocialLogin(cleanValues.socialLogin);
     setStyleData(cleanValues.styleData);
     setOwner(cleanValues.owner);
     setErrors({});
@@ -75,6 +80,7 @@ export default function RestaurantUpdateForm(props) {
     favicon: [],
     userId: [{ type: "Required" }],
     currency: [],
+    socialLogin: [],
     styleData: [],
     owner: [],
   };
@@ -110,6 +116,7 @@ export default function RestaurantUpdateForm(props) {
           favicon,
           userId,
           currency,
+          socialLogin,
           styleData,
           owner,
         };
@@ -173,6 +180,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              socialLogin,
               styleData,
               owner,
             };
@@ -204,6 +212,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              socialLogin,
               styleData,
               owner,
             };
@@ -235,6 +244,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              socialLogin,
               styleData,
               owner,
             };
@@ -266,6 +276,7 @@ export default function RestaurantUpdateForm(props) {
               favicon: value,
               userId,
               currency,
+              socialLogin,
               styleData,
               owner,
             };
@@ -297,6 +308,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId: value,
               currency,
+              socialLogin,
               styleData,
               owner,
             };
@@ -328,6 +340,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency: value,
+              socialLogin,
               styleData,
               owner,
             };
@@ -345,6 +358,38 @@ export default function RestaurantUpdateForm(props) {
         {...getOverrideProps(overrides, "currency")}
       ></TextField>
       <TextField
+        label="Social login"
+        isRequired={false}
+        isReadOnly={false}
+        value={socialLogin}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline,
+              logo,
+              favicon,
+              userId,
+              currency,
+              socialLogin: value,
+              styleData,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.socialLogin ?? value;
+          }
+          if (errors.socialLogin?.hasError) {
+            runValidationTasks("socialLogin", value);
+          }
+          setSocialLogin(value);
+        }}
+        onBlur={() => runValidationTasks("socialLogin", socialLogin)}
+        errorMessage={errors.socialLogin?.errorMessage}
+        hasError={errors.socialLogin?.hasError}
+        {...getOverrideProps(overrides, "socialLogin")}
+      ></TextField>
+      <TextField
         label="Style data"
         isRequired={false}
         isReadOnly={false}
@@ -359,6 +404,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              socialLogin,
               styleData: value,
               owner,
             };
@@ -390,6 +436,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              socialLogin,
               styleData,
               owner: value,
             };

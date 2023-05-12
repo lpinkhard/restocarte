@@ -62,5 +62,13 @@
   "item-background-color-label": "Hintergrundfarbe des Artikels",
   "item-background-color-description": "Hintergrundfarbe für Kategorien und Menüelemente",
   "item-text-color-label": "Artikeltextfarbe",
-  "item-text-color-description": "Textfarbe für Kategorien und Menüpunkte"
+  "item-text-color-description": "Textfarbe für Kategorien und Menüpunkte",
+  "social-login-label": "Soziale Anmeldung",
+  "social-login-description": "Option zur Anmeldung über ein soziales Netzwerk",
+  "social-none": "Keine",
+  "social-facebook": "Facebook",
+  "social-wechat": "WeChat",
+  "login-with-facebook": "Mit Facebook anmelden",
+  "login-with-wechat": "Mit WeChat anmelden",
+  "logout": "Abmelden"
 }
