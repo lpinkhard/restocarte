@@ -13,6 +13,7 @@ const ManagerMenu = ( {signOut} ) => {
                 <NavMenuItem><Link to="/tags">{t('create-tags')}</Link></NavMenuItem>
                 <Divider />
                 <NavMenuItem><Link to="/restaurant-setup">{t('restaurant-setup')}</Link></NavMenuItem>
+                <NavMenuItem><Link to="/appearance">{t('appearance')}</Link></NavMenuItem>
                 <Divider />
                 <NavMenuItem onClick={signOut}><Link to="#">{t('sign-out')}</Link></NavMenuItem>
             </NavMenu>

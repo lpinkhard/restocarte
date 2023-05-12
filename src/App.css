@@ -31,6 +31,7 @@
     position: fixed;
     top: 2rem;
     left: 2rem;
+    background-color: #fff;
 }
 
 .rtl .amplify-menu-trigger {
@@ -63,4 +64,18 @@
 
 .rtl .ui.modal, .rtl .ui.card>.extra.content {
     text-align: right;
+}
+
+.content .react-colorful {
+    width: auto;
+}
+
+.ui.button.colorButton {
+    border: var(--amplify-colors-border-primary) 1px solid;
+    margin-left: 0.5rem;
+    margin-right: 0.25rem;
+}
+
+.header, a {
+    color: inherit !important;
 }

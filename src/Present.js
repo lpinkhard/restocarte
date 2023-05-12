@@ -23,7 +23,7 @@ const Present = () => {
 
     return (
         <View className="Present">
-            <MainHeading restaurantId={restaurantId} loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} displayTagline />
+            <MainHeading restaurantId={restaurantId} loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} displayTagline isMenu />
             {contentReady && (
                 <Menu restaurant={restaurant} webp={webp} />
             )}

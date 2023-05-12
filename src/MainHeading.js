@@ -5,7 +5,7 @@ import {API, Auth} from "aws-amplify";
 import {getRestaurant, listRestaurants} from "./graphql/queries";
 import {cdnPath} from "./Helpers";
 
-const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, webp, displayTagline} ) => {
+const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, webp, displayTagline, isMenu} ) => {
     const [restaurant, setRestaurant] = useState(null);
     const [contentLoaded, setContentLoaded] = useState(false);
 
@@ -15,11 +15,40 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
 
     useEffect(() => {
         loadRestaurant(restaurant);
-        updateFavicon();
+        updateDisplay();
     }, [loadRestaurant, restaurant, contentLoaded]);
 
-    async function updateFavicon() {
+    async function updateDisplay() {
         if (restaurant) {
+            let globalStyle = document.getElementById('globalStyle');
+            if (!globalStyle) {
+                globalStyle = document.createElement('style');
+                globalStyle.id = 'globalStyle';
+                document.head.appendChild(globalStyle);
+            }
+            if (isMenu && restaurant.styleData && restaurant.styleData.length > 0) {
+                try {
+                    const styleData = JSON.parse(restaurant.styleData);
+                    globalStyle.innerHTML = '';
+                    if ('bgcolor' in styleData && styleData.bgcolor && styleData.bgcolor.length > 0) {
+                        document.body.style.background = styleData.bgcolor;
+                    }
+                    if ('textcolor' in styleData && styleData.textcolor && styleData.textcolor.length > 0) {
+                        document.body.style.color = styleData.textcolor;
+                    }
+                    if ('itembgcolor' in styleData && styleData.itembgcolor && styleData.itembgcolor.length > 0) {
+                        globalStyle.innerHTML += '.ui.card { background-color: ' + styleData.itembgcolor + ' !important }';
+                    }
+                    if ('itemtextcolor' in styleData && styleData.itembgcolor && styleData.itembgcolor.length > 0) {
+                        globalStyle.innerHTML += '.ui.card { color: ' + styleData.itemtextcolor + ' !important }';
+                    }
+                } catch {
+                }
+            } else {
+                document.body.style.background = "#ffffff";
+                document.body.style.color = "#000000";
+                globalStyle.innerHTML = '';
+            }
             if (restaurant.name && restaurant.name.length > 0) {
                 document.title = restaurant.name;
             }

@@ -30,6 +30,7 @@ export default function RestaurantUpdateForm(props) {
     favicon: "",
     userId: "",
     currency: "",
+    styleData: "",
     owner: "",
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -38,6 +39,7 @@ export default function RestaurantUpdateForm(props) {
   const [favicon, setFavicon] = React.useState(initialValues.favicon);
   const [userId, setUserId] = React.useState(initialValues.userId);
   const [currency, setCurrency] = React.useState(initialValues.currency);
+  const [styleData, setStyleData] = React.useState(initialValues.styleData);
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -50,6 +52,7 @@ export default function RestaurantUpdateForm(props) {
     setFavicon(cleanValues.favicon);
     setUserId(cleanValues.userId);
     setCurrency(cleanValues.currency);
+    setStyleData(cleanValues.styleData);
     setOwner(cleanValues.owner);
     setErrors({});
   };
@@ -72,6 +75,7 @@ export default function RestaurantUpdateForm(props) {
     favicon: [],
     userId: [{ type: "Required" }],
     currency: [],
+    styleData: [],
     owner: [],
   };
   const runValidationTasks = async (
@@ -106,6 +110,7 @@ export default function RestaurantUpdateForm(props) {
           favicon,
           userId,
           currency,
+          styleData,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -168,6 +173,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              styleData,
               owner,
             };
             const result = onChange(modelFields);
@@ -198,6 +204,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              styleData,
               owner,
             };
             const result = onChange(modelFields);
@@ -228,6 +235,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              styleData,
               owner,
             };
             const result = onChange(modelFields);
@@ -258,6 +266,7 @@ export default function RestaurantUpdateForm(props) {
               favicon: value,
               userId,
               currency,
+              styleData,
               owner,
             };
             const result = onChange(modelFields);
@@ -288,6 +297,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId: value,
               currency,
+              styleData,
               owner,
             };
             const result = onChange(modelFields);
@@ -318,6 +328,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency: value,
+              styleData,
               owner,
             };
             const result = onChange(modelFields);
@@ -334,6 +345,37 @@ export default function RestaurantUpdateForm(props) {
         {...getOverrideProps(overrides, "currency")}
       ></TextField>
       <TextField
+        label="Style data"
+        isRequired={false}
+        isReadOnly={false}
+        value={styleData}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline,
+              logo,
+              favicon,
+              userId,
+              currency,
+              styleData: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.styleData ?? value;
+          }
+          if (errors.styleData?.hasError) {
+            runValidationTasks("styleData", value);
+          }
+          setStyleData(value);
+        }}
+        onBlur={() => runValidationTasks("styleData", styleData)}
+        errorMessage={errors.styleData?.errorMessage}
+        hasError={errors.styleData?.hasError}
+        {...getOverrideProps(overrides, "styleData")}
+      ></TextField>
+      <TextField
         label="Owner"
         isRequired={false}
         isReadOnly={false}
@@ -348,6 +390,7 @@ export default function RestaurantUpdateForm(props) {
               favicon,
               userId,
               currency,
+              styleData,
               owner: value,
             };
             const result = onChange(modelFields);

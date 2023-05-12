@@ -53,5 +53,14 @@
   "logo-description": "标题中显示的徽标",
   "favicon-label": "网站图标",
   "favicon-description": "所有页面上使用的浏览器图标",
-  "price-invalid": "价格无效"
+  "price-invalid": "价格无效",
+  "appearance": "外观",
+  "background-color-label": "背景颜色",
+  "background-color-description": "主要背景颜色",
+  "text-color-label": "文本颜色",
+  "text-color-description": "主要文本颜色",
+  "item-background-color-label": "项目背景色",
+  "item-background-color-description": "类别和菜单项的背景颜色",
+  "item-text-color-label": "项目文字颜色",
+  "item-text-color-description": "类别和菜单项的文本颜色"
 }
