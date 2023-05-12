@@ -5,8 +5,6 @@ import Menu from './Menu';
 import React, {useCallback, useState} from "react";
 import {useParams} from "react-router-dom";
 import {hasWebPSupport} from "./Helpers";
-import SocialAuth from "./SocialAuth";
-import {Container} from "semantic-ui-react";
 
 const Present = () => {
     const { restaurantId } = useParams();

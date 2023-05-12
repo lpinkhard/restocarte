@@ -6,7 +6,7 @@ class SocialButton extends React.Component {
     render() {
         const { children, triggerLogin, ...props } = this.props;
         return (
-            <Button onClick={triggerLogin} {...props}>
+            <Button primary onClick={triggerLogin} {...props}>
                 {children}
             </Button>
         );

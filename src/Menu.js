@@ -14,7 +14,6 @@ const Menu = ( {isManager, restaurant, webp} ) => {
     const [priceStep, setPriceStep] = useState(0.01);
     const [decimals, setDecimals] = useState(2);
     const [currencySymbol, setCurrencySymbol] = useState('$');
-    const [authorizedState, setAuthorizedState] = useState(false);
 
     const loadCategory = useCallback(val => {
         setSelectedCategory(val);
