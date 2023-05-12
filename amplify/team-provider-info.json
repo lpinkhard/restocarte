@@ -22,7 +22,7 @@
         "stripewebhook": {
           "secretsPathAmplifyAppId": "d10li48b3ubv4a",
           "deploymentBucketName": "amplify-restocarte-main-205627-deployment",
-          "s3Key": "amplify-builds/stripewebhook-655a41366c454b736c51-build.zip"
+          "s3Key": "amplify-builds/stripewebhook-49536547436459693633-build.zip"
         }
       },
       "auth": {
