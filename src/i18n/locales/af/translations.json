@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Meld aan met Facebook",
   "login-with-wechat": "Meld aan met WeChat",
-  "logout": "Teken Uit"
+  "logout": "Teken Uit",
+  "options-label": "Opsies",
+  "options-description": "Opsies vir die spryskaart-item",
+  "exclusive": "Eksklusief"
 }

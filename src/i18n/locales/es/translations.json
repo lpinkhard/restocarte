@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Iniciar Sesión con Facebook",
   "login-with-wechat": "Iniciar Sesión con WeChat",
-  "logout": "Cerrar Sesión"
+  "logout": "Cerrar Sesión",
+  "options-label": "Opciones",
+  "options-description": "Opciones para el articulo del menú",
+  "exclusive": "Exclusivo"
 }

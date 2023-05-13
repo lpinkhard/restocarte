@@ -84,3 +84,16 @@
 .header, a {
     color: inherit !important;
 }
+
+.newItemOption .amplify-checkboxfield {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.editMenuItemForm i {
+    cursor: pointer;
+}
+
+.ui.bulleted.list:first-child {
+    margin-top: 1rem;
+}

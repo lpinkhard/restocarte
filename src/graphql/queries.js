@@ -26,6 +26,20 @@ export const getMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      options {
+        items {
+          id
+          title
+          priceDelta
+          exclusive
+          order
+          owner
+          createdAt
+          updatedAt
+          menuItemOptionsId
+        }
+        nextToken
+      }
       order
       owner
       createdAt
@@ -61,11 +75,93 @@ export const listMenuItems = /* GraphQL */ `
         enabled
         price
         image
+        options {
+          nextToken
+        }
         order
         owner
         createdAt
         updatedAt
         categoryMenuItemsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getMenuItemOption = /* GraphQL */ `
+  query GetMenuItemOption($id: ID!) {
+    getMenuItemOption(id: $id) {
+      id
+      menuItem {
+        id
+        category {
+          id
+          title
+          description
+          enabled
+          price
+          image
+          order
+          owner
+          createdAt
+          updatedAt
+          restaurantCategoriesId
+        }
+        title
+        description
+        enabled
+        price
+        image
+        options {
+          nextToken
+        }
+        order
+        owner
+        createdAt
+        updatedAt
+        categoryMenuItemsId
+      }
+      title
+      priceDelta
+      exclusive
+      order
+      owner
+      createdAt
+      updatedAt
+      menuItemOptionsId
+    }
+  }
+`;
+export const listMenuItemOptions = /* GraphQL */ `
+  query ListMenuItemOptions(
+    $filter: ModelMenuItemOptionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMenuItemOptions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        menuItem {
+          id
+          title
+          description
+          enabled
+          price
+          image
+          order
+          owner
+          createdAt
+          updatedAt
+          categoryMenuItemsId
+        }
+        title
+        priceDelta
+        exclusive
+        order
+        owner
+        createdAt
+        updatedAt
+        menuItemOptionsId
       }
       nextToken
     }

@@ -70,5 +70,8 @@
   "social-wechat": "ВеЦхат",
   "login-with-facebook": "Пријавите се преко Фацебоок-а",
   "login-with-wechat": "Пријавите се са ВеЦхат-ом",
-  "logout": "Одјава"
+  "logout": "Одјава",
+  "options-label": "Опције",
+  "options-description": "Опције за ставку менија",
+  "exclusive": "Ексклузивно"
 }

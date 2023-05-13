@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "تسجيل الدخول باستخدام Facebook",
   "login-with-wechat": "تسجيل الدخول باستخدام WeChat",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "options-label": "خيارات",
+  "options-description": "خيارات عنصر القائمة",
+  "exclusive": "حصري"
 }

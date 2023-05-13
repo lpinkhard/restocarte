@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Facebook ile giriş yap",
   "login-with-wechat": "WeChat ile giriş yap",
-  "logout": "Çıkış"
+  "logout": "Çıkış",
+  "options-label": "Seçenekler",
+  "options-description": "Menü öğesi için seçenekler",
+  "exclusive": "Özel"
 }

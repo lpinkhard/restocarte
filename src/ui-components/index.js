@@ -7,6 +7,8 @@
 export { default as studioTheme } from "./studioTheme";
 export { default as MenuItemCreateForm } from "./MenuItemCreateForm";
 export { default as MenuItemUpdateForm } from "./MenuItemUpdateForm";
+export { default as MenuItemOptionCreateForm } from "./MenuItemOptionCreateForm";
+export { default as MenuItemOptionUpdateForm } from "./MenuItemOptionUpdateForm";
 export { default as CategoryCreateForm } from "./CategoryCreateForm";
 export { default as CategoryUpdateForm } from "./CategoryUpdateForm";
 export { default as RestaurantCreateForm } from "./RestaurantCreateForm";

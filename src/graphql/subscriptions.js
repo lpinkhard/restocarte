@@ -29,6 +29,20 @@ export const onCreateMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      options {
+        items {
+          id
+          title
+          priceDelta
+          exclusive
+          order
+          owner
+          createdAt
+          updatedAt
+          menuItemOptionsId
+        }
+        nextToken
+      }
       order
       owner
       createdAt
@@ -65,6 +79,20 @@ export const onUpdateMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      options {
+        items {
+          id
+          title
+          priceDelta
+          exclusive
+          order
+          owner
+          createdAt
+          updatedAt
+          menuItemOptionsId
+        }
+        nextToken
+      }
       order
       owner
       createdAt
@@ -101,11 +129,166 @@ export const onDeleteMenuItem = /* GraphQL */ `
       enabled
       price
       image
+      options {
+        items {
+          id
+          title
+          priceDelta
+          exclusive
+          order
+          owner
+          createdAt
+          updatedAt
+          menuItemOptionsId
+        }
+        nextToken
+      }
       order
       owner
       createdAt
       updatedAt
       categoryMenuItemsId
+    }
+  }
+`;
+export const onCreateMenuItemOption = /* GraphQL */ `
+  subscription OnCreateMenuItemOption(
+    $filter: ModelSubscriptionMenuItemOptionFilterInput
+    $owner: String
+  ) {
+    onCreateMenuItemOption(filter: $filter, owner: $owner) {
+      id
+      menuItem {
+        id
+        category {
+          id
+          title
+          description
+          enabled
+          price
+          image
+          order
+          owner
+          createdAt
+          updatedAt
+          restaurantCategoriesId
+        }
+        title
+        description
+        enabled
+        price
+        image
+        options {
+          nextToken
+        }
+        order
+        owner
+        createdAt
+        updatedAt
+        categoryMenuItemsId
+      }
+      title
+      priceDelta
+      exclusive
+      order
+      owner
+      createdAt
+      updatedAt
+      menuItemOptionsId
+    }
+  }
+`;
+export const onUpdateMenuItemOption = /* GraphQL */ `
+  subscription OnUpdateMenuItemOption(
+    $filter: ModelSubscriptionMenuItemOptionFilterInput
+    $owner: String
+  ) {
+    onUpdateMenuItemOption(filter: $filter, owner: $owner) {
+      id
+      menuItem {
+        id
+        category {
+          id
+          title
+          description
+          enabled
+          price
+          image
+          order
+          owner
+          createdAt
+          updatedAt
+          restaurantCategoriesId
+        }
+        title
+        description
+        enabled
+        price
+        image
+        options {
+          nextToken
+        }
+        order
+        owner
+        createdAt
+        updatedAt
+        categoryMenuItemsId
+      }
+      title
+      priceDelta
+      exclusive
+      order
+      owner
+      createdAt
+      updatedAt
+      menuItemOptionsId
+    }
+  }
+`;
+export const onDeleteMenuItemOption = /* GraphQL */ `
+  subscription OnDeleteMenuItemOption(
+    $filter: ModelSubscriptionMenuItemOptionFilterInput
+    $owner: String
+  ) {
+    onDeleteMenuItemOption(filter: $filter, owner: $owner) {
+      id
+      menuItem {
+        id
+        category {
+          id
+          title
+          description
+          enabled
+          price
+          image
+          order
+          owner
+          createdAt
+          updatedAt
+          restaurantCategoriesId
+        }
+        title
+        description
+        enabled
+        price
+        image
+        options {
+          nextToken
+        }
+        order
+        owner
+        createdAt
+        updatedAt
+        categoryMenuItemsId
+      }
+      title
+      priceDelta
+      exclusive
+      order
+      owner
+      createdAt
+      updatedAt
+      menuItemOptionsId
     }
   }
 `;

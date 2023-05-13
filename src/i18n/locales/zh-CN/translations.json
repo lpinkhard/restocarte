@@ -70,5 +70,8 @@
   "social-wechat": "微信",
   "login-with-facebook": "Facebook 登录",
   "login-with-wechat": "微信登录",
-  "logout": "注销"
+  "logout": "注销",
+  "options-label": "选项",
+  "options-description": "菜单项的选项",
+  "exclusive": "独家"
 }
