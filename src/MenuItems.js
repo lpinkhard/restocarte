@@ -14,7 +14,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listMenuItems, getCategory} from "./graphql/queries";
 import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
-import {cdnPath, resizeImageFile} from "./Helpers";
+import {cdnPath, guid, resizeImageFile} from "./Helpers";
 import {useTranslation} from "react-i18next";
 
 const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol, webp}) => {
@@ -56,15 +56,6 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
 
     function resetCategory() {
         setSelectedCategory(null);
-    }
-
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
     }
 
     async function isAuthenticated() {
