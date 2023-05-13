@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Mit Facebook anmelden",
   "login-with-wechat": "Mit WeChat anmelden",
-  "logout": "Abmelden"
+  "logout": "Abmelden",
+  "options-label": "Optionen",
+  "options-description": "Optionen für den Menüpunkt",
+  "exclusive": "Exklusiv"
 }

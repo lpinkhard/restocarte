@@ -16,6 +16,27 @@ type MenuItem
   enabled: Boolean
   price: Float
   image: String
+  options: [MenuItemOption] @hasMany
+  order: Int
+  owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
+}
+
+type MenuItemOption
+@model
+@aws_iam
+@aws_cognito_user_pools
+@auth(
+  rules: [
+    { allow: owner, provider: userPools, operations: [create, update, read, delete] }
+    { allow: public, provider: iam, operations: [read] }
+    { allow: groups, groups: ["everyone"], operations: [read] }
+  ]
+) {
+  id: ID!
+  menuItem: MenuItem @belongsTo
+  title: String!
+  priceDelta: Float
+  exclusive: Boolean
   order: Int
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }

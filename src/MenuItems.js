@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {
-    CheckboxField,
+    CheckboxField, Divider,
     Grid,
+    Text,
     TextAreaField,
     TextField,
     View
@@ -10,11 +11,13 @@ import {
     createMenuItem as createMenuItemMutation,
     deleteMenuItem as deleteMenuItemMutation,
     updateMenuItem as updateMenuItemMutation,
+    createMenuItemOption as createMenuItemOptionMutation,
+    deleteMenuItemOption as deleteMenuItemOptionMutation,
 } from "./graphql/mutations";
 import {API, Auth, Storage} from "aws-amplify";
-import {listMenuItems, getCategory} from "./graphql/queries";
-import {Button, Card, Container, Header, Icon, Image, Modal} from "semantic-ui-react";
-import {cdnPath, resizeImageFile} from "./Helpers";
+import {listMenuItems, getCategory, getMenuItem} from "./graphql/queries";
+import {Button, Card, Container, Header, Icon, Image, List, Modal} from "semantic-ui-react";
+import {cdnPath, guid, resizeImageFile} from "./Helpers";
 import {useTranslation} from "react-i18next";
 
 const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol, webp}) => {
@@ -58,15 +61,6 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         setSelectedCategory(null);
     }
 
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
-    }
-
     async function isAuthenticated() {
         try {
             await Auth.currentAuthenticatedUser();
@@ -101,7 +95,8 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         }
 
         let apiData;
-        if (await isAuthenticated()) {
+        const auth = await isAuthenticated();
+        if (auth) {
             apiData = await API.graphql({ query: listMenuItems, variables, authMode: "AMAZON_COGNITO_USER_POOLS" });
         } else {
             apiData = await API.graphql({query: listMenuItems, variables, authMode: "AWS_IAM"});
@@ -119,6 +114,14 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                 if (menuItem.order > maxOrderId) {
                     setMaxOrderId(menuItem.order);
                 }
+
+                const { data } = await API.graphql({
+                    query: getMenuItem,
+                    variables: {id: menuItem.id},
+                    authMode: auth ? "AMAZON_COGNITO_USER_POOLS" : "AWS_IAM",
+                });
+                menuItem.options = data.getMenuItem.options.items;
+
                 return menuItem;
             })
         );
@@ -287,13 +290,58 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         setIsCreateOpen(value);
     }
 
+    async function addItemOption(event) {
+        event.preventDefault();
+
+        setBusyUpdating(true);
+
+        const target = document.getElementById('editMenuItemForm');
+        const form = new FormData(target);
+
+        let data = {
+            title: form.get("new-option-name"),
+            exclusive: form.get("exclusive") != null,
+            menuItemOptionsId: editingMenuItem.id,
+        };
+
+        const response = await API.graphql({
+            query: createMenuItemOptionMutation,
+            variables: { input: data },
+        });
+
+        data.id = response.data.createMenuItemOption.id;
+        editingMenuItem.options.push(data);
+
+        setBusyUpdating(false);
+    }
+
+    async function removeItemOption(optionId) {
+        setBusyUpdating(true);
+
+        await API.graphql({
+            query: deleteMenuItemOptionMutation,
+            variables: { input: { id: optionId } },
+        });
+
+        const index = editingMenuItem.options.map(x => {
+            return x.id;
+        }).indexOf(optionId);
+        editingMenuItem.options.splice(index, 1);
+
+        setBusyUpdating(false);
+    }
+
     function EditMenuItemModal() {
         if (!isManager) {
             return <Modal className="EditMenuItemModal" />
         }
 
         return (
-            <Modal className="EditMenuItemModal" dimmer="blurring" open={isEditOpen}>
+            <Modal className="EditMenuItemModal"
+                   dimmer="blurring"
+                   open={isEditOpen}
+                   onClose={() => setEditingMenuItem(false)}
+                   onOpen={() => setEditingMenuItem(true)}>
                 <Modal.Header>{t('edit-item')}</Modal.Header>
                 <Modal.Content>
                     {editingMenuItem && (
@@ -339,6 +387,28 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                                 value="yes"
                                 defaultChecked={editingMenuItem.enabled}
                             />
+                            <Divider />
+                            <div className="amplify-flex amplify-field">
+                                <label className="amplify-label">{t('options-label')}</label>
+                                <Text className="amplify-field__description">{t('options-description')}</Text>
+                                {editingMenuItem.options.sort((a, b) => a.order - b.order).map((option) => (
+                                    <Text key={option.id}>{option.title} <Icon name="delete" onClick={() => removeItemOption(option.id)} /></Text>
+                                ))}
+                                <TextField
+                                    className="newItemOption"
+                                    id="new-option-name"
+                                    name="new-option-name"
+                                    outerEndComponent={[
+                                        <CheckboxField
+                                            key="exclusive"
+                                            label={t('exclusive')}
+                                            name="exclusive"
+                                            value="yes"
+                                        />,
+                                        <Button icon key="add-button" onClick={addItemOption}><Icon name="plus" /></Button>
+                                    ]}
+                                />
+                            </div>
                         </Grid>
                     )}
                 </Modal.Content>
@@ -556,8 +626,17 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                             <DeleteItem id={menuItem.id} image={menuItem.image}/>
                             <EditMenuItem id={menuItem.id} />
                             <Card.Header textAlign="center">{menuItem.title}</Card.Header>
-                            {menuItem.description && (
-                                <Card.Description>{menuItem.description}</Card.Description>
+                            {(menuItem.description || menuItem.options.length > 0) && (
+                                <Card.Description>
+                                    {menuItem.description}
+                                    {menuItem.options.length > 0 && (
+                                        <List bulleted>
+                                        {menuItem.options.sort((a, b) => a.order - b.order).map((option) => (
+                                            <List.Item key={option.id}>{option.title}</List.Item>
+                                        ))}
+                                        </List>
+                                    )}
+                                </Card.Description>
                             )}
                         </Card.Content>
                         {menuItem.price && (

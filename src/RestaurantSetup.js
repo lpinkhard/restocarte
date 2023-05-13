@@ -11,7 +11,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
 import CurrencyList from 'currency-list';
-import {cdnPath, hasWebPSupport, resizeImageFile} from "./Helpers";
+import {cdnPath, guid, hasWebPSupport, resizeImageFile} from "./Helpers";
 import {useTranslation} from "react-i18next";
 import i18n from "i18next";
 
@@ -37,15 +37,6 @@ const RestaurantSetup = () => {
     }, [setContentReady]);
 
     const { t } = useTranslation();
-
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
-    }
 
     async function fetchRestaurant() {
         const user = await Auth.currentAuthenticatedUser();

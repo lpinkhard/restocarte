@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Войти через Facebook",
   "login-with-wechat": "Войти через WeChat",
-  "logout": "выйти"
+  "logout": "выйти",
+  "options-label": "параметры",
+  "options-description": "параметры пункта меню",
+  "exclusive": "эксклюзив"
 }

@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Prijava se sa Facebook-om",
   "login-with-wechat": "Prijavite se sa WeChat-om",
-  "logout": "Odjava"
+  "logout": "Odjava",
+  "options-label": "Opcije",
+  "options-description": "Opcije za stavku menija",
+  "exclusive": "Ekskluzivno"
 }

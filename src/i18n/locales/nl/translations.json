@@ -70,5 +70,8 @@
   "social-wechat": "WeChat",
   "login-with-facebook": "Log in met Facebook",
   "login-with-wechat": "Log in met WeChat",
-  "logout": "Uitloggen"
+  "logout": "Uitloggen",
+  "options-label": "Opties",
+  "options-description": "Opties voor het menu-item",
+  "exclusive": "Exclusief"
 }

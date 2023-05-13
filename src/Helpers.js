@@ -23,3 +23,12 @@ export const hasWebPSupport = () => {
 export const cdnPath = (fileId) => {
     return 'https://' + process.env.REACT_APP_CDN + '/' + fileId;
 }
+
+export const guid = () => {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
+}

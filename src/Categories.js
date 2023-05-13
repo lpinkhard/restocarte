@@ -14,7 +14,7 @@ import {
 import {API, Auth, Storage} from "aws-amplify";
 import {listCategories} from "./graphql/queries";
 import {Button, Card, Header, Icon, Image, Modal} from "semantic-ui-react";
-import {cdnPath, resizeImageFile} from "./Helpers";
+import {cdnPath, guid, resizeImageFile} from "./Helpers";
 import {useTranslation} from "react-i18next";
 
 const Categories = ({isManager, loadCategory, restaurant, webp}) => {
@@ -42,15 +42,6 @@ const Categories = ({isManager, loadCategory, restaurant, webp}) => {
     function selectCategory(category) {
         setSelectedCategory(category);
     };
-
-    function guid() {
-        function s4() {
-            return Math.floor((1 + Math.random()) * 0x10000)
-                .toString(16)
-                .substring(1);
-        }
-        return s4() + s4() + s4() + s4() + s4() + s4() + s4() + s4();
-    }
 
     async function isAuthenticated() {
         try {
