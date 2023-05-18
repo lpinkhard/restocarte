@@ -161,10 +161,10 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
                 )}
                 {!restaurant && (
                     <Header as="h1" textAlign="center" onClick={refresh}>
-                        {contentLoaded && webp (
+                        {(contentLoaded && webp) && (
                             <Image src="logo.webp" alt="Restocarte" />
                         )}
-                        {contentLoaded && !webp (
+                        {(contentLoaded && !webp) && (
                             <Image src="logo.png" alt="Restocarte" />
                         )}
                     </Header>
