@@ -73,5 +73,6 @@
   "logout": "Çıkış",
   "options-label": "Seçenekler",
   "options-description": "Menü öğesi için seçenekler",
-  "exclusive": "Özel"
+  "exclusive": "Özel",
+  "manage-subscription": "Aboneliği Yönet"
 }

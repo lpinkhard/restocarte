@@ -73,5 +73,6 @@
   "logout": "Abmelden",
   "options-label": "Optionen",
   "options-description": "Optionen für den Menüpunkt",
-  "exclusive": "Exklusiv"
+  "exclusive": "Exklusiv",
+  "manage-subscription": "Abonnement Verwalten"
 }

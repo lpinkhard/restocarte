@@ -73,5 +73,6 @@
   "logout": "Déconnexion",
   "options-label": "Options",
   "options-description": "Options pour l'élément de menu",
-  "exclusive": "Exclusif"
+  "exclusive": "Exclusif",
+  "manage-subscription": "Gérer l'Abonnement"
 }

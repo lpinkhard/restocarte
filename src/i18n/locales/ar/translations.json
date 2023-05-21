@@ -73,5 +73,6 @@
   "logout": "تسجيل الخروج",
   "options-label": "خيارات",
   "options-description": "خيارات عنصر القائمة",
-  "exclusive": "حصري"
+  "exclusive": "حصري",
+  "manage-subscription": "إدارة الاشتراك"
 }

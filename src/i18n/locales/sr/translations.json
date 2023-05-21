@@ -73,5 +73,6 @@
   "logout": "Одјава",
   "options-label": "Опције",
   "options-description": "Опције за ставку менија",
-  "exclusive": "Ексклузивно"
+  "exclusive": "Ексклузивно",
+  "manage-subscription": "Управљајте Претплатом"
 }
