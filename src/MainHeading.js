@@ -68,18 +68,18 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
         contentReady(contentLoaded);
     }, [contentReady, contentLoaded]);
 
-    async function isAuthenticated() {
+    async function authenticatedUser() {
         try {
-            await Auth.currentAuthenticatedUser();
-            return true;
+            return await Auth.currentAuthenticatedUser();
         } catch {
-            return false;
+            return null;
         }
     }
 
     async function fetchRestaurant() {
-        if (isManager) {
-            const user = await Auth.currentAuthenticatedUser();
+        const user = await authenticatedUser();
+
+        if (isManager && user) {
             const variables = {
                 filter: {
                     userId: {
@@ -119,7 +119,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
         const { data } = await API.graphql({
                 query: getRestaurant,
                 variables: {id: restaurantId},
-                authMode: await isAuthenticated() ? "AMAZON_COGNITO_USER_POOLS" : "AWS_IAM",
+                authMode: user != null ? "AMAZON_COGNITO_USER_POOLS" : "AWS_IAM",
             });
 
         const restaurantData = data.getRestaurant;
