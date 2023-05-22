@@ -11,6 +11,7 @@
   },
   "lambdaLayers": [],
   "secretNames": [
-    "stripe_key"
+    "stripe_key",
+    "mailchimp_key"
   ]
 }

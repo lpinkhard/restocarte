@@ -5,6 +5,20 @@ const aws = require('aws-sdk');
 
 const { Parameters } = await (new aws.SSM())
   .getParameters({
+    Names: ["stripe_key","mailchimp_key"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
     Names: ["stripe_key"].map(secretName => process.env[secretName]),
     WithDecryption: true,
   })
@@ -42,6 +56,16 @@ const getStripeKey = async () => {
   return Parameters[0].Value
 }
 
+const getMailchimpKey = async () => {
+  const { Parameters } = await (new aws.SSM())
+      .getParameters({
+        Names: ['mailchimp_key'].map(secretName => process.env[secretName]),
+        WithDecryption: true
+      })
+      .promise()
+  return Parameters[0].Value
+}
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json({
@@ -62,24 +86,31 @@ app.post('/webhook', async function (req, res) {
   const stripeKey = await getStripeKey()
   const stripe = require('stripe')(stripeKey)
 
-  console.log(stripeKey);
-
   const customer = await stripe.customers.retrieve(
       req.body.data.object.customer
   )
 
-  console.log('got customer');
-
   if (req.body.data.object.plan.product === 'prod_NqAmL5iL1pt5SQ' || req.body.data.object.plan.product === 'prod_NqApdPKO20vrK7') {
     // Standard plan
-    console.log('standard plan');
+    console.log('standard plan')
   } else if (req.body.data.object.plan.id === 'prod_NqAnKmDpGEY8vh' || req.body.data.object.plan.product === 'prod_NqApV0IeLDdwy9') {
     // Advanced plan
-    console.log('advanced plan');
+    console.log('advanced plan')
   } else {
     // Something else
-    console.log('wrong plan');
+    console.log('wrong plan')
     return;
+  }
+
+  let subscriptionValid
+  if (req.body.data.object.status === 'trialing' || req.body.data.object.status === 'active') {
+    subscriptionValid = true
+  } else if (req.body.data.object.status === 'unpaid' || req.body.data.object.status === 'canceled') {
+    subscriptionValid = false
+  } else {
+    // incomplete or past due
+    res.sendStatus(200)
+    return
   }
 
   const userEmail = customer.email
@@ -87,26 +118,71 @@ app.post('/webhook', async function (req, res) {
 
   const cognito = new aws.CognitoIdentityServiceProvider({ apiVersion: '2016-04-18' })
 
-  cognito.adminCreateUser({
-    UserPoolId: process.env.AUTH_RESTOCARTED4B87B7D_USERPOOLID,
-    Username: userEmail,
-    DesiredDeliveryMediums: [
-      'EMAIL'
-    ],
+  if (!subscriptionValid) {
+    console.log('disable user')
+    cognito.adminDisableUser({
+      UserPoolId: process.env.AUTH_RESTOCARTED4B87B7D_USERPOOLID,
+      Username: userEmail
+    }, function (err, data) {
+      if (err) console.log(err, err.stack) // an error occurred
+      else {
+        console.log(data)
+        res.sendStatus(200)
+      } // successful response
+    })
+    return
+  }
 
-    UserAttributes: [
-      {
-        Name: 'email',
-        Value: userEmail
-      }],
-    ValidationData: [
-      {
-        Name: 'email',
-        Value: userEmail
-      }
-    ]
+  console.log('enable user');
+  cognito.adminEnableUser({
+    UserPoolId: process.env.AUTH_RESTOCARTED4B87B7D_USERPOOLID,
+    Username: userEmail
   }, function (err, data) {
-    if (err) console.log(err, err.stack) // an error occurred
+    if (err) {
+      console.log('create user');
+      cognito.adminCreateUser({
+        UserPoolId: process.env.AUTH_RESTOCARTED4B87B7D_USERPOOLID,
+        Username: userEmail,
+        DesiredDeliveryMediums: [
+          'EMAIL'
+        ],
+
+        UserAttributes: [
+          {
+            Name: 'email',
+            Value: userEmail
+          }],
+        ValidationData: [
+          {
+            Name: 'email',
+            Value: userEmail
+          }
+        ]
+      }, function (err, data) {
+        if (err) console.log(err, err.stack) // an error occurred
+        else {
+          console.log(data)
+
+          const mailchimp = require('@mailchimp/mailchimp_marketing')
+          const md5 = require("md5")
+
+          mailchimp.setConfig({
+            apiKey: getMailchimpKey(),
+            server: "us10",
+          })
+          mailchimp.lists.createListMemberEvent(
+              'f094fa08b0',
+              md5(userEmail.toLowerCase()),
+              {
+                name: "new_subscriber",
+                properties: {}
+              }
+          )
+
+          res.sendStatus(200)
+        } // successful response
+      })
+    } // an error occurred
     else {
       console.log(data)
       res.sendStatus(200)

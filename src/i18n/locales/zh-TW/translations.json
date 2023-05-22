@@ -73,5 +73,6 @@
   "logout": "註銷",
   "options-label": "選項",
   "options-description": "菜單項的選項",
-  "exclusive": "獨家"
+  "exclusive": "獨家",
+  "manage-subscription": "管理訂閱"
 }

@@ -73,5 +73,6 @@
   "logout": "Uitloggen",
   "options-label": "Opties",
   "options-description": "Opties voor het menu-item",
-  "exclusive": "Exclusief"
+  "exclusive": "Exclusief",
+  "manage-subscription": "Abonnement Beheren"
 }

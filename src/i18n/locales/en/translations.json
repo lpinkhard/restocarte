@@ -73,5 +73,6 @@
   "logout": "Logout",
   "options-label": "Options",
   "options-description": "Options for the menu item",
-  "exclusive": "Exclusive"
+  "exclusive": "Exclusive",
+  "manage-subscription": "Manage Subscription"
 }

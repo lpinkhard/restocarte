@@ -73,5 +73,6 @@
   "logout": "Teken Uit",
   "options-label": "Opsies",
   "options-description": "Opsies vir die spryskaart-item",
-  "exclusive": "Eksklusief"
+  "exclusive": "Eksklusief",
+  "manage-subscription": "Bestuur Intekening"
 }

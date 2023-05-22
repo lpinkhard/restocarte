@@ -73,5 +73,6 @@
   "logout": "Cerrar Sesión",
   "options-label": "Opciones",
   "options-description": "Opciones para el articulo del menú",
-  "exclusive": "Exclusivo"
+  "exclusive": "Exclusivo",
+  "manage-subscription": "Administrar Suscripción"
 }

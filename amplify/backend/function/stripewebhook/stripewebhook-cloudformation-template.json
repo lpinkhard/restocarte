@@ -101,6 +101,28 @@
                   "stripe_key"
                 ]
               ]
+            },
+            "mailchimp_key": {
+              "Fn::Join": [
+                "",
+                [
+                  {
+                    "Fn::Sub": [
+                      "/amplify/${appId}/${env}/AMPLIFY_${functionName}_",
+                      {
+                        "appId": {
+                          "Ref": "secretsPathAmplifyAppId"
+                        },
+                        "env": {
+                          "Ref": "env"
+                        },
+                        "functionName": "stripewebhook"
+                      }
+                    ]
+                  },
+                  "mailchimp_key"
+                ]
+              ]
             }
           }
         },

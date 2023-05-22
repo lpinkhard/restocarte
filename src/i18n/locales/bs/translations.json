@@ -73,5 +73,6 @@
   "logout": "Odjava",
   "options-label": "Opcije",
   "options-description": "Opcije za stavku menija",
-  "exclusive": "Ekskluzivno"
+  "exclusive": "Ekskluzivno",
+  "manage-subscription": "Upravljajte Pretplatom"
 }

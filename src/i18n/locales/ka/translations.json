@@ -73,5 +73,6 @@
   "logout": "გამოსვლა",
   "options-label": "ოფციები",
   "options-description": "ოფციები მენიუს ელემენტისთვის",
-  "exclusive": "ექსკლუზივი"
+  "exclusive": "ექსკლუზივი",
+  "manage-subscription": "მართეთ გამოწერა"
 }
