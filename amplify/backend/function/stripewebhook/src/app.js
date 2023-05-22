@@ -5,6 +5,20 @@ const aws = require('aws-sdk');
 
 const { Parameters } = await (new aws.SSM())
   .getParameters({
+    Names: ["stripe_key","mailchimp_key"].map(secretName => process.env[secretName]),
+    WithDecryption: true,
+  })
+  .promise();
+
+Parameters will be of the form { Name: 'secretName', Value: 'secretValue', ... }[]
+*/
+/*
+Use the following code to retrieve configured secrets from SSM:
+
+const aws = require('aws-sdk');
+
+const { Parameters } = await (new aws.SSM())
+  .getParameters({
     Names: ["stripe_key"].map(secretName => process.env[secretName]),
     WithDecryption: true,
   })
@@ -36,6 +50,16 @@ const getStripeKey = async () => {
   const { Parameters } = await (new aws.SSM())
       .getParameters({
         Names: ['stripe_key'].map(secretName => process.env[secretName]),
+        WithDecryption: true
+      })
+      .promise()
+  return Parameters[0].Value
+}
+
+const getMailchimpKey = async () => {
+  const { Parameters } = await (new aws.SSM())
+      .getParameters({
+        Names: ['mailchimp_key'].map(secretName => process.env[secretName]),
         WithDecryption: true
       })
       .promise()
@@ -138,6 +162,23 @@ app.post('/webhook', async function (req, res) {
         if (err) console.log(err, err.stack) // an error occurred
         else {
           console.log(data)
+
+          const mailchimp = require('@mailchimp/mailchimp_marketing')
+          const md5 = require("md5")
+
+          mailchimp.setConfig({
+            apiKey: getMailchimpKey(),
+            server: "us10",
+          })
+          mailchimp.lists.createListMemberEvent(
+              'f094fa08b0',
+              md5(userEmail.toLowerCase()),
+              {
+                name: "new_subscriber",
+                properties: {}
+              }
+          )
+
           res.sendStatus(200)
         } // successful response
       })
