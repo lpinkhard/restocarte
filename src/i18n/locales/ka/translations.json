@@ -74,5 +74,6 @@
   "options-label": "ოფციები",
   "options-description": "ოფციები მენიუს ელემენტისთვის",
   "exclusive": "ექსკლუზივი",
-  "manage-subscription": "მართეთ გამოწერა"
+  "manage-subscription": "მართეთ გამოწერა",
+  "powered-by-restocarte": "უზრუნველყოფილია Restocarte"
 }

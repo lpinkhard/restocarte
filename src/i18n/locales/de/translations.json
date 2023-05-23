@@ -74,5 +74,6 @@
   "options-label": "Optionen",
   "options-description": "Optionen für den Menüpunkt",
   "exclusive": "Exklusiv",
-  "manage-subscription": "Abonnement Verwalten"
+  "manage-subscription": "Abonnement Verwalten",
+  "powered-by-restocarte": "Unterstützt von Restocarte"
 }

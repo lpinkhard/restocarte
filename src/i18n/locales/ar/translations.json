@@ -74,5 +74,6 @@
   "options-label": "خيارات",
   "options-description": "خيارات عنصر القائمة",
   "exclusive": "حصري",
-  "manage-subscription": "إدارة الاشتراك"
+  "manage-subscription": "إدارة الاشتراك",
+  "powered-by-restocarte": "مدعوم من Restocarte"
 }

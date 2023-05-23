@@ -74,5 +74,6 @@
   "options-label": "Options",
   "options-description": "Options for the menu item",
   "exclusive": "Exclusive",
-  "manage-subscription": "Manage Subscription"
+  "manage-subscription": "Manage Subscription",
+  "powered-by-restocarte": "Powered by Restocarte"
 }

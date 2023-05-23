@@ -27,6 +27,10 @@
     height: 100vh;
 }
 
+.Present {
+    min-height: 95vh;
+}
+
 .socialContainer {
     margin: 1rem;
     text-align: center;
@@ -57,6 +61,50 @@
 .rtl .floatingButton {
     right: auto;
     left: 2rem;
+}
+
+.addToOrderButton {
+    float: right;
+}
+
+.rtl .addToOrderButton {
+    float: left;
+}
+
+.ui.container.orderBar {
+    max-height: 33%;
+    min-height: 7rem;
+    margin: 0 !important;
+    width: 100% !important;
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 1.25rem;
+}
+
+.submitOrderButton {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    z-index: 2;
+}
+
+.rtl .submitOrderButton {
+    left: 1.25rem;
+    right: auto;
+}
+
+body:has(.orderBar) {
+    height: 133%;
+}
+
+body {
+    padding: 1px;
 }
 
 .backButton {

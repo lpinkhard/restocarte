@@ -74,5 +74,6 @@
   "options-label": "Seçenekler",
   "options-description": "Menü öğesi için seçenekler",
   "exclusive": "Özel",
-  "manage-subscription": "Aboneliği Yönet"
+  "manage-subscription": "Aboneliği Yönet",
+  "powered-by-restocarte": "Restocarte çalışıyor"
 }

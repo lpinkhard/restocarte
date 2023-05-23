@@ -74,5 +74,6 @@
   "options-label": "Opties",
   "options-description": "Opties voor het menu-item",
   "exclusive": "Exclusief",
-  "manage-subscription": "Abonnement Beheren"
+  "manage-subscription": "Abonnement Beheren",
+  "powered-by-restocarte": "Aangedreven door Restocarte"
 }
