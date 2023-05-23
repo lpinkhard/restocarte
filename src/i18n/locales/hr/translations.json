@@ -74,5 +74,6 @@
   "options-label": "Opcije",
   "options-description": "Opcije za stavku izbornika",
   "exclusive": "Ekskluzivno",
-  "manage-subscription": "Upravljanje Pretplatom"
+  "manage-subscription": "Upravljanje Pretplatom",
+  "powered-by-restocarte": "Pokreće Restocarte"
 }

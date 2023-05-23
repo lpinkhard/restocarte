@@ -74,5 +74,6 @@
   "options-label": "选项",
   "options-description": "菜单项的选项",
   "exclusive": "独家",
-  "manage-subscription": "管理订阅"
+  "manage-subscription": "管理订阅",
+  "powered-by-restocarte": "由 Restocarte 供电"
 }

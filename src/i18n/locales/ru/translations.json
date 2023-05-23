@@ -74,5 +74,6 @@
   "options-label": "параметры",
   "options-description": "параметры пункта меню",
   "exclusive": "эксклюзив",
-  "manage-subscription": "управление подпиской"
+  "manage-subscription": "управление подпиской",
+  "powered-by-restocarte": "Работает на Restocarte"
 }
