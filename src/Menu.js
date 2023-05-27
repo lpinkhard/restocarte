@@ -9,7 +9,7 @@ const Categories = React.lazy(() => import('./Categories'));
 const MenuItems = React.lazy(() => import('./MenuItems'));
 const SocialAuth = React.lazy(() => import('./SocialAuth'));
 
-const Menu = ( {isManager, restaurant, webp} ) => {
+const Menu = ( {isManager, restaurant, tableId, webp} ) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [priceStep, setPriceStep] = useState(0.01);
     const [decimals, setDecimals] = useState(2);
@@ -62,7 +62,7 @@ const Menu = ( {isManager, restaurant, webp} ) => {
                     {socialLogin && (
                         <Container className="socialContainer"><SocialAuth restaurant={restaurant} /></Container>
                     )}
-                    <MenuItems isManager={isManager} loadCategory={loadCategory} category={selectedCategory} decimals={decimals} priceStep={priceStep} currencySymbol={currencySymbol} webp={webp} />
+                    <MenuItems isManager={isManager} loadCategory={loadCategory} restaurant={restaurant} category={selectedCategory} tableId={tableId} decimals={decimals} priceStep={priceStep} currencySymbol={currencySymbol} webp={webp} />
                 </Suspense>
             );
         }
@@ -72,7 +72,7 @@ const Menu = ( {isManager, restaurant, webp} ) => {
                 {socialLogin && (
                     <Container className="socialContainer"><SocialAuth restaurant={restaurant} /></Container>
                 )}
-                <Categories isManager={isManager} loadCategory={loadCategory} restaurant={restaurant} selectedCategory={selectedCategory} webp={webp}/>
+                <Categories isManager={isManager} loadCategory={loadCategory} restaurant={restaurant} selectedCategory={selectedCategory} tableId={tableId} webp={webp}/>
             </Suspense>
         );
     }

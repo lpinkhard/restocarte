@@ -75,5 +75,6 @@
   "options-description": "Opcije za stavku menija",
   "exclusive": "Ekskluzivno",
   "manage-subscription": "Upravljajte Pretplatom",
-  "powered-by-restocarte": "Omogućava Restocarte"
+  "powered-by-restocarte": "Omogućava Restocarte",
+  "online-orders": "Omogući online naručivanje"
 }

@@ -1,5 +1,19 @@
 {
   "api": {
+    "api0502c1b4": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "submitorder"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "api9cd5a7a1": {
       "dependsOn": [
         {
@@ -98,6 +112,21 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "submitorder": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ],
+          "category": "api",
+          "resourceName": "restocarte"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -146,6 +175,30 @@
         {
           "category": "function",
           "resourceName": "stripewebhook"
+        }
+      ]
+    },
+    "AMPLIFY_function_submitorder_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "submitorder"
+        }
+      ]
+    },
+    "AMPLIFY_function_submitorder_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "submitorder"
+        }
+      ]
+    },
+    "AMPLIFY_function_submitorder_secretsPathAmplifyAppId": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "submitorder"
         }
       ]
     }

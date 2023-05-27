@@ -75,5 +75,6 @@
   "options-description": "菜單項的選項",
   "exclusive": "獨家",
   "manage-subscription": "管理訂閱",
-  "powered-by-restocarte": "由 Restocarte 供电"
+  "powered-by-restocarte": "由 Restocarte 供电",
+  "online-orders": "啟用在線訂購"
 }

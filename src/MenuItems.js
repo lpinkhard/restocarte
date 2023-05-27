@@ -20,7 +20,7 @@ import {Button, Card, Container, Header, Icon, Image, List, Modal} from "semanti
 import {cdnPath, guid, resizeImageFile} from "./Helpers";
 import {useTranslation} from "react-i18next";
 
-const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, currencySymbol, webp}) => {
+const MenuItems = ({isManager, restaurant, category, loadCategory, tableId, decimals, priceStep, currencySymbol, webp}) => {
     const [ menuItems, setMenuItems ] = useState([]);
     const [ categoryTitle, setCategoryTitle ] = useState('');
     const [ selectedCategory, setSelectedCategory ] = useState(category);
@@ -34,6 +34,8 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
     const [ priceError, setPriceError ] = useState("");
     const [ priceHasError, setPriceHasError ] = useState(false);
     const [ busyUpdating, setBusyUpdating ] = useState(false);
+    const [ orderItems, setOrderItems ] = useState([]);
+    const [ isSubmitBlocked, setIsSubmitBlocked ] = useState(false);
 
     const onBackButtonEvent = (e) => {
         e.preventDefault();
@@ -587,6 +589,49 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
         setMenuItems(newOrderState);
     }
 
+    function addToOrder(menuItem) {
+        let orderItemData = orderItems.slice(0);
+        orderItemData.push(menuItem);
+        setOrderItems(orderItemData);
+    }
+
+    async function submitOrder() {
+        setIsSubmitBlocked(true);
+
+        const orderItemNames = orderItems.map(obj => obj.title);
+
+        await API.post('api0502c1b4', '/submitorder', {
+            body: {
+                "restaurant": restaurant.id,
+                "table": tableId,
+                "orderItems": orderItemNames
+            }
+        }).then(response => {
+            setOrderItems([]);
+        }).catch(error => {
+            console.log(error);
+        });
+
+        setIsSubmitBlocked(false);
+    }
+
+    function OrderBar() {
+        return (
+            <Container className="orderBar">
+                <Button primary icon size="massive" disabled={isSubmitBlocked} className="submitOrderButton" onClick={() => submitOrder()}>
+                    <Icon name="send" />
+                </Button>
+                <List bulleted>
+                    {orderItems.map((orderItem, index) => (
+                        <List.Item id={index} key={index}>
+                            {orderItem.title}
+                        </List.Item>
+                    ))}
+                </List>
+            </Container>
+        )
+    }
+
     function BackButton() {
         if (document.documentElement.dir === 'rtl') {
             return (
@@ -641,12 +686,21 @@ const MenuItems = ({isManager, category, loadCategory, decimals, priceStep, curr
                         </Card.Content>
                         {menuItem.price && (
                             <Card.Content extra>
+                                {(!isManager && restaurant.onlineOrders) && (
+                                    <Button primary icon className="addToOrderButton" onClick={() => addToOrder(menuItem)}>
+                                        <Icon name="cart plus" />
+                                    </Button>
+                                )}
                                 <FormatCurrency value={menuItem.price} />
                             </Card.Content>
                         )}
                     </Card>
                 ))}
             </Card.Group>
+
+            {(!isManager && restaurant.onlineOrders && orderItems.length > 0) && (
+                <OrderBar />
+            )}
 
             {isManager && (
                 <View>

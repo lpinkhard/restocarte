@@ -8,7 +8,7 @@ import {hasWebPSupport} from "./Helpers";
 import {useTranslation} from "react-i18next";
 
 const Present = () => {
-    const { restaurantId } = useParams();
+    const { restaurantId, tableId } = useParams();
     const [ restaurant, setRestaurant ] = useState(null);
     const [ contentReady, setContentReady ] = useState(false);
 
@@ -28,7 +28,7 @@ const Present = () => {
         <View className="Present">
             <MainHeading restaurantId={restaurantId} loadRestaurant={restaurantLoaded} contentReady={onContentReady} webp={webp} displayTagline isMenu />
             {contentReady && (
-                <Menu restaurant={restaurant} webp={webp} />
+                <Menu restaurant={restaurant} tableId={tableId} webp={webp} />
             )}
         </View>,
         <Text fontSize="0.75rem" textAlign="center"><Link to="https://www.restocarte.com">{t('powered-by-restocarte')}</Link></Text>

@@ -75,5 +75,6 @@
   "options-description": "Opties voor het menu-item",
   "exclusive": "Exclusief",
   "manage-subscription": "Abonnement Beheren",
-  "powered-by-restocarte": "Aangedreven door Restocarte"
+  "powered-by-restocarte": "Aangedreven door Restocarte",
+  "online-orders": "Online bestellen inschakelen"
 }

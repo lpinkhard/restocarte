@@ -6,7 +6,13 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Grid,
+  SwitchField,
+  TextField,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Restaurant } from "../models";
 import { fetchByPath, validateField } from "./utils";
@@ -32,6 +38,7 @@ export default function RestaurantUpdateForm(props) {
     currency: "",
     socialLogin: "",
     styleData: "",
+    onlineOrders: false,
     owner: "",
   };
   const [name, setName] = React.useState(initialValues.name);
@@ -44,6 +51,9 @@ export default function RestaurantUpdateForm(props) {
     initialValues.socialLogin
   );
   const [styleData, setStyleData] = React.useState(initialValues.styleData);
+  const [onlineOrders, setOnlineOrders] = React.useState(
+    initialValues.onlineOrders
+  );
   const [owner, setOwner] = React.useState(initialValues.owner);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -58,6 +68,7 @@ export default function RestaurantUpdateForm(props) {
     setCurrency(cleanValues.currency);
     setSocialLogin(cleanValues.socialLogin);
     setStyleData(cleanValues.styleData);
+    setOnlineOrders(cleanValues.onlineOrders);
     setOwner(cleanValues.owner);
     setErrors({});
   };
@@ -82,6 +93,7 @@ export default function RestaurantUpdateForm(props) {
     currency: [],
     socialLogin: [],
     styleData: [],
+    onlineOrders: [],
     owner: [],
   };
   const runValidationTasks = async (
@@ -118,6 +130,7 @@ export default function RestaurantUpdateForm(props) {
           currency,
           socialLogin,
           styleData,
+          onlineOrders,
           owner,
         };
         const validationResponses = await Promise.all(
@@ -182,6 +195,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -214,6 +228,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -246,6 +261,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -278,6 +294,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -310,6 +327,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -342,6 +360,7 @@ export default function RestaurantUpdateForm(props) {
               currency: value,
               socialLogin,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -374,6 +393,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin: value,
               styleData,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -406,6 +426,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData: value,
+              onlineOrders,
               owner,
             };
             const result = onChange(modelFields);
@@ -421,6 +442,39 @@ export default function RestaurantUpdateForm(props) {
         hasError={errors.styleData?.hasError}
         {...getOverrideProps(overrides, "styleData")}
       ></TextField>
+      <SwitchField
+        label="Online orders"
+        defaultChecked={false}
+        isDisabled={false}
+        isChecked={onlineOrders}
+        onChange={(e) => {
+          let value = e.target.checked;
+          if (onChange) {
+            const modelFields = {
+              name,
+              tagline,
+              logo,
+              favicon,
+              userId,
+              currency,
+              socialLogin,
+              styleData,
+              onlineOrders: value,
+              owner,
+            };
+            const result = onChange(modelFields);
+            value = result?.onlineOrders ?? value;
+          }
+          if (errors.onlineOrders?.hasError) {
+            runValidationTasks("onlineOrders", value);
+          }
+          setOnlineOrders(value);
+        }}
+        onBlur={() => runValidationTasks("onlineOrders", onlineOrders)}
+        errorMessage={errors.onlineOrders?.errorMessage}
+        hasError={errors.onlineOrders?.hasError}
+        {...getOverrideProps(overrides, "onlineOrders")}
+      ></SwitchField>
       <TextField
         label="Owner"
         isRequired={false}
@@ -438,6 +492,7 @@ export default function RestaurantUpdateForm(props) {
               currency,
               socialLogin,
               styleData,
+              onlineOrders,
               owner: value,
             };
             const result = onChange(modelFields);

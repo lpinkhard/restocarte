@@ -1,5 +1,10 @@
 export type AmplifyDependentResourcesAttributes = {
   "api": {
+    "api0502c1b4": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
     "api9cd5a7a1": {
       "ApiId": "string",
       "ApiName": "string",
@@ -30,6 +35,13 @@ export type AmplifyDependentResourcesAttributes = {
       "Region": "string"
     },
     "stripewebhook": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "submitorder": {
       "Arn": "string",
       "LambdaExecutionRole": "string",
       "LambdaExecutionRoleArn": "string",

@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "api": {
+      "restocarte": [
+        "Query"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "secretNames": [
+    "mailgun_key"
+  ]
+}
