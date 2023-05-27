@@ -75,5 +75,6 @@
   "options-description": "Опције за ставку менија",
   "exclusive": "Ексклузивно",
   "manage-subscription": "Управљајте Претплатом",
-  "powered-by-restocarte": "Поверед би Restocarte"
+  "powered-by-restocarte": "Поверед би Restocarte",
+  "online-orders": "Омогући онлајн наручивање"
 }

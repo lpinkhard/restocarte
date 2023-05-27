@@ -75,5 +75,6 @@
   "options-description": "Options for the menu item",
   "exclusive": "Exclusive",
   "manage-subscription": "Manage Subscription",
-  "powered-by-restocarte": "Powered by Restocarte"
+  "powered-by-restocarte": "Powered by Restocarte",
+  "online-orders": "Enable online ordering"
 }

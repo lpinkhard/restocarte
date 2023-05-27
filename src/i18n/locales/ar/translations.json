@@ -75,5 +75,6 @@
   "options-description": "خيارات عنصر القائمة",
   "exclusive": "حصري",
   "manage-subscription": "إدارة الاشتراك",
-  "powered-by-restocarte": "مدعوم من Restocarte"
+  "powered-by-restocarte": "مدعوم من Restocarte",
+  "online-orders": "قم بتمكين الطلب عبر الإنترنت"
 }

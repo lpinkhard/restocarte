@@ -1,5 +1,5 @@
 import React, {useCallback, useState} from "react";
-import {Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
+import {CheckboxField, Grid, SelectField, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
@@ -83,6 +83,7 @@ const RestaurantSetup = () => {
         const data = {
             name: form.get("name"),
             tagline: form.get("tagline"),
+            onlineOrders: form.get("online-orders") != null,
         };
         if (image.name.length > 0) {
             const fileId = guid();
@@ -197,6 +198,12 @@ const RestaurantSetup = () => {
                                     descriptiveText={t('favicon-description')}
                                     type="file"
                                 />
+                                <CheckboxField
+                                    label={t('online-orders')}
+                                    name="online-orders"
+                                    value="yes"
+                                    defaultChecked={restaurant.onlineOrders}
+                                />
                                 <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
                                     {t('update')}
                                 </Button>
@@ -251,6 +258,11 @@ const RestaurantSetup = () => {
                                     label={t('favicon-label')}
                                     descriptiveText={t('favicon-description')}
                                     type="file"
+                                />
+                                <CheckboxField
+                                    label={t('online-orders')}
+                                    name="online-orders"
+                                    value="yes"
                                 />
                                 <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
                                     {t('update')}

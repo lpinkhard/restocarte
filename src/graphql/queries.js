@@ -255,6 +255,7 @@ export const getRestaurant = /* GraphQL */ `
       currency
       socialLogin
       styleData
+      onlineOrders
       owner
       createdAt
       updatedAt
@@ -281,6 +282,7 @@ export const listRestaurants = /* GraphQL */ `
         currency
         socialLogin
         styleData
+        onlineOrders
         owner
         createdAt
         updatedAt

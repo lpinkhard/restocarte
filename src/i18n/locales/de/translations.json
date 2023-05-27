@@ -75,5 +75,6 @@
   "options-description": "Optionen für den Menüpunkt",
   "exclusive": "Exklusiv",
   "manage-subscription": "Abonnement Verwalten",
-  "powered-by-restocarte": "Unterstützt von Restocarte"
+  "powered-by-restocarte": "Unterstützt von Restocarte",
+  "online-orders": "Online-Bestellung aktivieren"
 }

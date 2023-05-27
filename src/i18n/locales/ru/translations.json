@@ -75,5 +75,6 @@
   "options-description": "параметры пункта меню",
   "exclusive": "эксклюзив",
   "manage-subscription": "управление подпиской",
-  "powered-by-restocarte": "Работает на Restocarte"
+  "powered-by-restocarte": "Работает на Restocarte",
+  "online-orders": "включить онлайн-заказы"
 }

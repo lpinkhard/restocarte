@@ -84,5 +84,6 @@ type Restaurant
   currency: String
   socialLogin: String
   styleData: String
+  onlineOrders: Boolean
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }

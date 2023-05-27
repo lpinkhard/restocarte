@@ -431,6 +431,7 @@ export const createRestaurant = /* GraphQL */ `
       currency
       socialLogin
       styleData
+      onlineOrders
       owner
       createdAt
       updatedAt
@@ -468,6 +469,7 @@ export const updateRestaurant = /* GraphQL */ `
       currency
       socialLogin
       styleData
+      onlineOrders
       owner
       createdAt
       updatedAt
@@ -505,6 +507,7 @@ export const deleteRestaurant = /* GraphQL */ `
       currency
       socialLogin
       styleData
+      onlineOrders
       owner
       createdAt
       updatedAt

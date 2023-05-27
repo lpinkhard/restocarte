@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { Restaurant } from "../models";
 export declare type ValidationResponse = {
@@ -22,6 +22,7 @@ export declare type RestaurantUpdateFormInputValues = {
     currency?: string;
     socialLogin?: string;
     styleData?: string;
+    onlineOrders?: boolean;
     owner?: string;
 };
 export declare type RestaurantUpdateFormValidationValues = {
@@ -33,6 +34,7 @@ export declare type RestaurantUpdateFormValidationValues = {
     currency?: ValidationFunction<string>;
     socialLogin?: ValidationFunction<string>;
     styleData?: ValidationFunction<string>;
+    onlineOrders?: ValidationFunction<boolean>;
     owner?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -46,6 +48,7 @@ export declare type RestaurantUpdateFormOverridesProps = {
     currency?: PrimitiveOverrideProps<TextFieldProps>;
     socialLogin?: PrimitiveOverrideProps<TextFieldProps>;
     styleData?: PrimitiveOverrideProps<TextFieldProps>;
+    onlineOrders?: PrimitiveOverrideProps<SwitchFieldProps>;
     owner?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type RestaurantUpdateFormProps = React.PropsWithChildren<{

@@ -38,9 +38,11 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
                     }
                     if ('itembgcolor' in styleData && styleData.itembgcolor && styleData.itembgcolor.length > 0) {
                         globalStyle.innerHTML += '.ui.card { background-color: ' + styleData.itembgcolor + ' !important }';
+                        globalStyle.innerHTML += '.ui.container.orderBar { color: ' + styleData.itembgcolor + ' !important }';
                     }
                     if ('itemtextcolor' in styleData && styleData.itembgcolor && styleData.itembgcolor.length > 0) {
                         globalStyle.innerHTML += '.ui.card { color: ' + styleData.itemtextcolor + ' !important }';
+                        globalStyle.innerHTML += '.ui.container.orderBar { background-color: ' + styleData.itemtextcolor + ' !important }';
                     }
                 } catch {
                 }
