@@ -85,6 +85,5 @@ type Restaurant
   socialLogin: String
   styleData: String
   onlineOrders: Boolean
-  premium: Boolean @auth(rules: [{ allow: owner, operations: [read] }, { allow: public, provider: iam, operations: [read] }, { allow: groups, groups: ["everyone"], operations: [read] }])
   owner: String @auth(rules: [{ allow: owner, operations: [read, delete] }, { allow: public, provider: iam, operations: [read, delete] }, { allow: groups, groups: ["everyone"], operations: [read] }])
 }

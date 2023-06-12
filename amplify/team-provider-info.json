@@ -22,10 +22,12 @@
         "stripewebhook": {
           "secretsPathAmplifyAppId": "d10li48b3ubv4a",
           "deploymentBucketName": "amplify-restocarte-main-205627-deployment",
-          "s3Key": "amplify-builds/stripewebhook-49536547436459693633-build.zip"
+          "s3Key": "amplify-builds/stripewebhook-6d51487a73684a635962-build.zip"
         },
         "submitorder": {
-          "secretsPathAmplifyAppId": "d10li48b3ubv4a"
+          "secretsPathAmplifyAppId": "d10li48b3ubv4a",
+          "deploymentBucketName": "amplify-restocarte-main-205627-deployment",
+          "s3Key": "amplify-builds/submitorder-744f35394841306d6142-build.zip"
         }
       },
       "auth": {
