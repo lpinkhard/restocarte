@@ -5,6 +5,7 @@
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.1",
     "@aws-amplify/ui-react-storage": "^1.2.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@capacitor/android": "5.0.1",
     "@capacitor/core": "^5.0.1",
     "@capacitor/ios": "5.0.1",
@@ -24,7 +25,7 @@
     "react-image-file-resizer": "^0.4.8",
     "react-qr-code": "^2.0.11",
     "react-router-dom": "^6.11.1",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "react-social-login": "^3.4.17",
     "react-svg-to-image": "^3.0.0",
     "semantic-ui-css": "^2.5.0",
