@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import "@aws-amplify/ui-react/styles.css";
 import './App.css';
-import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import {HashRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
 import {useTranslation} from "react-i18next";
 import i18n from "i18next";
 
