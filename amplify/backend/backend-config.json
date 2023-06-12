@@ -178,22 +178,6 @@
         }
       ]
     },
-    "AMPLIFY_function_submitorder_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "submitorder"
-        }
-      ]
-    },
-    "AMPLIFY_function_submitorder_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "submitorder"
-        }
-      ]
-    },
     "AMPLIFY_function_submitorder_secretsPathAmplifyAppId": {
       "usedBy": [
         {

@@ -23,6 +23,9 @@
           "secretsPathAmplifyAppId": "d10li48b3ubv4a",
           "deploymentBucketName": "amplify-restocarte-main-205627-deployment",
           "s3Key": "amplify-builds/stripewebhook-49536547436459693633-build.zip"
+        },
+        "submitorder": {
+          "secretsPathAmplifyAppId": "d10li48b3ubv4a"
         }
       },
       "auth": {
