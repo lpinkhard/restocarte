@@ -243,6 +243,7 @@ const RestaurantSetup = () => {
                                     descriptiveText={t('social-login-description')}
                                     value={selectedSocialLogin}
                                     onChange={(e) => setSelectedSocialLogin(e.target.value)}
+                                    disabled={true}
                                 >
                                     <option key="none" value="none">{t('social-none')}</option>
                                     <option key="facebook" value="facebook">{t('social-facebook')}</option>
