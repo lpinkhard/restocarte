@@ -51,3 +51,4 @@ amplifytools.xcconfig
 .env
 .env.main
 .env.staging
+.next
