@@ -3,15 +3,14 @@ import {Grid, TextField, View, withAuthenticator} from '@aws-amplify/ui-react';
 
 import MainHeading from "./MainHeading";
 import ManagerMenu from "./ManagerMenu";
-import {Button, Container, Header, Modal, ModalHeader} from "semantic-ui-react";
+import {Button, Container, Header, Modal} from "semantic-ui-react";
 import {
     updateRestaurant as updateRestaurantMutation
 } from "./graphql/mutations";
-import {API, Auth, Storage} from "aws-amplify";
+import {API, Auth} from "aws-amplify";
 import {listRestaurants} from "./graphql/queries";
-import {cdnPath, hasWebPSupport, resizeImageFile} from "./Helpers";
+import {cdnPath, hasWebPSupport} from "./Helpers";
 import {useTranslation} from "react-i18next";
-import i18n from "i18next";
 import {HexColorPicker} from "react-colorful";
 
 const Appearance = () => {
