@@ -54,7 +54,7 @@ const Menu = ( {isManager, restaurant, tableId, webp} ) => {
     }
 
     function MenuContent(category) {
-        const socialLogin = !isManager && restaurant.socialLogin && restaurant.socialLogin !== 'none';
+        const socialLogin = !isManager && restaurant && restaurant.socialLogin && restaurant.socialLogin !== 'none';
 
         if (selectedCategory) {
             return (
