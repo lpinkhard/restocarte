@@ -34,10 +34,10 @@ const Tags = () => {
 
         let link = window.location.protocol + '//' + window.location.host + '/present/' + restaurant.id;
         if (table && table.length > 0) {
-            link += '/' + table;
+            link += '-' + table;
             setLinkTableNumber(parseInt(table));
         } else {
-            link += '/0';
+            link += '-0';
             setLinkTableNumber(0);
         }
 
