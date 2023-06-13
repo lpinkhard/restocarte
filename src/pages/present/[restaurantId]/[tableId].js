@@ -1,8 +1,8 @@
 import {Text, View} from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic';
-import MainHeading from '../../components/MainHeading';
-import Menu from '../../components/Menu';
+import MainHeading from '../../../components/MainHeading';
+import Menu from '../../../components/Menu';
 import React, {useCallback, useState} from "react";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
@@ -25,7 +25,7 @@ const Present = () => {
     const {t} = useTranslation();
 
     const webp = dynamic(
-        () => import('../../components/WebPSupport'),
+        () => import('../../../components/WebPSupport'),
         { ssr: false }
     );
 

@@ -32,12 +32,13 @@ const Tags = () => {
         const table = form.get("table");
         const nfc = form.get("nfc");
 
-        let link = window.location.protocol + '//' + window.location.host + '/' + restaurant.id;
+        let link = window.location.protocol + '//' + window.location.host + '/present/' + restaurant.id;
         if (table && table.length > 0) {
             link += '/' + table;
             setLinkTableNumber(parseInt(table));
         } else {
-            setLinkTableNumber(-1);
+            link += '/0';
+            setLinkTableNumber(0);
         }
 
         if (nfc) {
