@@ -1,16 +1,17 @@
 import {Text, View} from '@aws-amplify/ui-react';
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic';
-import MainHeading from '../../../components/MainHeading';
-import Menu from '../../../components/Menu';
+import MainHeading from '../../components/MainHeading';
+import Menu from '../../components/Menu';
 import React, {useCallback, useState} from "react";
 import {useTranslation} from "next-i18next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 const Present = () => {
     const router = useRouter();
-    const restaurantId = router.query.restaurantId;
-    const tableId = router.query.tableId;
+    const idSplit = router.query.id.split('-');
+    const restaurantId = idSplit.length >= 5 ? idSplit[0] + '-' + idSplit[1] + '-' + idSplit[2] + '-' + idSplit[3] + '-' + idSplit[4] : '';
+    const tableId = idSplit.length >= 6 ? idSplit[5] : '';
     const [ restaurant, setRestaurant ] = useState(null);
     const [ contentReady, setContentReady ] = useState(false);
 
@@ -25,7 +26,7 @@ const Present = () => {
     const {t} = useTranslation();
 
     const webp = dynamic(
-        () => import('../../../components/WebPSupport'),
+        () => import('../../components/WebPSupport'),
         { ssr: false }
     );
 
