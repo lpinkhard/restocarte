@@ -44,6 +44,7 @@ const MenuItems = ({isManager, restaurant, category, loadCategory, tableId, deci
     }
 
     const { t } = useTranslation();
+    const canOrderOnline = restaurant && restaurant.onlineOrders && tableId > 0;
 
     useEffect(() => {
         fetchCategory();
@@ -686,7 +687,7 @@ const MenuItems = ({isManager, restaurant, category, loadCategory, tableId, deci
                         </Card.Content>
                         {menuItem.price && (
                             <Card.Content extra>
-                                {(!isManager && restaurant.onlineOrders) && (
+                                {(!isManager && canOrderOnline) && (
                                     <Button primary icon className="addToOrderButton" onClick={() => addToOrder(menuItem)}>
                                         <Icon name="cart plus" />
                                     </Button>
@@ -698,7 +699,7 @@ const MenuItems = ({isManager, restaurant, category, loadCategory, tableId, deci
                 ))}
             </Card.Group>
 
-            {(!isManager && restaurant.onlineOrders && orderItems.length > 0) && (
+            {(!isManager && canOrderOnline && orderItems.length > 0) && (
                 <OrderBar />
             )}
 
