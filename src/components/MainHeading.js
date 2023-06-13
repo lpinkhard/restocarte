@@ -125,7 +125,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
             });
 
         const restaurantData = data.getRestaurant;
-        if (restaurantData.logo) {
+        if (restaurantData && restaurantData.logo) {
             if (webp) {
                 restaurantData.logo = cdnPath(restaurantData.logo + '.webp');
             } else {
@@ -135,7 +135,7 @@ const MainHeading = ( {isManager, restaurantId, loadRestaurant, contentReady, we
 
         setRestaurant(restaurantData);
 
-        if (!restaurantData.logo) {
+        if (!restaurantData || !restaurantData.logo) {
             setContentLoaded(true);
         }
     }
