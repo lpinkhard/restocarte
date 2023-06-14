@@ -16,16 +16,18 @@
     "aws-amplify": "^5.1.4",
     "currency-list": "^1.0.8",
     "del": "^7.0.0",
-    "i18next": "^22.4.15",
+    "fs": "^0.0.1-security",
+    "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.0.1",
+    "next": "^13.4.5",
+    "next-i18next": "^13.3.0",
     "react": "^18.2.0",
     "react-colorful": "^5.6.1",
     "react-dom": "^18.2.0",
-    "react-i18next": "^12.2.2",
+    "react-i18next": "^12.3.1",
     "react-image-file-resizer": "^0.4.8",
     "react-qr-code": "^2.0.11",
     "react-router-dom": "^6.11.1",
-    "react-scripts": "^5.0.1",
     "react-social-login": "^3.4.17",
     "react-svg-to-image": "^3.0.0",
     "semantic-ui-css": "^2.5.0",
@@ -34,10 +36,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "eslintConfig": {
     "extends": [
