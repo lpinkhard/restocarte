@@ -76,5 +76,8 @@
   "exclusive": "Exclusive",
   "manage-subscription": "Manage Subscription",
   "powered-by-restocarte": "Powered by Restocarte",
-  "online-orders": "Enable online ordering"
+  "online-orders": "Enable online ordering",
+  "restaurant-mobile": "Mobile Number",
+  "mobile-label": "Mobile Number",
+  "mobile-description": "Mobile number to send orders"
 }
