@@ -114,6 +114,11 @@ const RestaurantSetup = () => {
             setSelectedSocialLogin(socialLogin);
         }
 
+        const mobile = form.get("mobile");
+        if (mobile && mobile.length > 0) {
+            data.mobile = mobile;
+        }
+
         if (restaurant) {
             data.id = restaurant.id;
 
@@ -212,6 +217,13 @@ const RestaurantSetup = () => {
                                     value="yes"
                                     defaultChecked={restaurant.onlineOrders}
                                 />
+                                <TextField
+                                    name="mobile"
+                                    placeholder={t('restaurant-mobile')}
+                                    label={t('mobile-label')}
+                                    descriptiveText={t('mobile-description')}
+                                    defaultValue={restaurant.mobile}
+                                />
                                 <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
                                     {t('update')}
                                 </Button>
@@ -272,6 +284,12 @@ const RestaurantSetup = () => {
                                     label={t('online-orders')}
                                     name="online-orders"
                                     value="yes"
+                                />
+                                <TextField
+                                    name="mobile"
+                                    placeholder={t('restaurant-mobile')}
+                                    label={t('mobile-label')}
+                                    descriptiveText={t('mobile-label')}
                                 />
                                 <Button primary onClick={updateRestaurant} disabled={busyUpdating}>
                                     {t('update')}

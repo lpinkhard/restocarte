@@ -47,6 +47,36 @@ const getMailgunKey = async () => {
   return Parameters[0].Value
 }
 
+const getAccountSid = async () => {
+  const { Parameters } = await (new aws.SSM())
+      .getParameters({
+        Names: ['account_sid'].map(secretName => process.env[secretName]),
+        WithDecryption: true
+      })
+      .promise()
+  return Parameters[0].Value
+}
+
+const getAuthToken = async () => {
+  const { Parameters } = await (new aws.SSM())
+      .getParameters({
+        Names: ['auth_token'].map(secretName => process.env[secretName]),
+        WithDecryption: true
+      })
+      .promise()
+  return Parameters[0].Value
+}
+
+const getMessagingServiceSid = async () => {
+  const { Parameters } = await (new aws.SSM())
+      .getParameters({
+        Names: ['messaging_service_sid'].map(secretName => process.env[secretName]),
+        WithDecryption: true
+      })
+      .promise()
+  return Parameters[0].Value
+}
+
 // declare a new express app
 const app = express()
 app.use(bodyParser.json())
@@ -84,6 +114,22 @@ app.post('/submitorder', async function (req, res) {
       }
 
       const contactEmail = restaurantData.Item.userId
+      const mobileNumber = restaurantData.Item.mobile
+
+      if (mobileNumber && mobileNumber.length > 0) {
+        const accountSid = getAccountSid()
+        const authToken = getAuthToken()
+        const client = require('twilio')(accountSid, authToken)
+
+        client.messages
+            .create({
+              body: 'Order - Table ' + req.body.table + ' - ' + req.body.orderItems.join(', '),
+              messagingServiceSid: getMessagingServiceSid(),
+              to: mobileNumber
+            })
+            .then(message => console.log(message.sid))
+            .done();
+      }
 
       const data = {
         from: "Restocarte Orders <orders@notify.restocarte.com>",
